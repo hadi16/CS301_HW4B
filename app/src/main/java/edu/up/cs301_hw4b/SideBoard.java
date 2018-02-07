@@ -8,28 +8,26 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Created by Alex Hadi on 1/31/2018.
+ * Created by Alex Hadi on 2/6/2018.
  */
 
-public class QwirkleBoard extends View {
-    private static final int scaleDim = 12;
-
-    public QwirkleBoard(Context context){
+public class SideBoard extends View {
+    public SideBoard(Context context){
         super(context);
         generalInit();
     }
 
-    public QwirkleBoard(Context context, AttributeSet attrs){
+    public SideBoard(Context context, AttributeSet attrs){
         super(context, attrs);
         generalInit();
     }
 
-    public QwirkleBoard(Context context, AttributeSet attrs, int defStyleAttr){
+    public SideBoard(Context context, AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);
         generalInit();
     }
 
-    public QwirkleBoard(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes){
+    public SideBoard(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes){
         super(context, attrs, defStyleAttr, defStyleRes);
         generalInit();
     }
@@ -39,7 +37,7 @@ public class QwirkleBoard extends View {
     }
 
     @Override
-    public void onDraw(Canvas canvas){
+    public void onDraw(Canvas canvas) {
         canvas.drawColor(Color.WHITE);
 
         Paint blackPaint = new Paint();
@@ -47,12 +45,10 @@ public class QwirkleBoard extends View {
         blackPaint.setStrokeWidth(3.0f);
         blackPaint.setStyle(Paint.Style.STROKE);
 
-        int rectDim = canvas.getHeight() / scaleDim;
-        int offset = (canvas.getWidth() - (scaleDim*rectDim)) / 2;
-        for (int i = 0; i< scaleDim; i++){
-            for (int j = 0; j< scaleDim; j++){
-                canvas.drawRect((float)(i*rectDim+offset), (float)(j*rectDim), (float)((i+1)*rectDim+offset), (float)(j+1)*rectDim, blackPaint);
-            }
+        int rectDim = canvas.getHeight() / 6;
+        int offset = (canvas.getWidth() - rectDim) / 2;
+        for (int i = 0; i< 6; i++){
+            canvas.drawRect((float)offset, (float)(i*rectDim), (float)(offset+rectDim), (float)(i+1)*rectDim, blackPaint);
         }
     }
 }

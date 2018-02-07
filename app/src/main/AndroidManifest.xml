@@ -3,6 +3,7 @@
     package="edu.up.cs301_hw4b">
 
     <application
+        android:screenOrientation="landscape"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

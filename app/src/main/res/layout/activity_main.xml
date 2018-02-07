@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<edu.up.cs301_hw4b.QwirkleBoard xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.up.cs301_hw4b.MainActivity">
+    android:orientation="horizontal">
 
-</edu.up.cs301_hw4b.QwirkleBoard>
+    <edu.up.cs301_hw4b.SideBoard
+        android:layout_width="170dp"
+        android:layout_height="match_parent" />
+
+    <edu.up.cs301_hw4b.QwirkleBoard
+        android:layout_width="680dp"
+        android:layout_height="match_parent" />
+
+    <edu.up.cs301_hw4b.SideBoard
+        android:layout_width="170dp"
+        android:layout_height="match_parent" />
+</LinearLayout>
