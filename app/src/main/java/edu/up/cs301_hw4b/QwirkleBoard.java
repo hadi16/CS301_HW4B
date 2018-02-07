@@ -145,6 +145,17 @@ public class QwirkleBoard extends View {
 
         canvas.drawBitmap(dogRedSmall, (float)(3*rectDim+offset), (float)(2*rectDim), blackPaint);
         canvas.drawBitmap(dogBlueSmall, (float)(3*rectDim+offset), (float)(3*rectDim), blackPaint);
-        
+        canvas.drawBitmap(dogGreenSmall, (float)(3*rectDim+offset), (float)(4*rectDim), blackPaint);
+        canvas.drawBitmap(dogYellowSmall, (float)(3*rectDim+offset), (float)(5*rectDim), blackPaint);
+
+        canvas.drawBitmap(birdYellowSmall, (float)(2*rectDim+offset), (float)(5*rectDim), blackPaint);
+        canvas.drawBitmap(snakeYellowSmall, (float)(4*rectDim+offset), (float)(5*rectDim), blackPaint);
+        canvas.drawBitmap(foxYellowSmall, (float)(5*rectDim+offset), (float)(5*rectDim), blackPaint);
+
+        canvas.drawBitmap(foxBlueSmall, (float)(5*rectDim+offset), (float)(6*rectDim), blackPaint);
+        canvas.drawBitmap(foxGreenSmall, (float)(5*rectDim+offset), (float)(7*rectDim), blackPaint);
+
+        canvas.drawBitmap(dogOrangeSmall, (float)(3*rectDim+offset), (float)(6*rectDim), blackPaint);
+        canvas.drawBitmap(dogPurpleSmall, (float)(3*rectDim+offset), (float)(7*rectDim), blackPaint);
     }
 }
