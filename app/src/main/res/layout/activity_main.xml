@@ -4,15 +4,88 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <edu.up.cs301_hw4b.SideBoard
+    <LinearLayout
         android:layout_width="170dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <edu.up.cs301_hw4b.QwirkleBoard
+        <TextView
+            android:id="@+id/tvP1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Player 1" />
+
+        <edu.up.cs301_hw4b.SideBoardLeft
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvP1Score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Score: 10" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="680dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <edu.up.cs301_hw4b.SideBoard
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/menuButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Menu" />
+
+            <Button
+                android:id="@+id/swapButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Swap" />
+        </LinearLayout>
+
+        <edu.up.cs301_hw4b.QwirkleBoard
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="170dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvP2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Player 2" />
+
+        <edu.up.cs301_hw4b.SideBoardRight
+            android:id="@+id/sideBoardRight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvP1Score3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Score: 15" />
+
+    </LinearLayout>
 </LinearLayout>

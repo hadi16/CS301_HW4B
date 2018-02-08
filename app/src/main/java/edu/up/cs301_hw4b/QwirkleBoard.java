@@ -157,5 +157,7 @@ public class QwirkleBoard extends View {
 
         canvas.drawBitmap(dogOrangeSmall, (float)(3*rectDim+offset), (float)(6*rectDim), blackPaint);
         canvas.drawBitmap(dogPurpleSmall, (float)(3*rectDim+offset), (float)(7*rectDim), blackPaint);
+
+
     }
 }
