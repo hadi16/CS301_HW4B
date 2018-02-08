@@ -14,7 +14,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Player 1" />
+            android:text="Player 1"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
 
         <edu.up.cs301_hw4b.SideBoardLeft
             android:layout_width="match_parent"
@@ -26,7 +28,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Score: 10" />
+            android:text="Score: 10"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
 
     </LinearLayout>
 
@@ -72,7 +76,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Player 2" />
+            android:text="Player 2"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
 
         <edu.up.cs301_hw4b.SideBoardRight
             android:id="@+id/sideBoardRight"
@@ -85,7 +91,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Score: 15" />
+            android:text="Score: 15"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
 
     </LinearLayout>
 </LinearLayout>
