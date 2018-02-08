@@ -1,4 +1,4 @@
-package edu.up.cs301_hw4b;
+package up.cs301.qwirkle;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("edu.up.cs301_hw4b", appContext.getPackageName());
+        assertEquals("up.up.qwirkle", appContext.getPackageName());
     }
 }

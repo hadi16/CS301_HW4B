@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.up.cs301_hw4b">
+    package="up.cs301.qwirkle">
 
     <application
         android:screenOrientation="landscape"
@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="up.cs301.qwirkle.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

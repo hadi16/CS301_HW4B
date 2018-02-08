@@ -1,4 +1,4 @@
-package edu.up.cs301_hw4b;
+package up.cs301.qwirkle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -18,7 +18,7 @@
             android:textColor="@android:color/black"
             android:textSize="24sp" />
 
-        <edu.up.cs301_hw4b.SideBoardLeft
+        <up.cs301.qwirkle.SideBoardLeft
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -60,7 +60,7 @@
                 android:text="Swap" />
         </LinearLayout>
 
-        <edu.up.cs301_hw4b.QwirkleBoard
+        <up.cs301.qwirkle.QwirkleBoard
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -80,7 +80,7 @@
             android:textColor="@android:color/black"
             android:textSize="24sp" />
 
-        <edu.up.cs301_hw4b.SideBoardRight
+        <up.cs301.qwirkle.SideBoardRight
             android:id="@+id/sideBoardRight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
