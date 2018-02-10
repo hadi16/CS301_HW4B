@@ -15,7 +15,7 @@ import android.view.View;
 
 public class QwirkleBoard extends View {
     private static final int scaleDim = 12;
-    Paint blackPaint = new Paint();
+    private Paint blackPaint = new Paint();
 
     private Bitmap batBlue = BitmapFactory.decodeResource(getResources(), R.drawable.bat_blue);
     private Bitmap batGreen = BitmapFactory.decodeResource(getResources(), R.drawable.bat_green);
