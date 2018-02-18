@@ -14,6 +14,9 @@ import android.util.AttributeSet;
  * @version February 18, 2018
  */
 public class SideBoard extends QwirkleView {
+    // Controls how many tiles are in each SideBoard.
+    protected static final int numTiles = 6;
+
     /**
      * Constructor: SideBoard
      * @param context Object holds the current context of the view.
@@ -58,14 +61,14 @@ public class SideBoard extends QwirkleView {
     @Override
     public void onDraw(Canvas canvas) {
         // Offset needed to center the SideBoard.
-        int rectDim = canvas.getHeight() / 6;
+        int rectDim = canvas.getHeight() / numTiles;
         int offset = (canvas.getWidth() - rectDim) / 2;
 
         // Sets background color to white.
         canvas.drawColor(Color.WHITE);
 
         // Draws the SideBoard.
-        for (int i = 0; i< 6; i++){
+        for (int i = 0; i< numTiles; i++){
             canvas.drawRect(offset, i*rectDim, offset+rectDim, (i+1)*rectDim,
                     blackPaint);
         }

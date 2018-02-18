@@ -14,7 +14,7 @@ import android.util.AttributeSet;
  */
 public class SideBoardRight extends SideBoard {
     // Array used to hold current state of SideBoardRight.
-    private QwirkleTile[] sideBoardRight = new QwirkleTile[6];
+    private QwirkleTile[] sideBoardRight = new QwirkleTile[numTiles];
 
     /**
      * Constructor: SideBoardRight
