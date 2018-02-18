@@ -9,10 +9,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-/**
- * Created by Alex Hadi on 2/6/2018.
- */
-
 public class SideBoardRight extends View {
 
     private Bitmap batBlue = BitmapFactory.decodeResource(getResources(), R.drawable.bat_blue);
