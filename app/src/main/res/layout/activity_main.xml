@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvP1"
+            android:id="@+id/textViewPlayerOneLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -19,12 +19,13 @@
             android:textSize="24sp" />
 
         <up.cs301.qwirkle.SideBoardLeft
+            android:id="@+id/sideBoardLeft"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/tvP1Score"
+            android:id="@+id/textViewPlayerOneScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -46,14 +47,14 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/menuButton"
+                android:id="@+id/buttonMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Menu" />
 
             <Button
-                android:id="@+id/swapButton"
+                android:id="@+id/buttonSwap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -61,9 +62,9 @@
         </LinearLayout>
 
         <up.cs301.qwirkle.QwirkleBoard
+            android:id="@+id/qwirkleBoard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -72,7 +73,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvP2"
+            android:id="@+id/textViewPlayerTwoLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -87,7 +88,7 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/tvP1Score3"
+            android:id="@+id/textViewPlayerTwoScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
