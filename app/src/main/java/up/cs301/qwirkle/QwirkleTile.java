@@ -8,12 +8,14 @@ import android.graphics.Canvas;
  * This class contains code to draw tiles using given Bitmap and dimensions.
  *
  * @author Alex Hadi
- * @version February 18, 2018
+ * @version February 19, 2018
  */
 class QwirkleTile {
     private Bitmap tile;
     private int xPos;
     private int yPos;
+    private String animal;
+    private String color;
     private int rectDim;
     private int offset;
 
@@ -22,29 +24,37 @@ class QwirkleTile {
      * Used for the main board.
      * @param xPos The x position of the tile.
      * @param yPos The y position of the tile.
-     * @param tile The Bitmap for the tile.
+     * @param qwirkleBitmap The QwirkleBitmap object for the tile.
      */
-    QwirkleTile(int xPos, int yPos, Bitmap tile) {
+    QwirkleTile(int xPos, int yPos, QwirkleBitmap qwirkleBitmap) {
         this.rectDim = 97;
         this.offset = 98;
 
         this.xPos = xPos;
         this.yPos = yPos;
-        this.tile = Bitmap.createScaledBitmap(tile, rectDim, rectDim, false);
+
+        this.animal = qwirkleBitmap.getAnimal();
+        this.color = qwirkleBitmap.getColor();
+        this.tile = Bitmap.createScaledBitmap
+                (qwirkleBitmap.getTile(), rectDim, rectDim, false);
     }
 
     /**
      * Constructor: QwirkleTile
      * Used for the SideBoards.
      * @param yPos The y position of the tile.
-     * @param tile The Bitmap for the tile.
+     * @param qwirkleBitmap The QwirkleBitmap object for the tile.
      */
-    QwirkleTile(int yPos, Bitmap tile) {
+    QwirkleTile(int yPos, QwirkleBitmap qwirkleBitmap) {
         this.rectDim = 189;
         this.offset = 75;
 
         this.yPos = yPos;
-        this.tile = Bitmap.createScaledBitmap(tile, rectDim, rectDim, false);
+
+        this.animal = qwirkleBitmap.getAnimal();
+        this.color = qwirkleBitmap.getColor();
+        this.tile = Bitmap.createScaledBitmap
+                (qwirkleBitmap.getTile(), rectDim, rectDim, false);
     }
 
     /**

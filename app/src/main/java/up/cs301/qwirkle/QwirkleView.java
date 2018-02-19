@@ -17,7 +17,7 @@ import java.util.Hashtable;
  * Inherits from View.
  *
  * @author Alex Hadi
- * @version February 18, 2018
+ * @version February 19, 2018
  */
 public class QwirkleView extends View {
     // Hashtable for all Bitmaps
@@ -116,13 +116,13 @@ public class QwirkleView extends View {
     }
 
     /**
-     * Method: getBitmap
+     * Method: createQwirkleBitmapObject
      * Getter for the Bitmaps. Used to draw the tiles.
      * @param animal String for the animal of the tile.
      * @param color String for the color of the tile.
      * @return Copy of the Bitmap.
      */
-    protected Bitmap getBitmap(String animal, String color) {
+    protected QwirkleBitmap createQwirkleBitmapObject(String animal, String color) {
         Bitmap bitmap = bitmapHashtable.get(animal+"_"+color);
         /*
         External Citation
@@ -133,7 +133,7 @@ public class QwirkleView extends View {
         to-another-bitmap-without-using-createbitmap-and-copy
         Solution: Used the copy method and getConfig method.
         */
-        return bitmap.copy(bitmap.getConfig(), true);
+        return new QwirkleBitmap(animal, color, bitmap.copy(bitmap.getConfig(), true));
     }
 
     /**

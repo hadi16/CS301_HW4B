@@ -11,7 +11,7 @@ import android.util.AttributeSet;
  * Inherits from QwirkleView.
  *
  * @author Alex Hadi
- * @version February 18, 2018
+ * @version February 19, 2018
  */
 public class QwirkleBoard extends QwirkleView {
     // Number of rows and columns for the board.
@@ -65,17 +65,17 @@ public class QwirkleBoard extends QwirkleView {
      * Adds tiles to the board with the board array.
      */
     private void addTiles() {
-        board[3][2] = new QwirkleTile(3, 2, getBitmap("dog", "red"));
-        board[3][3] = new QwirkleTile(3, 3, getBitmap("dog", "blue"));
-        board[3][4] = new QwirkleTile(3, 4, getBitmap("dog", "green"));
-        board[3][5] = new QwirkleTile(3, 5, getBitmap("dog", "yellow"));
-        board[2][5] = new QwirkleTile(2, 5, getBitmap("bird", "yellow"));
-        board[4][5] = new QwirkleTile(4, 5, getBitmap("snake", "yellow"));
-        board[5][5] = new QwirkleTile(5, 5, getBitmap("fox", "yellow"));
-        board[5][6] = new QwirkleTile(5, 6, getBitmap("fox", "blue"));
-        board[5][7] = new QwirkleTile(5, 7, getBitmap("fox", "green"));
-        board[3][6] = new QwirkleTile(3, 6, getBitmap("dog", "orange"));
-        board[3][7] = new QwirkleTile(3, 7, getBitmap("dog", "purple"));
+        board[3][2] = new QwirkleTile(3, 2, createQwirkleBitmapObject("dog", "red"));
+        board[3][3] = new QwirkleTile(3, 3, createQwirkleBitmapObject("dog", "blue"));
+        board[3][4] = new QwirkleTile(3, 4, createQwirkleBitmapObject("dog", "green"));
+        board[3][5] = new QwirkleTile(3, 5, createQwirkleBitmapObject("dog", "yellow"));
+        board[2][5] = new QwirkleTile(2, 5, createQwirkleBitmapObject("bird", "yellow"));
+        board[4][5] = new QwirkleTile(4, 5, createQwirkleBitmapObject("snake", "yellow"));
+        board[5][5] = new QwirkleTile(5, 5, createQwirkleBitmapObject("fox", "yellow"));
+        board[5][6] = new QwirkleTile(5, 6, createQwirkleBitmapObject("fox", "blue"));
+        board[5][7] = new QwirkleTile(5, 7, createQwirkleBitmapObject("fox", "green"));
+        board[3][6] = new QwirkleTile(3, 6, createQwirkleBitmapObject("dog", "orange"));
+        board[3][7] = new QwirkleTile(3, 7, createQwirkleBitmapObject("dog", "purple"));
     }
 
     /**
