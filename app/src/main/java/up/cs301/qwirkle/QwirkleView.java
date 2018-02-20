@@ -17,7 +17,7 @@ import java.util.Hashtable;
  * Inherits from View.
  *
  * @author Alex Hadi
- * @version February 19, 2018
+ * @version February 20, 2018
  */
 public class QwirkleView extends View {
     // Hashtable for all Bitmaps
@@ -116,13 +116,13 @@ public class QwirkleView extends View {
     }
 
     /**
-     * Method: createQwirkleBitmapObject
+     * Method: createQwirkleBitmap
      * Getter for the Bitmaps. Used to draw the tiles.
      * @param animal String for the animal of the tile.
      * @param color String for the color of the tile.
      * @return Copy of the Bitmap.
      */
-    protected QwirkleBitmap createQwirkleBitmapObject(String animal, String color) {
+    protected QwirkleBitmap createQwirkleBitmap(String animal, String color) {
         Bitmap bitmap = bitmapHashtable.get(animal+"_"+color);
         /*
         External Citation

@@ -10,7 +10,7 @@ import android.util.AttributeSet;
  * Inherits from SideBoard.
  *
  * @author Alex Hadi
- * @version February 19, 2018
+ * @version February 20, 2018
  */
 public class SideBoardRight extends SideBoard {
     // Array used to hold current state of SideBoardRight.
@@ -61,12 +61,12 @@ public class SideBoardRight extends SideBoard {
      * Tiles are added to right SideBoard using array.
      */
     private void addTiles() {
-        sideBoardRight[0] = new QwirkleTile(0, createQwirkleBitmapObject("owl", "green"));
-        sideBoardRight[1] = new QwirkleTile(1, createQwirkleBitmapObject("snake", "purple"));
-        sideBoardRight[2] = new QwirkleTile(2, createQwirkleBitmapObject("bird", "blue"));
-        sideBoardRight[3] = new QwirkleTile(3, createQwirkleBitmapObject("fox", "red"));
-        sideBoardRight[4] = new QwirkleTile(4, createQwirkleBitmapObject("owl", "red"));
-        sideBoardRight[5] = new QwirkleTile(5, createQwirkleBitmapObject("bat", "orange"));
+        sideBoardRight[0] = new QwirkleTile(0, createQwirkleBitmap("owl", "green"));
+        sideBoardRight[1] = new QwirkleTile(1, createQwirkleBitmap("snake", "purple"));
+        sideBoardRight[2] = new QwirkleTile(2, createQwirkleBitmap("bird", "blue"));
+        sideBoardRight[3] = new QwirkleTile(3, createQwirkleBitmap("fox", "red"));
+        sideBoardRight[4] = new QwirkleTile(4, createQwirkleBitmap("owl", "red"));
+        sideBoardRight[5] = new QwirkleTile(5, createQwirkleBitmap("bat", "orange"));
     }
 
     /**
