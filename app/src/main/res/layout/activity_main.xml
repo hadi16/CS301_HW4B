@@ -29,9 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Score: 10"
+            android:text="Score: 43"
             android:textColor="@android:color/black"
-            android:textSize="24sp" />
+            android:textSize="24sp"/>
 
     </LinearLayout>
 
@@ -47,18 +47,33 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/buttonMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Menu" />
-
-            <Button
                 android:id="@+id/buttonSwap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
                 android:layout_weight="1"
-                android:text="Swap" />
+                android:text="Swap"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/textViewTurnLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"
+                android:text="Current Turn: Player 1"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"/>
+
+            <Button
+                android:id="@+id/buttonRestartGame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_weight="1"
+                android:text="Restart Game"
+                android:textSize="20sp"/>
         </LinearLayout>
 
         <up.cs301.qwirkle.QwirkleBoard
@@ -92,9 +107,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Score: 15"
+            android:text="Score: 55"
             android:textColor="@android:color/black"
-            android:textSize="24sp" />
+            android:textSize="24sp"/>
 
     </LinearLayout>
 </LinearLayout>

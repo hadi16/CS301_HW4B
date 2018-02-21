@@ -72,6 +72,11 @@ public class QwirkleBoard extends QwirkleView {
         board[2][5] = new QwirkleTile(2, 5, createQwirkleBitmap("bird", "yellow"));
         board[4][5] = new QwirkleTile(4, 5, createQwirkleBitmap("snake", "yellow"));
         board[5][5] = new QwirkleTile(5, 5, createQwirkleBitmap("fox", "yellow"));
+        board[6][5] = new QwirkleTile(6, 5, createQwirkleBitmap("owl", "yellow"));
+        board[7][4] = new QwirkleTile(7, 4, createQwirkleBitmap("bat", "orange"));
+        board[7][5] = new QwirkleTile(7, 5, createQwirkleBitmap("bat", "yellow"));
+        board[7][6] = new QwirkleTile(7, 6, createQwirkleBitmap("bat", "blue"));
+        board[7][7] = new QwirkleTile(7, 7, createQwirkleBitmap("bat", "purple"));
         board[5][6] = new QwirkleTile(5, 6, createQwirkleBitmap("fox", "blue"));
         board[5][7] = new QwirkleTile(5, 7, createQwirkleBitmap("fox", "green"));
         board[3][6] = new QwirkleTile(3, 6, createQwirkleBitmap("dog", "orange"));
