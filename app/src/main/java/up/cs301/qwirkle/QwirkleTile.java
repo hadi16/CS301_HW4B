@@ -27,8 +27,8 @@ class QwirkleTile {
      * @param qwirkleBitmap The QwirkleBitmap object for the tile.
      */
     QwirkleTile(int xPos, int yPos, QwirkleBitmap qwirkleBitmap) {
-        this.rectDim = 97;
-        this.offset = 268;
+        this.rectDim = 90;
+        this.offset = 78;
 
         this.xPos = xPos;
         this.yPos = yPos;

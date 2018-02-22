@@ -11,36 +11,84 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/buttonSwap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
-                android:layout_weight="1"
-                android:text="Swap"
-                android:textSize="20sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="5"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textViewTurnLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_weight="1"
-                android:text="Current Turn: Player 1"
-                android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                <TextView
+                    android:id="@+id/textViewTurnLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/turn"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"/>
 
+                <Button
+                    android:id="@+id/buttonSwap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="150dp"
+                    android:layout_marginTop="150dp"
+                    android:text="Swap"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textViewScoreboardLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/scoreboard"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textViewPlayerOneScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Player 1: 32"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textViewPlayerTwoScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Player 2: 24"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textViewPlayerThreeScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Player 3: 33"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textViewPlayerFourScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Player 4: 20"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+            <up.cs301.qwirkle.QwirkleBoard
+                android:id="@+id/qwirkleBoard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
         </LinearLayout>
 
-        <up.cs301.qwirkle.QwirkleBoard
-            android:id="@+id/qwirkleBoard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,9 +101,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Player"
+            android:text="Player 1"
             android:textColor="@android:color/black"
-            android:textSize="24sp" />
+            android:textSize="24sp"/>
 
         <up.cs301.qwirkle.SideBoard
             android:id="@+id/sideBoard"
@@ -68,9 +116,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Score: 55"
+            android:text="Score: 32"
             android:textColor="@android:color/black"
-            android:textSize="24sp" />
+            android:textSize="24sp"/>
 
     </LinearLayout>
 </LinearLayout>

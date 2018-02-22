@@ -15,7 +15,7 @@ import android.util.AttributeSet;
  */
 public class QwirkleBoard extends QwirkleView {
     // Number of rows and columns for the board.
-    private static final int scaleDim = 12;
+    private static final int scaleDim = 14;
 
     // Array for the current state of the board.
     private QwirkleTile board[][] = new QwirkleTile[scaleDim][scaleDim];
