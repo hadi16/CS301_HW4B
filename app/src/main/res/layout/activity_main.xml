@@ -5,38 +5,7 @@
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="170dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textViewPlayerOneLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Player 1"
-            android:textColor="@android:color/black"
-            android:textSize="24sp" />
-
-        <up.cs301.qwirkle.SideBoardLeft
-            android:id="@+id/sideBoardLeft"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/textViewPlayerOneScore"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Score: 43"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="680dp"
+        android:layout_width="850dp"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -53,7 +22,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_weight="1"
                 android:text="Swap"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textViewTurnLabel"
@@ -64,16 +33,8 @@
                 android:layout_weight="1"
                 android:text="Current Turn: Player 1"
                 android:textColor="@android:color/black"
-                android:textSize="24sp"/>
+                android:textSize="24sp" />
 
-            <Button
-                android:id="@+id/buttonRestartGame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_weight="1"
-                android:text="Restart Game"
-                android:textSize="20sp"/>
         </LinearLayout>
 
         <up.cs301.qwirkle.QwirkleBoard
@@ -88,16 +49,16 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewPlayerTwoLabel"
+            android:id="@+id/textViewPlayerLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Player 2"
+            android:text="Player"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
 
-        <up.cs301.qwirkle.SideBoardRight
-            android:id="@+id/sideBoardRight"
+        <up.cs301.qwirkle.SideBoard
+            android:id="@+id/sideBoard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />

@@ -11,7 +11,7 @@ import android.util.AttributeSet;
  * Inherits from QwirkleView.
  *
  * @author Alex Hadi
- * @version February 20, 2018
+ * @version February 21, 2018
  */
 public class QwirkleBoard extends QwirkleView {
     // Number of rows and columns for the board.
@@ -93,6 +93,9 @@ public class QwirkleBoard extends QwirkleView {
         //Offset needed to center the board.
         int rectDim = canvas.getHeight() / scaleDim;
         int offset = (canvas.getWidth() - (scaleDim*rectDim)) / 2;
+
+        System.out.println(rectDim);
+        System.out.println(offset);
 
         // Sets background color to white.
         canvas.drawColor(Color.WHITE);
