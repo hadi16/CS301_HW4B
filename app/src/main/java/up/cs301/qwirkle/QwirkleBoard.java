@@ -94,9 +94,6 @@ public class QwirkleBoard extends QwirkleView {
         int rectDim = canvas.getHeight() / scaleDim;
         int offset = (canvas.getWidth() - (scaleDim*rectDim)) / 2;
 
-        System.out.println(rectDim);
-        System.out.println(offset);
-
         // Sets background color to white.
         canvas.drawColor(Color.WHITE);
 
