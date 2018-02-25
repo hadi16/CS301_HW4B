@@ -11,14 +11,15 @@ import android.util.AttributeSet;
  * Inherits from QwirkleView.
  *
  * @author Alex Hadi
- * @version February 21, 2018
+ * @version February 24, 2018
  */
 public class QwirkleBoard extends QwirkleView {
     // Number of rows and columns for the board.
-    private static final int scaleDim = 14;
+    private static final int boardWidth = 24;
+    private static final int boardHeight = 16;
 
     // Array for the current state of the board.
-    private QwirkleTile board[][] = new QwirkleTile[scaleDim][scaleDim];
+    private QwirkleTile board[][] = new QwirkleTile[boardWidth][boardHeight];
 
     /**
      * Constructor: QwirkleBoard
@@ -91,15 +92,15 @@ public class QwirkleBoard extends QwirkleView {
     @Override
     public void onDraw(Canvas canvas){
         //Offset needed to center the board.
-        int rectDim = canvas.getHeight() / scaleDim;
-        int offset = (canvas.getWidth() - (scaleDim*rectDim)) / 2;
+        int rectDim = canvas.getHeight() / boardHeight;
+        int offset = (canvas.getWidth() - (boardWidth*rectDim)) / 2;
 
         // Sets background color to white.
         canvas.drawColor(Color.WHITE);
 
         // Draws the board.
-        for (int i = 0; i< scaleDim; i++){
-            for (int j = 0; j< scaleDim; j++){
+        for (int i = 0; i< board.length; i++){
+            for (int j = 0; j< board[i].length; j++){
                 canvas.drawRect(i*rectDim+offset, j*rectDim,
                         (i+1)*rectDim+offset, (j+1)*rectDim, blackPaint);
             }

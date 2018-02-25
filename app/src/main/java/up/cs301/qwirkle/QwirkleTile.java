@@ -8,7 +8,7 @@ import android.graphics.Canvas;
  * This class contains code to draw tiles using given Bitmap and dimensions.
  *
  * @author Alex Hadi
- * @version February 21, 2018
+ * @version February 24, 2018
  */
 class QwirkleTile {
     private Bitmap tile;
@@ -27,8 +27,8 @@ class QwirkleTile {
      * @param qwirkleBitmap The QwirkleBitmap object for the tile.
      */
     QwirkleTile(int xPos, int yPos, QwirkleBitmap qwirkleBitmap) {
-        this.rectDim = 90;
-        this.offset = 78;
+        this.rectDim = 74;
+        this.offset = 2;
 
         this.xPos = xPos;
         this.yPos = yPos;
@@ -46,8 +46,8 @@ class QwirkleTile {
      * @param qwirkleBitmap The QwirkleBitmap object for the tile.
      */
     QwirkleTile(int yPos, QwirkleBitmap qwirkleBitmap) {
-        this.rectDim = 189;
-        this.offset = 75;
+        this.rectDim = 154;
+        this.offset = 36;
 
         this.yPos = yPos;
 

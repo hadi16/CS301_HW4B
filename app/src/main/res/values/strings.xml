@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Qwirkle</string>
-    <string name="scoreboard"><u>Scoreboard</u></string>
-    <string name="turn"><u>Turn</u>\nPlayer 1</string>
+    <string name="scoreboard"><u>Scoreboard</u>\nPlayer 1: 32\nPlayer 2: 24\n
+        Player 3: 33\nPlayer 4: 20</string>
 </resources>

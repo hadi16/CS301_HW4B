@@ -12,7 +12,7 @@ import android.util.AttributeSet;
  *
  * @author Alex Hadi
  * @author Stephanie Camacho
- * @version February 21, 2018
+ * @version February 24, 2018
  */
 public class SideBoard extends QwirkleView {
     // Array used to hold current state of SideBoard.
@@ -89,7 +89,7 @@ public class SideBoard extends QwirkleView {
         canvas.drawColor(Color.WHITE);
 
         // Draws the SideBoard.
-        for (int i = 0; i< numTiles; i++){
+        for (int i = 0; i< sideBoard.length; i++){
             canvas.drawRect(offset, i*rectDim, offset+rectDim, (i+1)*rectDim,
                     blackPaint);
         }

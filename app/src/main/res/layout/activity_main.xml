@@ -5,120 +5,84 @@
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="850dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="5"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textViewTurnLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="@string/turn"
-                    android:textColor="@android:color/black"
-                    android:textSize="24sp"/>
-
-                <Button
-                    android:id="@+id/buttonSwap"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="150dp"
-                    android:layout_marginTop="150dp"
-                    android:text="Swap"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:id="@+id/textViewScoreboardLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/scoreboard"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:id="@+id/textViewPlayerOneScore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Player 1: 32"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:id="@+id/textViewPlayerTwoScore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Player 2: 24"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:id="@+id/textViewPlayerThreeScore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Player 3: 33"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:id="@+id/textViewPlayerFourScore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Player 4: 20"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp"/>
-
-            </LinearLayout>
-
-            <up.cs301.qwirkle.QwirkleBoard
-                android:id="@+id/qwirkleBoard"
+            <TextView
+                android:id="@+id/textViewPlayerLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="My Name: Player 1"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:id="@+id/textViewPlayerScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="My Score: 32"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:id="@+id/textViewTurnLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Current Turn: Player 1"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"/>
+
         </LinearLayout>
 
+        <up.cs301.qwirkle.QwirkleBoard
+            android:id="@+id/qwirkleBoard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="170dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="8"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewPlayerLabel"
+        <Button
+            android:id="@+id/buttonSwap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Player 1"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"/>
+            android:text="Swap"
+            android:textSize="20sp"/>
 
         <up.cs301.qwirkle.SideBoard
             android:id="@+id/sideBoard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="10"/>
 
         <TextView
-            android:id="@+id/textViewPlayerScore"
+            android:id="@+id/textViewScoreboardLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Score: 32"
+            android:text="@string/scoreboard"
             android:textColor="@android:color/black"
-            android:textSize="24sp"/>
+            android:textSize="20sp"/>
 
     </LinearLayout>
+
 </LinearLayout>
