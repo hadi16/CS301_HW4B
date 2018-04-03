@@ -3,7 +3,9 @@ package edu.up.cs301.qwirkle;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.View;
 
 /**
  * Class: QwirkleBoard
@@ -13,13 +15,14 @@ import android.util.AttributeSet;
  * @author Alex Hadi
  * @version February 24, 2018
  */
-public class QwirkleBoard extends QwirkleView {
+public class QwirkleBoard extends View {
     // Number of rows and columns for the board.
-    private static final int boardWidth = 24;
-    private static final int boardHeight = 16;
+    private static final int BOARD_WIDTH = 24;
+    private static final int BOARD_HEIGHT = 16;
+    private Paint blackPaint;
 
     // Array for the current state of the board.
-    private QwirkleTile board[][] = new QwirkleTile[boardWidth][boardHeight];
+    private QwirkleTile board[][] = new QwirkleTile[BOARD_WIDTH][BOARD_HEIGHT];
 
     /**
      * Constructor: QwirkleBoard
@@ -27,7 +30,7 @@ public class QwirkleBoard extends QwirkleView {
      */
     public QwirkleBoard(Context context){
         super(context);
-        addTiles();
+        initPaint();
     }
 
     /**
@@ -37,7 +40,7 @@ public class QwirkleBoard extends QwirkleView {
      */
     public QwirkleBoard(Context context, AttributeSet attrs){
         super(context, attrs);
-        addTiles();
+        initPaint();
     }
 
     /**
@@ -47,7 +50,7 @@ public class QwirkleBoard extends QwirkleView {
      */
     public QwirkleBoard(Context context, AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);
-        addTiles();
+        initPaint();
     }
 
     /**
@@ -58,30 +61,14 @@ public class QwirkleBoard extends QwirkleView {
     public QwirkleBoard(Context context, AttributeSet attrs, int defStyleAttr,
                  int defStyleRes){
         super(context, attrs, defStyleAttr, defStyleRes);
-        addTiles();
+        initPaint();
     }
 
-    /**
-     * Method: addTiles
-     * Adds tiles to the board with the board array.
-     */
-    private void addTiles() {
-        board[3][2] = new QwirkleTile(3, 2, createQwirkleBitmap("dog", "red"));
-        board[3][3] = new QwirkleTile(3, 3, createQwirkleBitmap("dog", "blue"));
-        board[3][4] = new QwirkleTile(3, 4, createQwirkleBitmap("dog", "green"));
-        board[3][5] = new QwirkleTile(3, 5, createQwirkleBitmap("dog", "yellow"));
-        board[2][5] = new QwirkleTile(2, 5, createQwirkleBitmap("bird", "yellow"));
-        board[4][5] = new QwirkleTile(4, 5, createQwirkleBitmap("snake", "yellow"));
-        board[5][5] = new QwirkleTile(5, 5, createQwirkleBitmap("fox", "yellow"));
-        board[6][5] = new QwirkleTile(6, 5, createQwirkleBitmap("owl", "yellow"));
-        board[7][4] = new QwirkleTile(7, 4, createQwirkleBitmap("bat", "orange"));
-        board[7][5] = new QwirkleTile(7, 5, createQwirkleBitmap("bat", "yellow"));
-        board[7][6] = new QwirkleTile(7, 6, createQwirkleBitmap("bat", "blue"));
-        board[7][7] = new QwirkleTile(7, 7, createQwirkleBitmap("bat", "purple"));
-        board[5][6] = new QwirkleTile(5, 6, createQwirkleBitmap("fox", "blue"));
-        board[5][7] = new QwirkleTile(5, 7, createQwirkleBitmap("fox", "green"));
-        board[3][6] = new QwirkleTile(3, 6, createQwirkleBitmap("dog", "orange"));
-        board[3][7] = new QwirkleTile(3, 7, createQwirkleBitmap("dog", "purple"));
+    private void initPaint() {
+        blackPaint = new Paint();
+        blackPaint.setColor(Color.BLACK);
+        blackPaint.setStrokeWidth(3.0f);
+        blackPaint.setStyle(Paint.Style.STROKE);
     }
 
     /**
@@ -92,8 +79,8 @@ public class QwirkleBoard extends QwirkleView {
     @Override
     public void onDraw(Canvas canvas){
         //Offset needed to center the board.
-        int rectDim = canvas.getHeight() / boardHeight;
-        int offset = (canvas.getWidth() - (boardWidth*rectDim)) / 2;
+        int rectDim = canvas.getHeight() /BOARD_HEIGHT;
+        int offset = (canvas.getWidth() - (BOARD_WIDTH*rectDim)) / 2;
 
         // Sets background color to white.
         canvas.drawColor(Color.WHITE);

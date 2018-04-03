@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.View;
 
 /**
  * Class: SideBoard
@@ -14,7 +15,7 @@ import android.util.AttributeSet;
  * @author Stephanie Camacho
  * @version February 24, 2018
  */
-public class SideBoard extends QwirkleView {
+public class SideBoard extends View {
     // Array used to hold current state of SideBoard.
     private QwirkleTile[] sideBoard = new QwirkleTile[numTiles];
 
@@ -27,7 +28,6 @@ public class SideBoard extends QwirkleView {
      */
     public SideBoard(Context context){
         super(context);
-        addTiles();
     }
 
     /**
@@ -37,7 +37,6 @@ public class SideBoard extends QwirkleView {
      */
     public SideBoard(Context context, AttributeSet attrs){
         super(context, attrs);
-        addTiles();
     }
 
     /**
@@ -47,7 +46,6 @@ public class SideBoard extends QwirkleView {
      */
     public SideBoard(Context context, AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);
-        addTiles();
     }
 
     /**
@@ -58,20 +56,6 @@ public class SideBoard extends QwirkleView {
     public SideBoard(Context context, AttributeSet attrs, int defStyleAttr,
                      int defStyleRes){
         super(context, attrs, defStyleAttr, defStyleRes);
-        addTiles();
-    }
-
-    /**
-     * Method: addTiles
-     * Tiles are added to right SideBoard using array.
-     */
-    private void addTiles() {
-        sideBoard[0] = new QwirkleTile(0, createQwirkleBitmap("owl", "green"));
-        sideBoard[1] = new QwirkleTile(1, createQwirkleBitmap("snake", "purple"));
-        sideBoard[2] = new QwirkleTile(2, createQwirkleBitmap("bird", "blue"));
-        sideBoard[3] = new QwirkleTile(3, createQwirkleBitmap("fox", "red"));
-        sideBoard[4] = new QwirkleTile(4, createQwirkleBitmap("owl", "red"));
-        sideBoard[5] = new QwirkleTile(5, createQwirkleBitmap("bat", "orange"));
     }
 
     /**
