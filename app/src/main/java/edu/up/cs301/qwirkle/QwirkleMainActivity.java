@@ -41,7 +41,7 @@ public class QwirkleMainActivity extends GameMainActivity {
                 return new QwirkleComputerPlayerSmart(name);
             }});
 
-        // Create a game configuration class for Qwirkle:
+        // Create a game configuration class for Qwirkle
         // - player types as given above
         // - from 1 to 2 players
         // - name of game is "Qwirkle"
