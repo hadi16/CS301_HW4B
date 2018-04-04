@@ -3,23 +3,41 @@ package edu.up.cs301.qwirkle;
 import java.util.ArrayList;
 
 import edu.up.cs301.game.infoMsg.GameState;
+import edu.up.cs301.qwirkle.tile.Tile;
 
 /**
  * Created by Alex Hadi on 4/1/2018.
  */
 
-public class QwirkleState extends GameState {
+public class QwirkleGameState extends GameState {
+    private int turn;
+    private int numPlayers;
+    private ArrayList<Tile> drawPile = new ArrayList<>();
+
     // Number of rows and columns for the board.
     private static final int BOARD_WIDTH = 24;
     private static final int BOARD_HEIGHT = 16;
 
-    // Array for the current state of the board.
-    private QwirkleTile board[][] = new QwirkleTile[BOARD_WIDTH][BOARD_HEIGHT];
+    // The number of tiles a player can have in their hand is 6
+    private static final int HAND_NUM = 6;
 
-    private boolean match(QwirkleTile tile1, QwirkleTile tile2) {
+    // Array for the current state of the board.
+    private Tile board[][] = new Tile[BOARD_WIDTH][BOARD_HEIGHT];
+
+    // Array for the player hands.
+    private Tile playerHands[][];
+
+    // Array to store each player's score (index corresponds to playerId).
+    private int[] playerScores;
+
+    public QwirkleGameState() {
+
+    }
+
+    private boolean match(Tile tile1, Tile tile2) {
         // XOR operator (or, but not both)
-        return tile1.getAnimal().equals(tile2.getAnimal()) ^
-                tile1.getColor().equals(tile2.getColor());
+        return tile1.getQAnimal().equals(tile2.getQAnimal()) ^
+                tile1.getQColor().equals(tile2.getQColor());
     }
 
     private boolean matchAdj(int x, int y, String dir) {
@@ -27,11 +45,11 @@ public class QwirkleState extends GameState {
         if (!(x>=0 && y>=0 && x<BOARD_WIDTH && y<BOARD_HEIGHT)) return false;
 
         // Step 2: Get tile1 at x, y (return false if not found)
-        QwirkleTile tile1 = board[x][y];
+        Tile tile1 = board[x][y];
         if (tile1 == null) return false;
 
         // Step 3: Get tile2 one step in dir (return false if not found)
-        QwirkleTile tile2 = null;
+        Tile tile2 = null;
         if (dir.equals("E") && (x+1) < BOARD_WIDTH) {
             tile2 = board[x+1][y];
         } else if (dir.equals("W") && (x-1) >= 0) {
@@ -47,7 +65,7 @@ public class QwirkleState extends GameState {
         return match(tile1, tile2);
     }
 
-    private void addAdj(int x, int y, ArrayList<QwirkleTile> line, String dir) {
+    private void addAdj(int x, int y, ArrayList<Tile> line, String dir) {
         int currentX = x;
         int currentY = y;
         while (matchAdj(currentX, currentY, dir)) {
@@ -69,7 +87,7 @@ public class QwirkleState extends GameState {
         }
     }
 
-    private boolean isValidLine(ArrayList<QwirkleTile> line) {
+    private boolean isValidLine(ArrayList<Tile> line) {
         for (int i=0; i<line.size(); ++i) {
             for (int j=0; j<line.size(); ++j) {
                 if (!(match(line.get(i), line.get(j)))) return false;
@@ -78,23 +96,23 @@ public class QwirkleState extends GameState {
         return true;
     }
 
-    public boolean validMoveAlgorithm(int x, int y, QwirkleTile tile, QwirkleTile[][] board) {
+    public boolean validMoveAlgorithm(int x, int y, Tile tile, Tile[][] board) {
         // Step 1: Check to see that x,y is empty spot on board
         if (board[x][y] != null) return false;
 
         // Step 2: If entire board is empty, then return true (any placement is ok)
         boolean empty = true;
-        for (QwirkleTile[] tileArr : board) {
-            for (QwirkleTile t : tileArr) {
+        for (Tile[] tileArr : board) {
+            for (Tile t : tileArr) {
                 if (t != null) empty = false;
             }
         }
         if (empty) return true;
 
         // Step 3: Create lineEW & lineNS, then add tile at x,y to lineEW & lineNS
-        ArrayList<QwirkleTile> lineEW = new ArrayList<>();
+        ArrayList<Tile> lineEW = new ArrayList<>();
         lineEW.add(board[x][y]);
-        ArrayList<QwirkleTile> lineNS = new ArrayList<>();
+        ArrayList<Tile> lineNS = new ArrayList<>();
         lineNS.add(board[x][y]);
 
         // Step 4: Find the tiles in line that tile is being added to
@@ -114,5 +132,9 @@ public class QwirkleState extends GameState {
 
         // If all checks passed, then it must be a valid move.
         return true;
+    }
+
+    public int getTurn() {
+        return turn;
     }
 }

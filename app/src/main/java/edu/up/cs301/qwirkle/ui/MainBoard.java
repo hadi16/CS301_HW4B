@@ -1,4 +1,4 @@
-package edu.up.cs301.qwirkle;
+package edu.up.cs301.qwirkle.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,28 +7,32 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import edu.up.cs301.qwirkle.tile.Tile;
+
 /**
- * Class: QwirkleBoard
+ * Class: MainBoard
  * This class contains the code to draw the main Qwirkle board.
- * Inherits from QwirkleView.
  *
  * @author Alex Hadi
- * @version February 24, 2018
+ * @author Stephanie Camacho
+ * @author Michael Quach
+ * @author Huy Nguyen
+ * @version April 3, 2018
  */
-public class QwirkleBoard extends View {
+public class MainBoard extends View {
     // Number of rows and columns for the board.
     private static final int BOARD_WIDTH = 24;
     private static final int BOARD_HEIGHT = 16;
     private Paint blackPaint;
 
     // Array for the current state of the board.
-    private QwirkleTile board[][] = new QwirkleTile[BOARD_WIDTH][BOARD_HEIGHT];
+    private Tile board[][] = new Tile[BOARD_WIDTH][BOARD_HEIGHT];
 
     /**
      * Constructor: QwirkleBoard
      * @param context Object holds the current context of the view.
      */
-    public QwirkleBoard(Context context){
+    public MainBoard(Context context){
         super(context);
         initPaint();
     }
@@ -38,7 +42,7 @@ public class QwirkleBoard extends View {
      * @param context Object holds the current context of the view.
      * @param attrs Object holds the attributes for the view.
      */
-    public QwirkleBoard(Context context, AttributeSet attrs){
+    public MainBoard(Context context, AttributeSet attrs){
         super(context, attrs);
         initPaint();
     }
@@ -48,7 +52,7 @@ public class QwirkleBoard extends View {
      * @param context Object holds the current context of the view.
      * @param attrs Object holds the attributes for the view.
      */
-    public QwirkleBoard(Context context, AttributeSet attrs, int defStyleAttr){
+    public MainBoard(Context context, AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);
         initPaint();
     }
@@ -58,8 +62,8 @@ public class QwirkleBoard extends View {
      * @param context Object holds the current context of the view.
      * @param attrs Object holds the attributes for the view.
      */
-    public QwirkleBoard(Context context, AttributeSet attrs, int defStyleAttr,
-                 int defStyleRes){
+    public MainBoard(Context context, AttributeSet attrs, int defStyleAttr,
+                     int defStyleRes){
         super(context, attrs, defStyleAttr, defStyleRes);
         initPaint();
     }
@@ -94,8 +98,8 @@ public class QwirkleBoard extends View {
         }
 
         // Draws the tiles.
-        for (QwirkleTile[] x : board) {
-            for (QwirkleTile tile : x) {
+        for (Tile[] x : board) {
+            for (Tile tile : x) {
                 if (tile != null) tile.drawTile(canvas);
             }
         }

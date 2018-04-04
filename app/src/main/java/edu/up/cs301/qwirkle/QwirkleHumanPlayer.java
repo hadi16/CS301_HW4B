@@ -13,7 +13,7 @@ import edu.up.cs301.game.infoMsg.GameInfo;
 
 public class QwirkleHumanPlayer extends GameHumanPlayer {
     private GameMainActivity activity;
-    private QwirkleState state;
+    private QwirkleGameState state;
 
     /**
      * Constructor: QwirkleHumanPlayer
@@ -39,8 +39,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer {
 
     @Override
     public void receiveInfo(GameInfo info) {
-        if (!(info instanceof QwirkleState)) return;
+        if (!(info instanceof QwirkleGameState)) return;
 
-        this.state = (QwirkleState)info;
+        this.state = (QwirkleGameState)info;
     }
 }
