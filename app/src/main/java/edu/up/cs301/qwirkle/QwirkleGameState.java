@@ -42,10 +42,7 @@ public class QwirkleGameState extends GameState {
     public int getTurn() {
         return turn;
     }
-
-    public int getNumPlayers() {
-        return numPlayers;
-    }
+    
 
     public int getHandNum() {
         return HAND_NUM;
