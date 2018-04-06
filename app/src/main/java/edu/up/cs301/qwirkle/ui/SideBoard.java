@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import edu.up.cs301.qwirkle.tile.Tile;
+import edu.up.cs301.qwirkle.tile.QwirkleTile;
 
 /**
  * Class: SideBoard
@@ -21,7 +21,7 @@ import edu.up.cs301.qwirkle.tile.Tile;
  */
 public class SideBoard extends View {
     // Array used to hold current state of SideBoard.
-    private Tile[] sideBoard = new Tile[numTiles];
+    private QwirkleTile[] sideBoard = new QwirkleTile[numTiles];
     private Paint blackPaint;
 
     // Controls how many tiles are in each SideBoard.
@@ -95,7 +95,7 @@ public class SideBoard extends View {
         }
 
         // Tiles are drawn.
-        for (Tile tile : sideBoard) {
+        for (QwirkleTile tile : sideBoard) {
             if (tile != null) tile.drawTile(canvas);
         }
     }

@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import edu.up.cs301.qwirkle.tile.Tile;
+import edu.up.cs301.qwirkle.tile.QwirkleTile;
 
 /**
  * Class: MainBoard
@@ -26,7 +26,7 @@ public class MainBoard extends View {
     private Paint blackPaint;
 
     // Array for the current state of the board.
-    private Tile board[][] = new Tile[BOARD_WIDTH][BOARD_HEIGHT];
+    private QwirkleTile board[][] = new QwirkleTile[BOARD_WIDTH][BOARD_HEIGHT];
 
     /**
      * Constructor: QwirkleBoard
@@ -98,8 +98,8 @@ public class MainBoard extends View {
         }
 
         // Draws the tiles.
-        for (Tile[] x : board) {
-            for (Tile tile : x) {
+        for (QwirkleTile[] x : board) {
+            for (QwirkleTile tile : x) {
                 if (tile != null) tile.drawTile(canvas);
             }
         }

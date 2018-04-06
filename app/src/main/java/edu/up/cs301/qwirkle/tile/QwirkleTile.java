@@ -9,24 +9,24 @@ import android.util.Log;
 import java.util.Hashtable;
 
 /**
- * Class: Tile
+ * Class: QwirkleTile
  * This class contains code to draw tiles using given Bitmap and dimensions.
  *
  * @author Alex Hadi
  * @author Stephanie Camacho
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 3, 2018
+ * @version April 5, 2018
  */
-public class Tile {
+public class QwirkleTile {
     // Hashtable for all Bitmaps
     private static Hashtable<String, Bitmap> tileImages = null;
 
     private Bitmap bitmap;
     private int xPos;
     private int yPos;
-    private QAnimal qAnimal;
-    private QColor qColor;
+    private QwirkleAnimal qwirkleAnimal;
+    private QwirkleColor qwirkleColor;
 
     // Boolean to see if tile belongs to main board (true) or side board (false)
     private boolean mainBoard;
@@ -38,38 +38,38 @@ public class Tile {
     private static final int OFFSET_SIDE = 36;
 
     /**
-     * Constructor: Tile
+     * Constructor: QwirkleTile
      * Used for the main board.
      * @param xPos The x position of the bitmap.
      * @param yPos The y position of the bitmap.
-     * @param animal The QAnimal for the bitmap.
-     * @param color The QColor for the bitmap.
+     * @param animal The QwirkleAnimal for the bitmap.
+     * @param color The QwirkleColor for the bitmap.
      */
-    public Tile(int xPos, int yPos, QAnimal animal, QColor color) {
+    public QwirkleTile(int xPos, int yPos, QwirkleAnimal animal, QwirkleColor color) {
         this.mainBoard = true;
         this.xPos = xPos;
         this.yPos = yPos;
-        this.qAnimal = animal;
-        this.qColor = color;
+        this.qwirkleAnimal = animal;
+        this.qwirkleColor = color;
     }
 
     /**
-     * Constructor: Tile
+     * Constructor: QwirkleTile
      * Used for the SideBoards.
      * @param yPos The y position of the bitmap.
-     * @param animal The QAnimal for the bitmap.
-     * @param color The QColor for the bitmap.
+     * @param animal The QwirkleAnimal for the bitmap.
+     * @param color The QwirkleColor for the bitmap.
      */
-    public Tile(int yPos, QAnimal animal, QColor color) {
+    public QwirkleTile(int yPos, QwirkleAnimal animal, QwirkleColor color) {
         this.mainBoard = false;
         this.yPos = yPos;
-        this.qAnimal = animal;
-        this.qColor = color;
+        this.qwirkleAnimal = animal;
+        this.qwirkleColor = color;
     }
 
     @Override
     public String toString() {
-        return qAnimal.longName()+"_"+qColor.longName();
+        return qwirkleAnimal.longName()+"_"+qwirkleColor.longName();
     }
 
     /*
@@ -88,11 +88,11 @@ public class Tile {
      */
     @Override
     public boolean equals(Object o) {
-        // Check to make sure it is a Tile.
-        if (o instanceof Tile) {
-            // Cast object as Tile
-            Tile tile = (Tile)o;
-            return this.qAnimal.equals(tile.qAnimal) && this.qColor.equals(tile.qColor);
+        // Check to make sure it is a QwirkleTile.
+        if (o instanceof QwirkleTile) {
+            // Cast object as QwirkleTile
+            QwirkleTile tile = (QwirkleTile)o;
+            return this.qwirkleAnimal.equals(tile.qwirkleAnimal) && this.qwirkleColor.equals(tile.qwirkleColor);
         }
         return false;
     }
@@ -102,8 +102,8 @@ public class Tile {
 
         tileImages = new Hashtable<>();
         // Iterate over all QwirkleAnimals and QwirkleColors.
-        for (QAnimal animal: QAnimal.values()) {
-            for (QColor color: QColor.values()) {
+        for (QwirkleAnimal animal: QwirkleAnimal.values()) {
+            for (QwirkleColor color: QwirkleColor.values()) {
                 String idName = animal.toString()+"_"+color.toString();
                 /*
                 External Citation
@@ -143,10 +143,10 @@ public class Tile {
         }
     }
 
-    public QAnimal getQAnimal() {
-        return qAnimal;
+    public QwirkleAnimal getQAnimal() {
+        return qwirkleAnimal;
     }
-    public QColor getQColor() {
-        return qColor;
+    public QwirkleColor getQColor() {
+        return qwirkleColor;
     }
 }

@@ -1,15 +1,15 @@
 package edu.up.cs301.qwirkle.tile;
 
 /**
- * Enum: QAnimal
+ * Enum: QwirkleAnimal
  *
  * @author Alex Hadi
  * @author Stephanie Camacho
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 3, 2018
+ * @version April 5, 2018
  */
-public enum QAnimal {
+public enum QwirkleAnimal {
     bat, dog, fox, owl, parrot, snake;
 
     public char shortName() {
