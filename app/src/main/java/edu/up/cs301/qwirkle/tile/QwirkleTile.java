@@ -143,10 +143,19 @@ public class QwirkleTile {
         }
     }
 
-    public QwirkleAnimal getQAnimal() {
+    public int getxPos() {
+        return xPos;
+    }
+
+    public int getyPos() {
+        return yPos;
+    }
+
+    public QwirkleAnimal getQwirkleAnimal() {
         return qwirkleAnimal;
     }
-    public QwirkleColor getQColor() {
+
+    public QwirkleColor getQwirkleColor() {
         return qwirkleColor;
     }
 }

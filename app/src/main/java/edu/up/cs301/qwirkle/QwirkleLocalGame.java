@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.LocalGame;
 import edu.up.cs301.game.actionMsg.GameAction;
+import edu.up.cs301.qwirkle.action.PlaceTileAction;
+import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 
 /**
@@ -18,29 +20,60 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 5, 2018
  */
 public class QwirkleLocalGame extends LocalGame {
+    private QwirkleGameState gameState;
+
+    public QwirkleLocalGame() {
+        this.gameState = new QwirkleGameState();
+    }
+
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
     }
 
     @Override
     protected boolean canMove(int playerIdx) {
-        return false;
+        return gameState.getTurn() == playerIdx;
     }
 
     @Override
     protected String checkIfGameOver() {
+        if (gameState.hasTilesInPile()) return null;
+        if (validMovesExist()) return null;
         return null;
     }
 
     @Override
     protected boolean makeMove(GameAction action) {
-        return false;
+        if (action instanceof PlaceTileAction) {
+            PlaceTileAction pta = (PlaceTileAction) action;
+            return true;
+        }
+        else if (action instanceof SwapTileAction) {
+            SwapTileAction sta = (SwapTileAction) action;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean validMovesExist() {
+        for (int playerId=0; playerId<gameState.getNumPlayers(); ++playerId) {
+            QwirkleTile[] playerHand = gameState.getPlayerHands()[playerId];
+            for (QwirkleTile tileInHand : playerHand) {
+                for (QwirkleTile[] tiles : gameState.getBoard()) {
+                    for (QwirkleTile tile : tiles) {
+                        if (isValidMove(tile.getxPos(), tile.getyPos(), tile, gameState.getBoard()));
+                    }
+                }
+            }
+        }
     }
 
     private boolean match(QwirkleTile tile1, QwirkleTile tile2) {
         // XOR operator (or, but not both)
-        return tile1.getQAnimal().equals(tile2.getQAnimal()) ^
-                tile1.getQColor().equals(tile2.getQColor());
+        return tile1.getQwirkleAnimal().equals(tile2.getQwirkleAnimal()) ^
+                tile1.getQwirkleColor().equals(tile2.getQwirkleColor());
     }
 
     private boolean matchAdj(int x, int y, String dir, QwirkleTile[][] board) {
@@ -103,7 +136,7 @@ public class QwirkleLocalGame extends LocalGame {
         return true;
     }
 
-    public boolean isValidMove(int x, int y, QwirkleTile tile, QwirkleTile[][] board) {
+    private boolean isValidMove(int x, int y, QwirkleTile tile, QwirkleTile[][] board) {
         // Step 1: Check to see that x,y is empty spot on board
         if (board[x][y] != null) return false;
 

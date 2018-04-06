@@ -34,7 +34,19 @@ public class QwirkleGameState extends GameState {
 
     }
 
+    public boolean hasTilesInPile() {
+        return drawPile.size() > 0;
+    }
     public int getTurn() {
         return turn;
+    }
+    public int getNumPlayers() {
+        return numPlayers;
+    }
+    public QwirkleTile[][] getPlayerHands() {
+        return playerHands;
+    }
+    public QwirkleTile[][] getBoard() {
+        return board;
     }
 }
