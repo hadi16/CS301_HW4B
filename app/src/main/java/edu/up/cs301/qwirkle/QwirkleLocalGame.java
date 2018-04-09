@@ -23,7 +23,7 @@ public class QwirkleLocalGame extends LocalGame {
     private QwirkleGameState gameState;
 
     public QwirkleLocalGame() {
-        this.gameState = new QwirkleGameState();
+        this.gameState = new QwirkleGameState(gameState);
     }
 
     @Override
@@ -63,11 +63,14 @@ public class QwirkleLocalGame extends LocalGame {
             for (QwirkleTile tileInHand : playerHand) {
                 for (QwirkleTile[] tiles : gameState.getBoard()) {
                     for (QwirkleTile tile : tiles) {
-                        if (isValidMove(tile.getxPos(), tile.getyPos(), tile, gameState.getBoard()));
+                        if (isValidMove(tile.getxPos(), tile.getyPos(), tile, gameState.getBoard())) {
+                            return true;
+                        }
                     }
                 }
             }
         }
+        return false;
     }
 
     private boolean match(QwirkleTile tile1, QwirkleTile tile2) {
@@ -136,7 +139,7 @@ public class QwirkleLocalGame extends LocalGame {
         return true;
     }
 
-    private boolean isValidMove(int x, int y, QwirkleTile tile, QwirkleTile[][] board) {
+    public boolean isValidMove(int x, int y, QwirkleTile tile, QwirkleTile[][] board) {
         // Step 1: Check to see that x,y is empty spot on board
         if (board[x][y] != null) return false;
 
