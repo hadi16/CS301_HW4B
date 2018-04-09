@@ -33,28 +33,40 @@ public class QwirkleGameState extends GameState {
     public QwirkleGameState(QwirkleGameState orig) {
         turn = orig.getTurn();
         numPlayers = orig.getNumPlayers();
-        HAND_NUM = orig.getHandNum();
+        board = orig.getBoard();
+        playerHands = orig.getPlayerHands();
+        playerScores = orig.getPlayerScores();
     }
 
     public boolean hasTilesInPile() {
         return drawPile.size() > 0;
     }
+
     public int getTurn() {
         return turn;
-    }
-    
-
-    public int getHandNum() {
-        return HAND_NUM;
     }
 
     public int getNumPlayers() {
         return numPlayers;
     }
+
+    public ArrayList<QwirkleTile> getDrawPile() {
+        return drawPile;
+    }
+
+    public int getHandNum() {
+        return HAND_NUM;
+    }
+
     public QwirkleTile[][] getPlayerHands() {
         return playerHands;
     }
+
     public QwirkleTile[][] getBoard() {
         return board;
+    }
+
+    public int[] getPlayerScores() {
+        return playerScores;
     }
 }
