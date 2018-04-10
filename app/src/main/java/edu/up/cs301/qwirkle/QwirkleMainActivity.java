@@ -70,4 +70,6 @@ public class QwirkleMainActivity extends GameMainActivity {
     public LocalGame createLocalGame() {
         return new QwirkleLocalGame();
     }
+
+
 }
