@@ -19,7 +19,7 @@ public class PlaceTileAction extends GameAction {
     private int xPos;
     private int yPos;
 
-    /*public PlaceTileAction(GamePlayer player, QwirkleTile playerHands, int xPos, int yPos) {
+    public PlaceTileAction(GamePlayer player, QwirkleTile playerHands, int xPos, int yPos) {
         super(player);
     }
 
@@ -33,6 +33,6 @@ public class PlaceTileAction extends GameAction {
 
     public int getyPos() {
         return yPos;
-    }*/
+    }
 }
 
