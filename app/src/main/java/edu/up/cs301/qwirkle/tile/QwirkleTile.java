@@ -24,7 +24,6 @@ public class QwirkleTile {
     // Hashtable for all Bitmaps
     private static Hashtable<String, Bitmap> tileImages = null;
 
-    private Bitmap bitmap;
     private int xPos;
     private int yPos;
     private QwirkleAnimal qwirkleAnimal;
@@ -140,6 +139,15 @@ public class QwirkleTile {
      * @param canvas Canvas object to allow the bitmap to be drawn.
      */
     public void drawTile(Canvas canvas) {
+        Bitmap bitmap = tileImages.get(qwirkleAnimal+"_"+qwirkleColor);
+        if (bitmap == null) return;
+        if (mainBoard) {
+            bitmap = Bitmap.createScaledBitmap(bitmap, RECTDIM_MAIN, RECTDIM_MAIN, false);
+        }
+        else {
+            bitmap = Bitmap.createScaledBitmap(bitmap, RECTDIM_SIDE, RECTDIM_SIDE, false);
+        }
+
         // No paint needed to draw the bitmap.
         if (mainBoard) {
             canvas.drawBitmap(bitmap, xPos*RECTDIM_MAIN+OFFSET_MAIN,
