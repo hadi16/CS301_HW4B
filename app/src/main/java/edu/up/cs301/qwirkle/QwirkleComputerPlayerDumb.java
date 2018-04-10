@@ -6,6 +6,7 @@ import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
+import edu.up.cs301.qwirkle.ui.SideBoard;
 
 /**
  * Class: QwirkleComputerPlayerDumb
@@ -19,10 +20,10 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
 public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     //Instance variables
     private QwirkleGameState gameState;
-    private QwirkleLocalGame localGame;
-    private QwirkleTile[] playerHand;
-    private int playerScore;
+    private QwirkleTile[] myPlayerHand;
     private QwirkleTile[][] board;
+    private GamePlayer thePlayer;
+    private int myPlayerScore;
     private boolean myTurn;
 
     public QwirkleComputerPlayerDumb(String name) {
@@ -31,15 +32,17 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
 
     @Override
     protected void receiveInfo(GameInfo info) {
-        //Check if it's the correct instance of the game
         if (!(info instanceof QwirkleGameState)) return;
-        //Get the current game state
-        gameState = (QwirkleGameState)info;
-        //Check for the player's turn
+
+        this.gameState = (QwirkleGameState)info;
         if (gameState.getTurn() != this.playerNum) return;
-        //Play a random move
+
+        this.thePlayer = (GamePlayer)info;
+        this.myTurn = true;
+        this.board = gameState.getBoard();
+        this.myPlayerHand = gameState.getMyPlayerHand();
+
         playRandomMove();
-        PlaceTileAction action = new PlaceTileAction((GamePlayer)info);
     }
 
     private void playRandomMove(){
@@ -48,15 +51,17 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
 
         //Check each tile in the hand to the whole board to see if there's a valid move
         //Iterate through each tile in the player's hand
-        for (int i = 0; i < 6; i++){
+        for (int i = 0; i < QwirkleGameState.HAND_NUM; i++){
             //Iterate through all x position
             for(int x = 0; x < MainBoard.BOARD_WIDTH; x++){
                 //Iterate through all y position
                 for(int y = 0; y < MainBoard.BOARD_HEIGHT; y++){
-                    if(localGame.isValidMove(x,y, playerHand[i], board)) {
-                        //Place tile
-                        //Update the score
-                        return;
+                    PlaceTileAction action = new PlaceTileAction(thePlayer, x, y, i);
+                    game.sendAction(action);
+
+                    // End once the turn is changed.
+                    if (gameState.getTurn() != playerNum) {
+                        break;
                     }
                 }
             }

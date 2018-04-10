@@ -24,7 +24,7 @@ public class QwirkleGameState extends GameState {
     private ArrayList<QwirkleTile> drawPile = new ArrayList<>();
 
     // The number of tiles a player can have in their hand is 6
-    private static final int HAND_NUM = 6;
+    public static final int HAND_NUM = 6;
 
     // Array for the current state of the board.
     private QwirkleTile board[][] = new QwirkleTile[MainBoard.BOARD_WIDTH]
@@ -93,7 +93,7 @@ public class QwirkleGameState extends GameState {
         }
     }
 
-    private QwirkleTile getRandomTile() {
+    public QwirkleTile getRandomTile() {
         if (drawPile.size() == 0) {
             return null;
         }
@@ -102,6 +102,15 @@ public class QwirkleGameState extends GameState {
         QwirkleTile tile = drawPile.get(i);
         drawPile.remove(i);
         return tile;
+    }
+
+    public void changeTurn() {
+        if (turn == numPlayers-1) {
+            turn = 0;
+        }
+        else {
+            turn++;
+        }
     }
 
     public boolean hasTilesInPile() {
@@ -126,5 +135,13 @@ public class QwirkleGameState extends GameState {
     }
     public QwirkleTile[] getMyPlayerHand() {
         return myPlayerHand;
+    }
+
+    public void setBoardAtIdx(int x, int y, QwirkleTile tile) {
+        board[x][y] = tile;
+    }
+
+    public void setPlayerHandsAtIdx(int playerIdx, int handIdx, QwirkleTile tile) {
+        playerHands[playerIdx][handIdx] = tile;
     }
 }

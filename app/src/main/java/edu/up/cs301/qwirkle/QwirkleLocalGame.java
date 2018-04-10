@@ -2,6 +2,7 @@ package edu.up.cs301.qwirkle;
 
 import java.util.ArrayList;
 
+import edu.up.cs301.game.Game;
 import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.LocalGame;
 import edu.up.cs301.game.actionMsg.GameAction;
@@ -47,9 +48,35 @@ public class QwirkleLocalGame extends LocalGame {
     protected boolean makeMove(GameAction action) {
         if (action instanceof PlaceTileAction) {
             PlaceTileAction pta = (PlaceTileAction) action;
+            int x = pta.getxPos();
+            int y = pta.getyPos();
+            int handIdx = pta.getHandIdx();
+
+            QwirkleTile[][] playerHands = gameState.getPlayerHands();
+            int playerIdx = getPlayerIdx((GamePlayer)action);
+            QwirkleTile tile = playerHands[playerIdx][handIdx];
+
+            if (!isValidMove(x, y, tile, gameState.getBoard())) {
+                return false;
+            }
+
+            gameState.setBoardAtIdx(x, y, tile);
+
+            QwirkleTile newTile;
+            if (gameState.hasTilesInPile()) {
+                newTile = gameState.getRandomTile();
+            }
+            else {
+                newTile = null;
+            }
+
+            gameState.setPlayerHandsAtIdx(playerIdx, handIdx, newTile);
+            gameState.changeTurn();
+
             return true;
         }
         else if (action instanceof SwapTileAction) {
+            // TODO: Add swap
             SwapTileAction sta = (SwapTileAction) action;
             return true;
         }
@@ -58,7 +85,7 @@ public class QwirkleLocalGame extends LocalGame {
         }
     }
 
-    public boolean validMovesExist() {
+    private boolean validMovesExist() {
         for (int playerId=0; playerId<gameState.getNumPlayers(); ++playerId) {
             QwirkleTile[] playerHand = gameState.getPlayerHands()[playerId];
             for (QwirkleTile tileInHand : playerHand) {
@@ -141,7 +168,7 @@ public class QwirkleLocalGame extends LocalGame {
         return true;
     }
 
-    public boolean isValidMove(int x, int y, QwirkleTile tile,
+    private boolean isValidMove(int x, int y, QwirkleTile tile,
                                QwirkleTile[][] board) {
         // Step 1: Check to see that x,y is empty spot on board
         if (board[x][y] != null) return false;
