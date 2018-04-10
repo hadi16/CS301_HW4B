@@ -8,6 +8,8 @@ import android.util.Log;
 
 import java.util.Hashtable;
 
+import edu.up.cs301.game.R;
+
 /**
  * Class: QwirkleTile
  * This class contains code to draw tiles using given Bitmap and dimensions.
@@ -124,8 +126,7 @@ public class QwirkleTile {
                 Used the getIdentifier method with the getPackage method.
                  */
                 int id = activity.getResources().getIdentifier(idName, "drawable",
-                        activity.getClass().getPackage().getName());
-                Log.i("initBitmaps", Integer.toString(id));
+                        activity.getPackageName());
                 Bitmap bitmap = BitmapFactory.decodeResource(activity.getResources(), id);
                 // Add id and bitmap to hash table.
                 if (bitmap != null) tileImages.put(idName, bitmap);

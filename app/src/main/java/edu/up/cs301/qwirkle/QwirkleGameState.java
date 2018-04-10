@@ -120,7 +120,6 @@ public class QwirkleGameState extends GameState {
     public QwirkleTile[][] getBoard() {
         return board;
     }
-
     public QwirkleTile[] getMyPlayerHand() {
         return myPlayerHand;
     }
