@@ -1,7 +1,10 @@
 package edu.up.cs301.qwirkle;
 
+import android.graphics.Color;
+import android.graphics.Point;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,6 +16,7 @@ import edu.up.cs301.game.GameMainActivity;
 import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.GameState;
+import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
 import edu.up.cs301.qwirkle.ui.SideBoard;
@@ -89,7 +93,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (event.getAction() != MotionEvent.ACTION_UP) {
+        if (event.getAction() != MotionEvent.ACTION_DOWN) {
             return true;
         }
 
@@ -100,12 +104,19 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
         Log.i("Y-position", Integer.toString(y));
 
         for (int i = 0; i < 6; i++) {
-            if (x > state.getMyPlayerHand()[i].getxPos() && x < state.getMyPlayerHand()[i].getxPos() + ) {
+            if (x > state.getMyPlayerHand()[i].getxPos() && x < state.getMyPlayerHand()[i].getxPos()
+            && y > state.getMyPlayerHand()[i].getyPos() && y < state.getMyPlayerHand()[i].getyPos()) {
                 selectTile(state.getMyPlayerHand()[i]);
+                game.sendAction((new PlaceTileAction(this, x, y, i)));
+            }
+            else {
+                break;
             }
         }
 
+        for (int i = 0; i < QwirkleGameState.HAND_NUM)
 
+        QwirkleTile(state.getMyPlayerHand()[i].getxPos(), state.getMyPlayerHand()[i].getyPos(), );
 
         if (v.getId() == R.id.mainBoard) {
             return true;
@@ -113,6 +124,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
         else if (v.getId() == R.id.sideBoard) {
             return true;
         }
+
         return true;
     }
 
