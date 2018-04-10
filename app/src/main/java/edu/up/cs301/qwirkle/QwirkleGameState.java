@@ -33,11 +33,14 @@ public class QwirkleGameState extends GameState {
     public QwirkleGameState() {
         this.turn = 0;
         this.numPlayers = 1;
-        this.playerScores[0] = 0;
-        this.playerScores[1] = 0;
+        this.playerHands = new QwirkleTile[numPlayers][HAND_NUM];
+        this.playerScores = new int[numPlayers];
+        for (int i = 0; i < playerScores.length; i++) {
+            playerScores[i] = 0;
+        }
         for (int i=0; i<numPlayers; i++) {
             for (int j=0; j<HAND_NUM; j++) {
-                playerHands[i][j] = drawPile.get((int) Math.random()*36);
+              //  playerHands[i][j] = drawPile.get((int) Math.random()*36);
             }
         }
     }

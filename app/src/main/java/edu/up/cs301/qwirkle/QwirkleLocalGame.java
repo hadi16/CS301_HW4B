@@ -23,7 +23,7 @@ public class QwirkleLocalGame extends LocalGame {
     private QwirkleGameState gameState;
 
     public QwirkleLocalGame() {
-    this.gameState = new QwirkleGameState(gameState);
+        this.gameState = new QwirkleGameState();
     }
 
     @Override
