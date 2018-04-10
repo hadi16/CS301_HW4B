@@ -37,6 +37,11 @@ public class QwirkleTile {
     private static final int OFFSET_MAIN = 2;
     private static final int OFFSET_SIDE = 36;
 
+    public QwirkleTile(QwirkleAnimal animal, QwirkleColor color) {
+        this.qwirkleAnimal = animal;
+        this.qwirkleColor = color;
+    }
+
     /**
      * Constructor: QwirkleTile
      * Used for the main board.
