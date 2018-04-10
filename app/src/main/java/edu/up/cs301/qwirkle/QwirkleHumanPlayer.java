@@ -1,7 +1,10 @@
 package edu.up.cs301.qwirkle;
 
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+
+import java.util.List;
 
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
@@ -44,8 +47,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer {
 
         activity.setContentView(R.layout.qwirkle_human_player);
 
+        Listeners listeners = new Listeners();
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
+        mainBoard.setOnTouchListener(listeners);
         sideBoard = (SideBoard)activity.findViewById(R.id.sideBoard);
     }
 
@@ -59,5 +64,21 @@ public class QwirkleHumanPlayer extends GameHumanPlayer {
         if (!(info instanceof QwirkleGameState)) return;
 
         this.state = (QwirkleGameState)info;
+    }
+
+    private class Listeners implements View.OnTouchListener {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            int x = (int)event.getX();
+            int y = (int)event.getY();
+
+            if (v.getId() == R.id.mainBoard) {
+                return true;
+            }
+            else if (v.getId() == R.id.sideBoard) {
+                return true;
+            }
+            return false;
+        }
     }
 }

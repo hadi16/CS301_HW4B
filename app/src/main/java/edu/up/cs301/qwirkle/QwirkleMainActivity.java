@@ -71,19 +71,4 @@ public class QwirkleMainActivity extends GameMainActivity {
     public LocalGame createLocalGame() {
         return new QwirkleLocalGame();
     }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int x = (int)event.getX();
-        int y = (int)event.getY();
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                break;
-            case MotionEvent.ACTION_MOVE:
-                break;
-            case MotionEvent.ACTION_UP:
-                break;
-        }
-        return false;
-    }
 }
