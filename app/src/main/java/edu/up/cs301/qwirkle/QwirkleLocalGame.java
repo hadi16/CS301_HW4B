@@ -53,6 +53,7 @@ public class QwirkleLocalGame extends LocalGame {
             int handIdx = pta.getHandIdx();
 
             QwirkleTile[][] playerHands = gameState.getPlayerHands();
+            // TODO: Fix this line! (bad cast)
             int playerIdx = getPlayerIdx((GamePlayer)action);
             QwirkleTile tile = playerHands[playerIdx][handIdx];
 

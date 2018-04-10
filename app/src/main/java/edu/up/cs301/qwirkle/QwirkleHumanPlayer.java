@@ -3,6 +3,9 @@ package edu.up.cs301.qwirkle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
@@ -28,6 +31,9 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
     private Button buttonSwap;
     private MainBoard mainBoard;
     private SideBoard sideBoard;
+    private String playerName;
+    private TextView textViewTurnLabel;
+    private TextView textViewScoreLabel;
 
     /**
      * Constructor: QwirkleHumanPlayer
@@ -37,6 +43,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
      */
     public QwirkleHumanPlayer(String name) {
         super(name);
+        this.playerName = name;
     }
 
     @Override
@@ -45,10 +52,22 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
         QwirkleTile.initBitmaps(activity);
         activity.setContentView(R.layout.qwirkle_human_player);
 
+        TextView textViewPlayerLabel = (TextView)activity.findViewById(R.id.textViewPlayerLabel);
+        textViewPlayerLabel.setText("My Name: " + name);
+
+        textViewTurnLabel = (TextView)activity.findViewById(R.id.textViewTurnLabel);
+        textViewScoreLabel = (TextView)activity.findViewById(R.id.textViewPlayerScore);
+
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
         mainBoard.setOnTouchListener(this);
         sideBoard = (SideBoard)activity.findViewById(R.id.sideBoard);
+    }
+
+    @Override
+    protected void initAfterReady() {
+        super.initAfterReady();
+        textViewTurnLabel.setText("Current Turn: "+allPlayerNames[playerNum]);
     }
 
     @Override
