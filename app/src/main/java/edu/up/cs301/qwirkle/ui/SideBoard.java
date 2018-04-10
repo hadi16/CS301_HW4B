@@ -72,6 +72,8 @@ public class SideBoard extends View {
         blackPaint.setStyle(Paint.Style.STROKE);
     }
 
+
+
     /**
      * Method: onDraw
      * Given a Canvas object, draws SideBoards.
@@ -93,7 +95,7 @@ public class SideBoard extends View {
         }
 
         // Tiles are drawn.
-        /*for (QwirkleTile tile : sideBoard) {
+        /*for (QwirkleTile tile : this.) {
             if (tile != null) tile.drawTile(canvas);
         }*/
     }

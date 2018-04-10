@@ -1,8 +1,11 @@
 package edu.up.cs301.qwirkle;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import edu.up.cs301.game.infoMsg.GameState;
+import edu.up.cs301.qwirkle.tile.QwirkleAnimal;
+import edu.up.cs301.qwirkle.tile.QwirkleColor;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
 
@@ -38,7 +41,13 @@ public class QwirkleGameState extends GameState {
     public QwirkleGameState() {
         this.turn = 0;
         this.numPlayers = 1;
+        initDrawPile();
         this.playerHands = new QwirkleTile[numPlayers][HAND_NUM];
+        for (int i = 0; i < playerHands.length; i++) {
+            for (int j = 0; j < playerHands[i].length; j++) {
+                playerHands[i][j] = getRandomTile();
+            }
+        }
         this.playerScores = new int[numPlayers];
         for (int i = 0; i < playerScores.length; i++) {
             playerScores[i] = 0;
@@ -48,7 +57,6 @@ public class QwirkleGameState extends GameState {
     public QwirkleGameState(QwirkleGameState orig) {
         turn = orig.getTurn();
         numPlayers = orig.getNumPlayers();
-
         drawPile = new ArrayList<>();
         for (int i = 0; i<drawPile.size(); i++) {
             QwirkleTile oldTile = orig.drawPile.get(i);
@@ -77,6 +85,27 @@ public class QwirkleGameState extends GameState {
         for (int i = 0; i<playerScores.length; i++) {
             playerScores[i] = orig.playerScores[i];
         }
+    }
+
+    private void initDrawPile() {
+        for (QwirkleAnimal animal : QwirkleAnimal.values()) {
+            for (QwirkleColor color : QwirkleColor.values()) {
+                for (int i = 0; i < 3; i++) {
+                    drawPile.add(new QwirkleTile(animal, color));
+                }
+            }
+        }
+    }
+
+    private QwirkleTile getRandomTile() {
+        if (drawPile.size() == 0) {
+            return null;
+        }
+        Random random = new Random();
+        int i = random.nextInt(drawPile.size());
+        QwirkleTile tile = drawPile.get(i);
+        drawPile.remove(i);
+        return tile;
     }
 
     public boolean hasTilesInPile() {

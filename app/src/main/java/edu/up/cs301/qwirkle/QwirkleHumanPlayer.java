@@ -10,6 +10,7 @@ import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
 import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameInfo;
+import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
 import edu.up.cs301.qwirkle.ui.SideBoard;
 
@@ -44,7 +45,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer {
     @Override
     public void setAsGui(GameMainActivity activity) {
         this.activity = activity;
-
+        QwirkleTile.initBitmaps(activity);
         activity.setContentView(R.layout.qwirkle_human_player);
 
         Listeners listeners = new Listeners();

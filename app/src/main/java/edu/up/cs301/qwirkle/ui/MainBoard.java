@@ -21,7 +21,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  */
 public class MainBoard extends View {
     // Number of rows and columns for the board.
-    public static final int BOARD_WIDTH = 24;
+    public static final int BOARD_WIDTH = 21;
     public static final int BOARD_HEIGHT = 16;
     private Paint blackPaint;
 
