@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import java.util.Hashtable;
 
@@ -20,6 +21,9 @@ public class QwirkleTile {
     // Hashtable for all Bitmaps
     private static Hashtable<String, Bitmap> tileImages = null;
 
+    private Bitmap bitmapMain;
+    private Bitmap bitmapSide;
+
     private int xPos;
     private int yPos;
     private QwirkleAnimal qwirkleAnimal;
@@ -30,13 +34,14 @@ public class QwirkleTile {
 
     // Constants to make bitmaps draw properly on the screen.
     private static final int RECTDIM_MAIN = 74;
-    private static final int RECTDIM_SIDE = 154;
+    private static final int RECTDIM_SIDE = 175;
     private static final int OFFSET_MAIN = 2;
-    private static final int OFFSET_SIDE = 36;
+    private static final int OFFSET_SIDE = 26;
 
     public QwirkleTile(QwirkleAnimal animal, QwirkleColor color) {
         this.qwirkleAnimal = animal;
         this.qwirkleColor = color;
+        initBitmapInstance();
     }
 
     /**
@@ -53,6 +58,7 @@ public class QwirkleTile {
         this.yPos = yPos;
         this.qwirkleAnimal = animal;
         this.qwirkleColor = color;
+        initBitmapInstance();
     }
 
     /**
@@ -67,6 +73,7 @@ public class QwirkleTile {
         this.yPos = yPos;
         this.qwirkleAnimal = animal;
         this.qwirkleColor = color;
+        initBitmapInstance();
     }
 
     @Override
@@ -97,6 +104,13 @@ public class QwirkleTile {
             return this.qwirkleAnimal.equals(tile.qwirkleAnimal) && this.qwirkleColor.equals(tile.qwirkleColor);
         }
         return false;
+    }
+
+    private void initBitmapInstance() {
+        if (tileImages == null) return;
+        Bitmap bitmap = tileImages.get(this.toString());
+        bitmapMain = Bitmap.createScaledBitmap(bitmap, RECTDIM_MAIN, RECTDIM_MAIN, false);
+        bitmapSide = Bitmap.createScaledBitmap(bitmap, RECTDIM_SIDE, RECTDIM_SIDE, false);
     }
 
     public static void initBitmaps(Activity activity) {
@@ -135,52 +149,41 @@ public class QwirkleTile {
      * @param canvas Canvas object to allow the bitmap to be drawn.
      */
     public void drawTile(Canvas canvas) {
-        Bitmap bitmap = tileImages.get(qwirkleAnimal+"_"+qwirkleColor);
-        if (bitmap == null) return;
-        if (mainBoard) {
-            bitmap = Bitmap.createScaledBitmap(bitmap, RECTDIM_MAIN, RECTDIM_MAIN, false);
-        }
-        else {
-            bitmap = Bitmap.createScaledBitmap(bitmap, RECTDIM_SIDE, RECTDIM_SIDE, false);
-        }
+        if (bitmapMain == null || bitmapSide == null) initBitmapInstance();
 
         // No paint needed to draw the bitmap.
         if (mainBoard) {
-            canvas.drawBitmap(bitmap, xPos*RECTDIM_MAIN+OFFSET_MAIN,
+            canvas.drawBitmap(bitmapMain, xPos*RECTDIM_MAIN+OFFSET_MAIN,
                     yPos*RECTDIM_MAIN, null);
         } else {
-            canvas.drawBitmap(bitmap, OFFSET_SIDE, yPos*RECTDIM_SIDE, null);
+            canvas.drawBitmap(bitmapSide, OFFSET_SIDE, yPos*RECTDIM_SIDE, null);
         }
     }
 
+    // Getters
     public int getxPos() {
         return xPos;
     }
-
     public int getyPos() {
         return yPos;
     }
-
     public QwirkleAnimal getQwirkleAnimal() {
         return qwirkleAnimal;
     }
-
     public QwirkleColor getQwirkleColor() {
         return qwirkleColor;
     }
-
     public boolean isMainBoard() {
         return mainBoard;
     }
 
+    // Setters
     public void setxPos(int xPos) {
         this.xPos = xPos;
     }
-
     public void setyPos(int yPos) {
         this.yPos = yPos;
     }
-
     public void setMainBoard(boolean mainBoard) {
         this.mainBoard = mainBoard;
     }

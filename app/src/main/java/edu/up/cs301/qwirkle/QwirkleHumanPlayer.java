@@ -22,7 +22,7 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  * @version April 10, 2018
  */
 
-public class QwirkleHumanPlayer extends GameHumanPlayer {
+public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchListener {
     private GameMainActivity activity;
     private QwirkleGameState state;
     private Button buttonSwap;
@@ -45,10 +45,9 @@ public class QwirkleHumanPlayer extends GameHumanPlayer {
         QwirkleTile.initBitmaps(activity);
         activity.setContentView(R.layout.qwirkle_human_player);
 
-        Listeners listeners = new Listeners();
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
-        mainBoard.setOnTouchListener(listeners);
+        mainBoard.setOnTouchListener(this);
         sideBoard = (SideBoard)activity.findViewById(R.id.sideBoard);
     }
 
@@ -67,20 +66,17 @@ public class QwirkleHumanPlayer extends GameHumanPlayer {
         sideBoard.invalidate();
     }
 
-    private class Listeners implements View.OnTouchListener {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            int x = (int)event.getX();
-            int y = (int)event.getY();
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        int x = (int)event.getX();
+        int y = (int)event.getY();
 
-
-            if (v.getId() == R.id.mainBoard) {
-                return true;
-            }
-            else if (v.getId() == R.id.sideBoard) {
-                return true;
-            }
-            return false;
+        if (v.getId() == R.id.mainBoard) {
+            return true;
         }
+        else if (v.getId() == R.id.sideBoard) {
+            return true;
+        }
+        return false;
     }
 }
