@@ -144,4 +144,8 @@ public class QwirkleGameState extends GameState {
     public void setPlayerHandsAtIdx(int playerIdx, int handIdx, QwirkleTile tile) {
         playerHands[playerIdx][handIdx] = tile;
     }
+
+    public int[] getPlayerScores() {
+        return playerScores;
+    }
 }

@@ -22,7 +22,6 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     private QwirkleGameState gameState;
     private QwirkleTile[] myPlayerHand;
     private QwirkleTile[][] board;
-    private GamePlayer thePlayer;
     private int myPlayerScore;
     private boolean myTurn;
 
@@ -37,7 +36,6 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
         this.gameState = (QwirkleGameState)info;
         if (gameState.getTurn() != this.playerNum) return;
 
-        this.thePlayer = (GamePlayer)info;
         this.myTurn = true;
         this.board = gameState.getBoard();
         this.myPlayerHand = gameState.getMyPlayerHand();
@@ -56,7 +54,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
             for(int x = 0; x < MainBoard.BOARD_WIDTH; x++){
                 //Iterate through all y position
                 for(int y = 0; y < MainBoard.BOARD_HEIGHT; y++){
-                    PlaceTileAction action = new PlaceTileAction(thePlayer, x, y, i);
+                    PlaceTileAction action = new PlaceTileAction(this, x, y, i);
                     game.sendAction(action);
 
                     // End once the turn is changed.
