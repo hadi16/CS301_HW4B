@@ -168,4 +168,16 @@ public class QwirkleTile {
     public boolean isMainBoard() {
         return mainBoard;
     }
+
+    public void setxPos(int xPos) {
+        this.xPos = xPos;
+    }
+
+    public void setyPos(int yPos) {
+        this.yPos = yPos;
+    }
+
+    public void setMainBoard(boolean mainBoard) {
+        this.mainBoard = mainBoard;
+    }
 }

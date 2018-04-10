@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import edu.up.cs301.game.infoMsg.GameState;
@@ -97,8 +98,15 @@ public class SideBoard extends View {
                     blackPaint);
         }
 
+        if (gameState == null) {
+            Log.i("THIS IS THE PROBLEM", "something");
+            return;
+        }
+
         // Tiles are drawn.
-        for (QwirkleTile tile : gameState.getMyPlayerHand()) {
+        Log.i("I REACH HERE", "something again");
+        QwirkleTile[] myPlayerHand = gameState.getMyPlayerHand();
+        for (QwirkleTile tile : myPlayerHand) {
             if (tile != null) tile.drawTile(canvas);
         }
     }
