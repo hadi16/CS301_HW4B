@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.util.Log;
 
 import java.util.Hashtable;
-
-import edu.up.cs301.game.R;
 
 /**
  * Class: QwirkleTile

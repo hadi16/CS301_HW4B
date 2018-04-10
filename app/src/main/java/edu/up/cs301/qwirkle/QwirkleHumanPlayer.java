@@ -1,11 +1,8 @@
 package edu.up.cs301.qwirkle;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-
-import java.util.List;
 
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
