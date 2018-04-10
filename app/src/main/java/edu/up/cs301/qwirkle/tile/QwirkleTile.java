@@ -158,4 +158,8 @@ public class QwirkleTile {
     public QwirkleColor getQwirkleColor() {
         return qwirkleColor;
     }
+
+    public boolean isMainBoard() {
+        return mainBoard;
+    }
 }

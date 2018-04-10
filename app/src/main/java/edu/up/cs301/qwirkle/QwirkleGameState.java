@@ -30,10 +30,27 @@ public class QwirkleGameState extends GameState {
     // Array to store each player's score (index corresponds to playerId).
     private int[] playerScores;
 
+    public QwirkleGameState() {
+        this.turn = 0;
+        this.numPlayers = 1;
+        this.playerScores[0] = 0;
+        this.playerScores[1] = 0;
+        for (int i=0; i<numPlayers; i++) {
+            for (int j=0; j<HAND_NUM; j++) {
+                playerHands[i][j] = drawPile.get((int) Math.random()*36);
+            }
+        }
+    }
+
     public QwirkleGameState(QwirkleGameState orig) {
+
         turn = orig.getTurn();
         numPlayers = orig.getNumPlayers();
-        drawPile = orig.getDrawPile();
+        drawPile = new ArrayList<>();
+        for (int i = 0; i<drawPile.size(); i++) {
+            QwirkleTile oldTile = orig.getDrawPile().get(i);
+            if (oldTile.isMainBoard() )
+        }
         board = orig.getBoard();
         playerHands = orig.getPlayerHands();
         playerScores = orig.getPlayerScores();
