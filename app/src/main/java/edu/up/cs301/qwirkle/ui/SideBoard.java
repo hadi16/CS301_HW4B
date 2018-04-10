@@ -15,7 +15,6 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * This class contains the code to draw the SideBoard.
  *
  * @author Alex Hadi
- * @author Stephanie Camacho
  * @author Michael Quach
  * @author Huy Nguyen
  * @version April 3, 2018

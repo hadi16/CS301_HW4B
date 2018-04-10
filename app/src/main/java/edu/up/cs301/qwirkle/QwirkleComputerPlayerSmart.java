@@ -4,9 +4,14 @@ import edu.up.cs301.game.GameComputerPlayer;
 import edu.up.cs301.game.infoMsg.GameInfo;
 
 /**
- * Created by Alex Hadi on 4/1/2018.
+ * Class: QwirkleComputerPlayerSmart
+ * The smart computer player.
+ *
+ * @author Alex Hadi
+ * @author Michael Quach
+ * @author Huy Nguyen
+ * @version April 10, 2018
  */
-
 public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
     public QwirkleComputerPlayerSmart(String name) {
         super(name);

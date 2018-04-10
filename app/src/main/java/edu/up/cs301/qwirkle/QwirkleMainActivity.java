@@ -13,7 +13,9 @@ import edu.up.cs301.game.config.GamePlayerType;
  * This class contains the code to interact with the QwirkleMainActivity XML.
  *
  * @author Alex Hadi
- * @version February 24, 2018
+ * @author Michael Quach
+ * @author Huy Nguyen
+ * @version April 10, 2018
  */
 public class QwirkleMainActivity extends GameMainActivity {
     private static final int PORT_NUMBER = 2236;

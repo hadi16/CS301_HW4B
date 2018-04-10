@@ -15,10 +15,9 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
  * The local game of Qwirkle.
  *
  * @author Alex Hadi
- * @author Stephanie Camacho
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 5, 2018
+ * @version April 10, 2018
  */
 public class QwirkleLocalGame extends LocalGame {
     private QwirkleGameState gameState;

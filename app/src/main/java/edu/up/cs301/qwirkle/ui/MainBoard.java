@@ -15,10 +15,9 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * This class contains the code to draw the main Qwirkle board.
  *
  * @author Alex Hadi
- * @author Stephanie Camacho
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 3, 2018
+ * @version April 10, 2018
  */
 public class MainBoard extends View {
     // Number of rows and columns for the board.

@@ -17,10 +17,9 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  * The human player configuration of Qwirkle.
  *
  * @author Alex Hadi
- * @author Stephanie Camacho
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 9, 2018
+ * @version April 10, 2018
  */
 
 public class QwirkleHumanPlayer extends GameHumanPlayer {

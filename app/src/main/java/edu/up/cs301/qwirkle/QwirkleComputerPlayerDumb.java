@@ -8,9 +8,14 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
 
 /**
- * Created by Alex Hadi on 4/1/2018.
+ * Class: QwirkleComputerPlayerDumb
+ * The dumb computer player.
+ *
+ * @author Alex Hadi
+ * @author Michael Quach
+ * @author Huy Nguyen
+ * @version April 10, 2018
  */
-
 public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     //Instance variables
     private QwirkleGameState gameState;

@@ -12,10 +12,9 @@ import java.util.Hashtable;
  * This class contains code to draw tiles using given Bitmap and dimensions.
  *
  * @author Alex Hadi
- * @author Stephanie Camacho
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 5, 2018
+ * @version April 10, 2018
  */
 public class QwirkleTile {
     // Hashtable for all Bitmaps

@@ -14,12 +14,10 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
  * The game state of Qwirkle.
  *
  * @author Alex Hadi
- * @author Stephanie Camacho
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 9, 2018
+ * @version April 10, 2018
  */
-
 public class QwirkleGameState extends GameState {
     private int turn;
     private int numPlayers;
