@@ -73,6 +73,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer {
             int x = (int)event.getX();
             int y = (int)event.getY();
 
+
             if (v.getId() == R.id.mainBoard) {
                 return true;
             }

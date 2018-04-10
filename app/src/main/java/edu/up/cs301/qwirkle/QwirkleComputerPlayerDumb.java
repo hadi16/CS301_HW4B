@@ -31,11 +31,14 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
 
     @Override
     protected void receiveInfo(GameInfo info) {
+        //Check if it's the correct instance of the game
         if (!(info instanceof QwirkleGameState)) return;
-
-        QwirkleGameState state = (QwirkleGameState)info;
-        if (state.getTurn() != this.playerNum) return;
-
+        //Get the current game state
+        gameState = (QwirkleGameState)info;
+        //Check for the player's turn
+        if (gameState.getTurn() != this.playerNum) return;
+        //Play a random move
+        playRandomMove();
         PlaceTileAction action = new PlaceTileAction((GamePlayer)info);
     }
 

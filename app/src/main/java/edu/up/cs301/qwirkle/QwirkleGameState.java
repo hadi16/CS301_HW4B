@@ -47,7 +47,7 @@ public class QwirkleGameState extends GameState {
         for (int i = 0; i < playerHands.length; i++) {
             for (int j = 0; j < playerHands[i].length; j++) {
                 playerHands[i][j] = getRandomTile();
-                playerHands[i][j].setyPos(i);
+                playerHands[i][j].setyPos(j);
                 playerHands[i][j].setMainBoard(false);
             }
         }
