@@ -67,7 +67,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer {
         this.state = (QwirkleGameState)info;
         mainBoard.setGameState(state);
         sideBoard.setGameState(state);
-        Log.i("I'M HERE!", "something part 3");
         mainBoard.invalidate();
         sideBoard.invalidate();
     }

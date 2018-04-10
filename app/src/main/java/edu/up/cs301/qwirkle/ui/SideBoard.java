@@ -99,12 +99,10 @@ public class SideBoard extends View {
         }
 
         if (gameState == null) {
-            Log.i("THIS IS THE PROBLEM", "something");
             return;
         }
 
         // Tiles are drawn.
-        Log.i("I REACH HERE", "something again");
         QwirkleTile[] myPlayerHand = gameState.getMyPlayerHand();
         for (QwirkleTile tile : myPlayerHand) {
             if (tile != null) tile.drawTile(canvas);
