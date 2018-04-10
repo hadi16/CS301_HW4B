@@ -1,5 +1,6 @@
 package edu.up.cs301.qwirkle;
 
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -53,7 +54,8 @@ public class QwirkleMainActivity extends GameMainActivity {
 
         // Add the default players to the configuration
         defaultConfig.addPlayer("Human", 0); // player 1: a human player
-        defaultConfig.addPlayer("Computer", 1); // player 2: a dumb computer player
+        defaultConfig.addPlayer("Computer", 1); // player 2: a dumb computer
+        // player
 
         // Set the default remote-player setup:
         // - player name: "Remote Player"
@@ -68,5 +70,20 @@ public class QwirkleMainActivity extends GameMainActivity {
     @Override
     public LocalGame createLocalGame() {
         return new QwirkleLocalGame();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int x = (int)event.getX();
+        int y = (int)event.getY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+        }
+        return false;
     }
 }

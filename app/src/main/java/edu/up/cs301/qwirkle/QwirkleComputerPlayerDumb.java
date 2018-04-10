@@ -5,6 +5,7 @@ import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
+import edu.up.cs301.qwirkle.ui.MainBoard;
 
 /**
  * Created by Alex Hadi on 4/1/2018.
@@ -41,9 +42,9 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
         //Iterate through each tile in the player's hand
         for (int i = 0; i < 6; i++){
             //Iterate through all x position
-            for(int x = 0; x < 24; x++){
+            for(int x = 0; x < MainBoard.BOARD_WIDTH; x++){
                 //Iterate through all y position
-                for(int y = 0; y < 16; y++){
+                for(int y = 0; y < MainBoard.BOARD_HEIGHT; y++){
                     if(localGame.isValidMove(x,y, playerHand[i], board)) {
                         //Place tile
                         //Update the score
