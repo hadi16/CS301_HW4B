@@ -8,6 +8,7 @@ import edu.up.cs301.game.actionMsg.GameAction;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
+import edu.up.cs301.qwirkle.ui.MainBoard;
 
 /**
  * Class: QwirkleLocalGame
@@ -81,8 +82,8 @@ public class QwirkleLocalGame extends LocalGame {
 
     private boolean matchAdj(int x, int y, String dir, QwirkleTile[][] board) {
         // Step 1: Check for valid x & y position
-        if (!(x>=0 && y>=0 && x<QwirkleGameState.BOARD_WIDTH &&
-                y<QwirkleGameState.BOARD_HEIGHT)) {
+        if (!(x>=0 && y>=0 && x< MainBoard.BOARD_WIDTH &&
+                y<MainBoard.BOARD_HEIGHT)) {
             return false;
         }
 
@@ -92,13 +93,13 @@ public class QwirkleLocalGame extends LocalGame {
 
         // Step 3: Get tile2 one step in dir (return false if not found)
         QwirkleTile tile2 = null;
-        if (dir.equals("E") && (x+1) < QwirkleGameState.BOARD_WIDTH) {
+        if (dir.equals("E") && (x+1) < MainBoard.BOARD_WIDTH) {
             tile2 = board[x+1][y];
         } else if (dir.equals("W") && (x-1) >= 0) {
             tile2 = board[x-1][y-1];
         } else if (dir.equals("N") && (y-1) >= 0) {
             tile2 = board[x][y-1];
-        } else if (dir.equals("S") && (y+1) < QwirkleGameState.BOARD_HEIGHT) {
+        } else if (dir.equals("S") && (y+1) < MainBoard.BOARD_HEIGHT) {
             tile2 = board[x][y+1];
         }
         if (tile2 == null) return false;

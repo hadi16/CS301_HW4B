@@ -20,12 +20,10 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 3, 2018
  */
 public class SideBoard extends View {
-    // Array used to hold current state of SideBoard.
-    private QwirkleTile[] sideBoard = new QwirkleTile[numTiles];
     private Paint blackPaint;
 
     // Controls how many tiles are in each SideBoard.
-    protected static final int numTiles = 6;
+    private static final int NUM_TILES = 6;
 
     /**
      * Constructor: SideBoard
@@ -82,21 +80,21 @@ public class SideBoard extends View {
     @Override
     public void onDraw(Canvas canvas) {
         // Offset needed to center the SideBoard.
-        int rectDim = canvas.getHeight() / numTiles;
+        int rectDim = canvas.getHeight() / NUM_TILES;
         int offset = (canvas.getWidth() - rectDim) / 2;
 
         // Sets background color to white.
         canvas.drawColor(Color.WHITE);
 
         // Draws the SideBoard.
-        for (int i = 0; i< sideBoard.length; i++){
+        for (int i = 0; i< NUM_TILES; i++){
             canvas.drawRect(offset, i*rectDim, offset+rectDim, (i+1)*rectDim,
                     blackPaint);
         }
 
         // Tiles are drawn.
-        for (QwirkleTile tile : sideBoard) {
+        /*for (QwirkleTile tile : sideBoard) {
             if (tile != null) tile.drawTile(canvas);
-        }
+        }*/
     }
 }

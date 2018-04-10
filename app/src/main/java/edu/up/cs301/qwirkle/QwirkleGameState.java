@@ -4,9 +4,17 @@ import java.util.ArrayList;
 
 import edu.up.cs301.game.infoMsg.GameState;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
+import edu.up.cs301.qwirkle.ui.MainBoard;
 
 /**
- * Created by Alex Hadi on 4/1/2018.
+ * Class: QwirkleGameState
+ * The game state of Qwirkle.
+ *
+ * @author Alex Hadi
+ * @author Stephanie Camacho
+ * @author Michael Quach
+ * @author Huy Nguyen
+ * @version April 9, 2018
  */
 
 public class QwirkleGameState extends GameState {
@@ -14,15 +22,11 @@ public class QwirkleGameState extends GameState {
     private int numPlayers;
     private ArrayList<QwirkleTile> drawPile = new ArrayList<>();
 
-    // Number of rows and columns for the board.
-    public static final int BOARD_WIDTH = 24;
-    public static final int BOARD_HEIGHT = 16;
-
     // The number of tiles a player can have in their hand is 6
     private static final int HAND_NUM = 6;
 
     // Array for the current state of the board.
-    private QwirkleTile board[][] = new QwirkleTile[BOARD_WIDTH][BOARD_HEIGHT];
+    private QwirkleTile board[][] = new QwirkleTile[MainBoard.BOARD_WIDTH][MainBoard.BOARD_HEIGHT];
 
     // Array for the player hands.
     private QwirkleTile playerHands[][];
@@ -38,11 +42,6 @@ public class QwirkleGameState extends GameState {
         for (int i = 0; i < playerScores.length; i++) {
             playerScores[i] = 0;
         }
-        for (int i=0; i<numPlayers; i++) {
-            for (int j=0; j<HAND_NUM; j++) {
-              //  playerHands[i][j] = drawPile.get((int) Math.random()*36);
-            }
-        }
     }
 
     public QwirkleGameState(QwirkleGameState orig) {
@@ -54,7 +53,7 @@ public class QwirkleGameState extends GameState {
             QwirkleTile newTile = new QwirkleTile(oldTile.getQwirkleAnimal(), oldTile.getQwirkleColor());
             drawPile.add(newTile);
         }
-        board = new QwirkleTile[BOARD_WIDTH][BOARD_HEIGHT];
+        board = new QwirkleTile[MainBoard.BOARD_WIDTH][MainBoard.BOARD_HEIGHT];
         for (int i = 0; i<board.length; i++) {
             for (int j = 0; j<board[i].length; j++) {
                 if (board[i][j] == null) {

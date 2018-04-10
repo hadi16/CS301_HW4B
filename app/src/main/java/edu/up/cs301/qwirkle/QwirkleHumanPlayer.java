@@ -8,7 +8,14 @@ import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameInfo;
 
 /**
- * Created by Alex Hadi on 4/1/2018.
+ * Class: QwirkleHumanPlayer
+ * The human player configuration of Qwirkle.
+ *
+ * @author Alex Hadi
+ * @author Stephanie Camacho
+ * @author Michael Quach
+ * @author Huy Nguyen
+ * @version April 9, 2018
  */
 
 public class QwirkleHumanPlayer extends GameHumanPlayer {
