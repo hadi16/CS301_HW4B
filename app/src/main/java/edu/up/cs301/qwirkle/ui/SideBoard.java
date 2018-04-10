@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import edu.up.cs301.game.infoMsg.GameState;
+import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 
 /**
@@ -22,6 +24,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
 public class SideBoard extends View {
     private Paint blackPaint;
 
+    private QwirkleGameState gameState;
     // Controls how many tiles are in each SideBoard.
     private static final int NUM_TILES = 6;
 
@@ -95,8 +98,12 @@ public class SideBoard extends View {
         }
 
         // Tiles are drawn.
-        /*for (QwirkleTile tile : this.) {
+        for (QwirkleTile tile : gameState.getMyPlayerHand()) {
             if (tile != null) tile.drawTile(canvas);
-        }*/
+        }
+    }
+
+    public void setGameState(QwirkleGameState gameState) {
+        this.gameState = gameState;
     }
 }

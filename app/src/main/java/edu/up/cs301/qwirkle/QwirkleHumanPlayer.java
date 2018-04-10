@@ -63,8 +63,9 @@ public class QwirkleHumanPlayer extends GameHumanPlayer {
     @Override
     public void receiveInfo(GameInfo info) {
         if (!(info instanceof QwirkleGameState)) return;
-
         this.state = (QwirkleGameState)info;
+        mainBoard.setGameState(state);
+        sideBoard.setGameState(state);
     }
 
     private class Listeners implements View.OnTouchListener {

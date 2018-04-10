@@ -38,6 +38,8 @@ public class QwirkleGameState extends GameState {
     // Array to store each player's score (index corresponds to playerId).
     private int[] playerScores;
 
+    private QwirkleTile[] myPlayerHand;
+
     public QwirkleGameState() {
         this.turn = 0;
         this.numPlayers = 1;
@@ -54,15 +56,10 @@ public class QwirkleGameState extends GameState {
         }
     }
 
-    public QwirkleGameState(QwirkleGameState orig) {
+    public QwirkleGameState(QwirkleGameState orig, int playerId) {
         turn = orig.getTurn();
         numPlayers = orig.getNumPlayers();
-        drawPile = new ArrayList<>();
-        for (int i = 0; i<drawPile.size(); i++) {
-            QwirkleTile oldTile = orig.drawPile.get(i);
-            QwirkleTile newTile = new QwirkleTile(oldTile.getQwirkleAnimal(), oldTile.getQwirkleColor());
-            drawPile.add(newTile);
-        }
+        drawPile = null;
 
         board = new QwirkleTile[MainBoard.BOARD_WIDTH][MainBoard.BOARD_HEIGHT];
         for (int i = 0; i<board.length; i++) {
@@ -74,11 +71,9 @@ public class QwirkleGameState extends GameState {
             }
         }
 
-        playerHands = new QwirkleTile[orig.numPlayers][QwirkleGameState.HAND_NUM];
-        for (int i = 0; i<playerHands.length; i++) {
-            for (int j= 0; j<playerHands[i].length; j++) {
-                playerHands[i][j] = orig.getPlayerHands()[i][j];
-            }
+        myPlayerHand = new QwirkleTile[HAND_NUM];
+        for (int i = 0; i<HAND_NUM; i++) {
+            myPlayerHand[i] = orig.getPlayerHands()[playerId][i];
         }
 
         playerScores = new int[orig.numPlayers];
@@ -124,5 +119,9 @@ public class QwirkleGameState extends GameState {
     }
     public QwirkleTile[][] getBoard() {
         return board;
+    }
+
+    public QwirkleTile[] getMyPlayerHand() {
+        return myPlayerHand;
     }
 }

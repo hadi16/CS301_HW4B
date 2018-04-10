@@ -29,6 +29,7 @@ public class QwirkleLocalGame extends LocalGame {
 
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
+        p.sendInfo(new QwirkleGameState(gameState, getPlayerIdx(p)));
     }
 
     @Override
