@@ -86,6 +86,9 @@ public class SideBoard extends View {
         int rectDim = canvas.getHeight() / NUM_TILES;
         int offset = (canvas.getWidth() - rectDim) / 2;
 
+        System.out.println(rectDim);
+        System.out.println(offset);
+
         // Sets background color to white.
         canvas.drawColor(Color.WHITE);
 
