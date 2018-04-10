@@ -43,17 +43,36 @@ public class QwirkleGameState extends GameState {
     }
 
     public QwirkleGameState(QwirkleGameState orig) {
-
         turn = orig.getTurn();
         numPlayers = orig.getNumPlayers();
         drawPile = new ArrayList<>();
         for (int i = 0; i<drawPile.size(); i++) {
             QwirkleTile oldTile = orig.getDrawPile().get(i);
-            if (oldTile.isMainBoard() )
+            QwirkleTile newTile = new QwirkleTile(oldTile.getQwirkleAnimal(), oldTile.getQwirkleColor());
+            drawPile.add(newTile);
         }
-        board = orig.getBoard();
-        playerHands = orig.getPlayerHands();
-        playerScores = orig.getPlayerScores();
+        board = new QwirkleTile[BOARD_WIDTH][BOARD_HEIGHT];
+        for (int i = 0; i<board.length; i++) {
+            for (int j = 0; j<board[i].length; j++) {
+                if (board[i][j] == null) {
+                    continue;
+                }
+                else {
+                    QwirkleTile oldTile = orig.getBoard()[i][j];
+                    board[i][j] = new QwirkleTile(oldTile.getxPos(), oldTile.getyPos(), oldTile.getQwirkleAnimal(), oldTile.getQwirkleColor());
+                }
+            }
+        }
+        playerHands = new QwirkleTile[orig.numPlayers][QwirkleGameState.HAND_NUM];
+        for (int i = 0; i<playerHands.length; i++) {
+            for (int j= 0; j<playerHands[i].length; j++) {
+                playerHands[i][j] = orig.getPlayerHands()[i][j];
+            }
+        }
+        playerScores = new int[orig.numPlayers];
+        for (int i = 0; i<playerScores.length; i++) {
+            playerScores[i] = orig.getPlayerScores()[i];
+        }
     }
 
     public boolean hasTilesInPile() {
