@@ -50,7 +50,7 @@
         </LinearLayout>
 
         <edu.up.cs301.qwirkle.ui.MainBoard
-            android:id="@+id/qwirkleBoard"
+            android:id="@+id/mainBoard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />

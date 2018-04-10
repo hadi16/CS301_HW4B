@@ -47,61 +47,50 @@ public class QwirkleGameState extends GameState {
     public QwirkleGameState(QwirkleGameState orig) {
         turn = orig.getTurn();
         numPlayers = orig.getNumPlayers();
+
         drawPile = new ArrayList<>();
         for (int i = 0; i<drawPile.size(); i++) {
-            QwirkleTile oldTile = orig.getDrawPile().get(i);
+            QwirkleTile oldTile = orig.drawPile.get(i);
             QwirkleTile newTile = new QwirkleTile(oldTile.getQwirkleAnimal(), oldTile.getQwirkleColor());
             drawPile.add(newTile);
         }
+
         board = new QwirkleTile[MainBoard.BOARD_WIDTH][MainBoard.BOARD_HEIGHT];
         for (int i = 0; i<board.length; i++) {
             for (int j = 0; j<board[i].length; j++) {
-                if (board[i][j] == null) {
-                    continue;
-                }
-                else {
-                    QwirkleTile oldTile = orig.getBoard()[i][j];
+                if (board[i][j] != null) {
+                    QwirkleTile oldTile = orig.board[i][j];
                     board[i][j] = new QwirkleTile(oldTile.getxPos(), oldTile.getyPos(), oldTile.getQwirkleAnimal(), oldTile.getQwirkleColor());
                 }
             }
         }
+
         playerHands = new QwirkleTile[orig.numPlayers][QwirkleGameState.HAND_NUM];
         for (int i = 0; i<playerHands.length; i++) {
             for (int j= 0; j<playerHands[i].length; j++) {
                 playerHands[i][j] = orig.getPlayerHands()[i][j];
             }
         }
+
         playerScores = new int[orig.numPlayers];
         for (int i = 0; i<playerScores.length; i++) {
-            playerScores[i] = orig.getPlayerScores()[i];
+            playerScores[i] = orig.playerScores[i];
         }
     }
 
     public boolean hasTilesInPile() {
         return drawPile.size() > 0;
     }
-
     public int getTurn() {
         return turn;
     }
-
     public int getNumPlayers() {
         return numPlayers;
     }
-
-    public ArrayList<QwirkleTile> getDrawPile() {
-        return drawPile;
-    }
-
     public QwirkleTile[][] getPlayerHands() {
         return playerHands;
     }
-
     public QwirkleTile[][] getBoard() {
         return board;
-    }
-
-    public int[] getPlayerScores() {
-        return playerScores;
     }
 }

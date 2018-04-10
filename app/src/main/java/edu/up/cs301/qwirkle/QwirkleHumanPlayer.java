@@ -1,11 +1,14 @@
 package edu.up.cs301.qwirkle;
 
 import android.view.View;
+import android.widget.Button;
 
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
 import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameInfo;
+import edu.up.cs301.qwirkle.ui.MainBoard;
+import edu.up.cs301.qwirkle.ui.SideBoard;
 
 /**
  * Class: QwirkleHumanPlayer
@@ -21,6 +24,9 @@ import edu.up.cs301.game.infoMsg.GameInfo;
 public class QwirkleHumanPlayer extends GameHumanPlayer {
     private GameMainActivity activity;
     private QwirkleGameState state;
+    private Button buttonSwap;
+    private MainBoard mainBoard;
+    private SideBoard sideBoard;
 
     /**
      * Constructor: QwirkleHumanPlayer
@@ -37,6 +43,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer {
         this.activity = activity;
 
         activity.setContentView(R.layout.qwirkle_human_player);
+
+        buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
+        mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
+        sideBoard = (SideBoard)activity.findViewById(R.id.sideBoard);
     }
 
     @Override
