@@ -1,5 +1,6 @@
 package edu.up.cs301.qwirkle;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
 import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameInfo;
+import edu.up.cs301.game.infoMsg.GameState;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
 import edu.up.cs301.qwirkle.ui.SideBoard;
@@ -87,8 +89,23 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() != MotionEvent.ACTION_UP) {
+            return true;
+        }
+
         int x = (int)event.getX();
         int y = (int)event.getY();
+
+        Log.i("X-position", Integer.toString(x));
+        Log.i("Y-position", Integer.toString(y));
+
+        for (int i = 0; i < 6; i++) {
+            if (x > state.getMyPlayerHand()[i].getxPos() && x < state.getMyPlayerHand()[i].getxPos() + ) {
+                selectTile(state.getMyPlayerHand()[i]);
+            }
+        }
+
+
 
         if (v.getId() == R.id.mainBoard) {
             return true;
@@ -96,6 +113,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
         else if (v.getId() == R.id.sideBoard) {
             return true;
         }
-        return false;
+        return true;
+    }
+
+    public QwirkleTile selectTile(QwirkleTile tile) {
+        return tile;
     }
 }
