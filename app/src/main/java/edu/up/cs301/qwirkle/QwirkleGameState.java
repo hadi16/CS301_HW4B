@@ -26,7 +26,8 @@ public class QwirkleGameState extends GameState {
     private static final int HAND_NUM = 6;
 
     // Array for the current state of the board.
-    private QwirkleTile board[][] = new QwirkleTile[MainBoard.BOARD_WIDTH][MainBoard.BOARD_HEIGHT];
+    private QwirkleTile board[][] = new QwirkleTile[MainBoard.BOARD_WIDTH]
+            [MainBoard.BOARD_HEIGHT];
 
     // Array for the player hands.
     private QwirkleTile playerHands[][];
@@ -81,16 +82,28 @@ public class QwirkleGameState extends GameState {
     public boolean hasTilesInPile() {
         return drawPile.size() > 0;
     }
+
     public int getTurn() {
         return turn;
     }
+
     public int getNumPlayers() {
         return numPlayers;
     }
+
+    public ArrayList<QwirkleTile> getDrawPile() {
+        return drawPile;
+    }
+
     public QwirkleTile[][] getPlayerHands() {
         return playerHands;
     }
+
     public QwirkleTile[][] getBoard() {
         return board;
+    }
+
+    public int[] getPlayerScores() {
+        return playerScores;
     }
 }

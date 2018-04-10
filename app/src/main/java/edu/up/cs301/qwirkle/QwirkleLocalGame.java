@@ -64,7 +64,8 @@ public class QwirkleLocalGame extends LocalGame {
             for (QwirkleTile tileInHand : playerHand) {
                 for (QwirkleTile[] tiles : gameState.getBoard()) {
                     for (QwirkleTile tile : tiles) {
-                        if (isValidMove(tile.getxPos(), tile.getyPos(), tile, gameState.getBoard())) {
+                        if (isValidMove(tile.getxPos(), tile.getyPos(), tile,
+                                gameState.getBoard())) {
                             return true;
                         }
                     }
@@ -140,11 +141,13 @@ public class QwirkleLocalGame extends LocalGame {
         return true;
     }
 
-    public boolean isValidMove(int x, int y, QwirkleTile tile, QwirkleTile[][] board) {
+    public boolean isValidMove(int x, int y, QwirkleTile tile,
+                               QwirkleTile[][] board) {
         // Step 1: Check to see that x,y is empty spot on board
         if (board[x][y] != null) return false;
 
-        // Step 2: If entire board is empty, then return true (any placement is ok)
+        // Step 2: If entire board is empty, then return true (any placement is
+        // ok)
         boolean empty = true;
         for (QwirkleTile[] tileArr : board) {
             for (QwirkleTile t : tileArr) {
@@ -153,7 +156,8 @@ public class QwirkleLocalGame extends LocalGame {
         }
         if (empty) return true;
 
-        // Step 3: Create lineEW & lineNS, then add tile at x,y to lineEW & lineNS
+        // Step 3: Create lineEW & lineNS, then add tile at x,y to lineEW &
+        // lineNS
         ArrayList<QwirkleTile> lineEW = new ArrayList<>();
         lineEW.add(board[x][y]);
         ArrayList<QwirkleTile> lineNS = new ArrayList<>();
