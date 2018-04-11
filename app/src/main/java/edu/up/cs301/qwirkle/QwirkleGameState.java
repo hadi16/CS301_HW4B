@@ -78,7 +78,6 @@ public class QwirkleGameState extends GameState {
         // We will eventually change this to a deep copy.
         board = orig.getBoard();
 
-
         myPlayerHand = new QwirkleTile[HAND_NUM];
         for (int i = 0; i<HAND_NUM; i++) {
             myPlayerHand[i] = orig.getPlayerHands()[playerId][i];

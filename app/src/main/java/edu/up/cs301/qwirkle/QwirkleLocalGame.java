@@ -55,10 +55,9 @@ public class QwirkleLocalGame extends LocalGame {
             int playerIdx = getPlayerIdx(pta.getPlayer());
             QwirkleTile tile = playerHands[playerIdx][handIdx];
 
-            // TODO: Add valid move functionality
-            /*if (!isValidMove(x, y, tile, gameState.getBoard())) {
+            if (!isValidMove(x, y, tile, gameState.getBoard())) {
                 return false;
-            }*/
+            }
 
             gameState.setBoardAtIdx(x, y, tile);
 
@@ -172,7 +171,7 @@ public class QwirkleLocalGame extends LocalGame {
         return true;
     }
 
-    private boolean isValidMove(int x, int y, QwirkleTile tile,
+    public boolean isValidMove(int x, int y, QwirkleTile tile,
                                QwirkleTile[][] board) {
         // Step 1: Check to see that x,y is empty spot on board
         if (board[x][y] != null) return false;
