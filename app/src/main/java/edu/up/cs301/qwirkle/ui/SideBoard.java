@@ -83,7 +83,13 @@ public class SideBoard extends View {
     public void onDraw(Canvas canvas) {
         // Offset needed to center the SideBoard.
         int rectDim = canvas.getHeight() / NUM_TILES;
+        if (rectDim != QwirkleTile.RECTDIM_SIDE) {
+            QwirkleTile.RECTDIM_SIDE = rectDim;
+        }
         int offset = (canvas.getWidth() - rectDim) / 2;
+        if (offset != QwirkleTile.OFFSET_SIDE) {
+            QwirkleTile.OFFSET_SIDE = offset;
+        }
 
         // Sets background color to white.
         canvas.drawColor(Color.WHITE);

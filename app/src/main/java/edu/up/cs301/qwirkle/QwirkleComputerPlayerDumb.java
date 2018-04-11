@@ -57,11 +57,6 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
                 for(int y = 0; y < MainBoard.BOARD_HEIGHT; y++){
                     PlaceTileAction action = new PlaceTileAction(this, x, y, i);
                     game.sendAction(action);
-
-                    // End once the turn is changed.
-                    if (gameState.getTurn() != playerNum) {
-                        break;
-                    }
                 }
             }
         }

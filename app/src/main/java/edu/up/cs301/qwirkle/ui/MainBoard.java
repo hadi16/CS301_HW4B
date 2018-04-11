@@ -84,7 +84,13 @@ public class MainBoard extends View {
     public void onDraw(Canvas canvas){
         //Offset needed to center the board.
         int rectDim = canvas.getHeight() /BOARD_HEIGHT;
+        if (rectDim != QwirkleTile.RECTDIM_MAIN) {
+            QwirkleTile.RECTDIM_MAIN = rectDim;
+        }
         int offset = (canvas.getWidth() - (BOARD_WIDTH*rectDim)) / 2;
+        if (offset != QwirkleTile.OFFSET_MAIN) {
+            QwirkleTile.OFFSET_MAIN = offset;
+        }
 
         // Sets background color to white.
         canvas.drawColor(Color.WHITE);
