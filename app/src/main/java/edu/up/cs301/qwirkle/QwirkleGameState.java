@@ -164,6 +164,10 @@ public class QwirkleGameState extends GameState {
         return myPlayerHand;
     }
 
+    public int[] getPlayerScores() {
+        return playerScores;
+    }
+
     // Setters
     public void setBoardAtIdx(int x, int y, QwirkleTile tile) {
         board[x][y] = tile;

@@ -22,8 +22,9 @@ public class QwirkleLocalGame extends LocalGame {
 
     public QwirkleLocalGame() {
         // TODO: Fix number of players
-        this.gameState = new QwirkleGameState(2);
+        this.gameState = new QwirkleGameState();
     }
+
 
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
@@ -106,5 +107,12 @@ public class QwirkleLocalGame extends LocalGame {
         return false;
     }
 
+    private void winRound(boolean isWinner) {
+        for (int i = 0; i < gameState.getNumPlayers(); i++) {
+            if (gameState.getPlayerScores()[i] >= 100) {
+                break;
+                }
+            }
+        }
+    }
 
-}

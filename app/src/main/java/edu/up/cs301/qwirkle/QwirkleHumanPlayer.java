@@ -67,8 +67,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         scoreBoardView = (TextView)activity.findViewById(R.id.textViewScoreboardLabel);
 
         myScoreView.setText("My Score: 0");
-        scoreBoardView.setText("Scoreboard:\n"+name+": 0\n"+"Computer: 0");
+        scoreBoardView.setText("Scoreboard:\n"+name+": 0"+ "\n"+"Computer: 0");
 
+        /*
+        myScoreView.setText("My Score: " + gameState.getPlayerScores()[0]);
+        scoreBoardView.setText("Scoreboard:\n"+name+": "+ gameState.getPlayerScores()[0]+ "\n"+"Computer: "+gameState.getPlayerScores()[1]);
+*/
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         buttonSwap.setOnClickListener(this);
         mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
