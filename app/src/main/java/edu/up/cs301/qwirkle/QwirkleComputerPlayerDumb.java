@@ -1,7 +1,5 @@
 package edu.up.cs301.qwirkle;
 
-import android.graphics.Color;
-
 import edu.up.cs301.game.GameComputerPlayer;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;

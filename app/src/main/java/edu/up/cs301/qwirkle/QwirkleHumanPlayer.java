@@ -13,6 +13,7 @@ import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
+import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
 import edu.up.cs301.qwirkle.ui.SideBoard;
@@ -27,7 +28,8 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  * @version April 10, 2018
  */
 
-public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchListener {
+public class QwirkleHumanPlayer extends GameHumanPlayer
+        implements View.OnTouchListener, View.OnClickListener {
     private GameMainActivity activity;
     private QwirkleGameState state;
     private Button buttonSwap;
@@ -37,6 +39,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
     private TextView textViewTurnLabel;
     private TextView textViewScoreLabel;
     private boolean[] isSelected = new boolean[QwirkleGameState.HAND_NUM];
+    private boolean swap = false;
 
     /**
      * Constructor: QwirkleHumanPlayer
@@ -62,6 +65,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
         textViewScoreLabel = (TextView)activity.findViewById(R.id.textViewPlayerScore);
 
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
+        buttonSwap.setOnClickListener(this);
         mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
         mainBoard.setOnTouchListener(this);
         sideBoard = (SideBoard)activity.findViewById(R.id.sideBoard);
@@ -135,16 +139,25 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
             return true;
         }
         else if (v.getId() == R.id.sideBoard) {
-            int yPos = getSelectedHandIdx(x, y);
-            if (yPos == -1) return false;
+            if (swap) {
+                int yPos = getSelectedHandIdx(x, y);
+                if (yPos == -1) return false;
 
-            for (int i=0; i<isSelected.length; i++) isSelected[i] = false;
-            isSelected[yPos] = true;
+                isSelected[yPos] = !isSelected[yPos];
+            }
+            else {
+                int yPos = getSelectedHandIdx(x, y);
+                if (yPos == -1) return false;
 
-            mainBoard.invalidate();
-            sideBoard.invalidate();
+                for (int i = 0; i < isSelected.length; i++)
+                    isSelected[i] = false;
+                isSelected[yPos] = true;
 
-            return false;
+                mainBoard.invalidate();
+                sideBoard.invalidate();
+            }
+
+            return true;
         }
 
         return false;
@@ -170,5 +183,19 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
         }
 
         return y / QwirkleTile.RECTDIM_SIDE;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() != R.id.buttonSwap) return;
+        if (swap) {
+            boolean somethingToSwap = false;
+            for (boolean selected: isSelected) if (selected) somethingToSwap = true;
+            if (!somethingToSwap) return;
+
+            SwapTileAction sta = new SwapTileAction(this, isSelected);
+            game.sendAction(sta);
+        }
+        swap = !swap;
     }
 }

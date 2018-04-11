@@ -93,6 +93,10 @@ public class QwirkleGameState extends GameState {
         }
     }
 
+    public void addToDrawPile(QwirkleTile tile) {
+        drawPile.add(tile);
+    }
+
     public QwirkleTile getRandomTile() {
         if (drawPile.size() == 0) {
             return null;
