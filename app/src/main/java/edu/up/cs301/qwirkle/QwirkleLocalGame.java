@@ -138,7 +138,7 @@ public class QwirkleLocalGame extends LocalGame {
         if (dir.equals("E") && (x+1) < MainBoard.BOARD_WIDTH) {
             tile2 = board[x+1][y];
         } else if (dir.equals("W") && (x-1) >= 0) {
-            tile2 = board[x-1][y-1];
+            tile2 = board[x-1][y];
         } else if (dir.equals("N") && (y-1) >= 0) {
             tile2 = board[x][y-1];
         } else if (dir.equals("S") && (y+1) < MainBoard.BOARD_HEIGHT) {
@@ -218,7 +218,6 @@ public class QwirkleLocalGame extends LocalGame {
         if (!(lineEW.size() > 1)) {
             if (!isValidLine(lineEW)) return false;
         }
-
         // If all checks passed, then it must be a valid move.
         return true;
     }
