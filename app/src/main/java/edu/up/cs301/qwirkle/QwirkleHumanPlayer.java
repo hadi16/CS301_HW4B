@@ -193,6 +193,9 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
             SwapTileAction sta = new SwapTileAction(this, isSelected);
             game.sendAction(sta);
+            for (int i=0; i<isSelected.length; i++) {
+                isSelected[i] = false;
+            }
         }
         swap = !swap;
         if (swap) {
