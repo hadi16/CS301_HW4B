@@ -1,8 +1,5 @@
 package edu.up.cs301.qwirkle;
 
-import android.graphics.Color;
-import android.util.Log;
-
 import java.util.Random;
 
 import edu.up.cs301.game.GameComputerPlayer;
@@ -28,6 +25,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     private QwirkleGameState gameState;
     private QwirkleTile[] myPlayerHand;
     private QwirkleTile[][] board;
+    private QwirkleRules rules = new QwirkleRules();
 
     public QwirkleComputerPlayerDumb(String name) {
         super(name);
@@ -55,19 +53,18 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     }
 
     private void playRandomMove() {
-        QwirkleLocalGame localGame = new QwirkleLocalGame();
         //Check each tile in the hand to the whole board to see if there's a valid move
         //Iterate through each tile in the player's hand
         for (int i = 0; i < QwirkleGameState.HAND_NUM; i++){
             //Iterate through all x position
-            for(int x = 0; x < MainBoard.BOARD_WIDTH; x++){
+            for (int x = 0; x < MainBoard.BOARD_WIDTH; x++){
                 //Iterate through all y position
-                for(int y = 0; y < MainBoard.BOARD_HEIGHT; y++) {
-                    if (!localGame.isValidMove(x, y, myPlayerHand[i], board)) {
-                        continue;
+                for (int y = 0; y < MainBoard.BOARD_HEIGHT; y++) {
+                    if (rules.isValidMove(x, y, myPlayerHand[i], board)) {
+                        PlaceTileAction action = new PlaceTileAction(this, x, y, i);
+                        game.sendAction(action);
+                        return;
                     }
-                    PlaceTileAction action = new PlaceTileAction(this, x, y, i);
-                    game.sendAction(action);
                 }
             }
         }

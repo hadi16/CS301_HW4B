@@ -107,6 +107,7 @@ public class MainBoard extends View {
             return;
         }
 
+
         // Draws the tiles.
         QwirkleTile[][] board = gameState.getBoard();
         for (QwirkleTile[] x : board) {
