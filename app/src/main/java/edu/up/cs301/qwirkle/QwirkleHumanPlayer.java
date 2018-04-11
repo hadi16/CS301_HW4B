@@ -17,6 +17,7 @@ import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.GameState;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
+import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
 import edu.up.cs301.qwirkle.ui.SideBoard;
@@ -114,9 +115,18 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
             }
         }
 
-        for (int i = 0; i < QwirkleGameState.HAND_NUM)
-
-        QwirkleTile(state.getMyPlayerHand()[i].getxPos(), state.getMyPlayerHand()[i].getyPos(), );
+        for (int i = 0; i < 6; i++) {
+            if (buttonSwap.isPressed()) {
+                if (x > state.getMyPlayerHand()[i].getxPos() && x < state.getMyPlayerHand()[i].getxPos()
+                        && y > state.getMyPlayerHand()[i].getyPos() && y < state.getMyPlayerHand()[i].getyPos()) {
+                    selectTile(state.getMyPlayerHand()[i]);
+                    game.sendAction((new SwapTileAction(this, x, y, i)));
+                }
+            }
+            else {
+                break;
+            }
+        }
 
         if (v.getId() == R.id.mainBoard) {
             return true;

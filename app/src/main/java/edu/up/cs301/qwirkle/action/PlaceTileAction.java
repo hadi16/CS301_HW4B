@@ -2,6 +2,7 @@ package edu.up.cs301.qwirkle.action;
 
 import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.actionMsg.GameAction;
+import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
 
@@ -25,6 +26,8 @@ public class PlaceTileAction extends GameAction {
         this.yPos = yPos;
         this.handIdx = handIdx;
     }
+
+    for (int i = 0; i < )
 
     public int getxPos() {
         return xPos;
