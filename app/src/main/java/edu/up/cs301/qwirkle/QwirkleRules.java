@@ -1,5 +1,7 @@
 package edu.up.cs301.qwirkle;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
@@ -32,11 +34,9 @@ public class QwirkleRules {
     private boolean matchAdj(int x, int y, String dir, QwirkleTile[][] board) {
         System.out.println(x);
         System.out.println(y);
-        System.out.println("ok then");
         // Step 1: Check for valid x & y position
         if (!(x>=0 && y>=0 && x<MainBoard.BOARD_WIDTH &&
                 y<MainBoard.BOARD_HEIGHT)) {
-            System.out.println("hi there");
             return false;
         }
 
@@ -58,7 +58,6 @@ public class QwirkleRules {
             tile2 = board[x][y+1];
         }
         if (tile2 == null) {
-            System.out.println("im here");
             return false;
         }
 
@@ -93,7 +92,6 @@ public class QwirkleRules {
     private boolean isValidLine(ArrayList<QwirkleTile> line) {
         for (int i=0; i<line.size(); ++i) {
             for (int j=0; j<line.size(); ++j) {
-                System.out.println("here");
                 if (!(match(line.get(i), line.get(j)))) return false;
             }
         }
@@ -102,10 +100,6 @@ public class QwirkleRules {
 
     public boolean isValidMove(int x, int y, QwirkleTile tile,
                                QwirkleTile[][] board) {
-        System.out.println("here we goooo");
-        System.out.println(x);
-        System.out.println(y);
-        System.out.println("donnnnne");
         // Step 1: Check to see that x,y is empty spot on board
         if (board[x][y] != null) return false;
 
@@ -118,7 +112,6 @@ public class QwirkleRules {
             }
         }
         if (empty) {
-            System.out.println("im empty");
             return true;
         }
 
@@ -142,16 +135,15 @@ public class QwirkleRules {
         }
         if (lineNS.size() > 1) {
             if (!isValidLine(lineNS)) {
-                System.out.println("im northg");
                 return false;
             }
         }
         if (!(lineEW.size() > 1)) {
             if (!isValidLine(lineEW)) {
-                System.out.println("im east");
                 return false;
             }
         }
+
 
         // If all checks passed, then it must be a valid move.
         return true;
