@@ -152,4 +152,7 @@ public class QwirkleGameState extends GameState {
         playerHands[playerIdx][handIdx].setyPos(handIdx);
         playerHands[playerIdx][handIdx].setMainBoard(false);
     }
+    public void setPlayerHandsIsSelectedAtIdx(int idx, boolean isSelected) {
+        myPlayerHand[idx].setSelected(isSelected);
+    }
 }
