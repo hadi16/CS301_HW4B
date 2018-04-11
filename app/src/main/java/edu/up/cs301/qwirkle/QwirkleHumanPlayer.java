@@ -136,6 +136,14 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             mainBoard.invalidate();
             sideBoard.invalidate();
 
+            if (buttonSwap.isPressed()) {
+                SwapTileAction sta = new SwapTileAction(this, xyPos[0], xyPos[1], handSelectedIdx);
+                game.sendAction(sta);
+
+                mainBoard.invalidate();
+                sideBoard.invalidate();
+            }
+            
             return true;
         }
         else if (v.getId() == R.id.sideBoard) {
