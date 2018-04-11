@@ -198,11 +198,11 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             }
         }
         swap = !swap;
-        if (swap) {
+        if (!swap) {
             buttonSwap.setText("Swap");
         }
         else {
-            buttonSwap.setText("End Swap");
+            buttonSwap.setText("End");
         }
     }
 }
