@@ -10,13 +10,4 @@ package edu.up.cs301.qwirkle.tile;
  */
 public enum QwirkleAnimal {
     bat, dog, fox, owl, parrot, snake;
-
-    public char shortName() {
-        return this.toString().charAt(0);
-    }
-
-    public String longName() {
-        String s = this.toString();
-        return s.substring(0,1)+s.substring(1);
-    }
 }

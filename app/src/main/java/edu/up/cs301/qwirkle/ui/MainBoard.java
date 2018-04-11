@@ -107,7 +107,6 @@ public class MainBoard extends View {
         for (QwirkleTile[] x : board) {
             for (QwirkleTile tile : x) {
                 if (tile != null) tile.drawTile(canvas);
-                Log.i("wHAT'S WRONG WITH YOU?", "ok");
             }
         }
     }

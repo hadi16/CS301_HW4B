@@ -73,8 +73,6 @@ public class SideBoard extends View {
         blackPaint.setStyle(Paint.Style.STROKE);
     }
 
-
-
     /**
      * Method: onDraw
      * Given a Canvas object, draws SideBoards.

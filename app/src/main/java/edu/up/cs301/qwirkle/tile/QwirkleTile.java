@@ -23,8 +23,6 @@ public class QwirkleTile {
     private Bitmap bitmapMain;
     private Bitmap bitmapSide;
 
-    private boolean isSelected = false;
-
     private int xPos;
     private int yPos;
     private QwirkleAnimal qwirkleAnimal;
@@ -79,7 +77,8 @@ public class QwirkleTile {
 
     @Override
     public String toString() {
-        return qwirkleAnimal.longName()+"_"+qwirkleColor.longName();
+        System.out.println(qwirkleAnimal.toString()+"_"+qwirkleColor.toString());
+        return qwirkleAnimal.toString()+"_"+qwirkleColor.toString();
     }
 
     /*
@@ -175,12 +174,6 @@ public class QwirkleTile {
     public QwirkleColor getQwirkleColor() {
         return qwirkleColor;
     }
-    public boolean isMainBoard() {
-        return mainBoard;
-    }
-    public boolean isSelected() {
-        return isSelected;
-    }
 
     // Setters
     public void setxPos(int xPos) {
@@ -191,8 +184,5 @@ public class QwirkleTile {
     }
     public void setMainBoard(boolean mainBoard) {
         this.mainBoard = mainBoard;
-    }
-    public void setSelected(boolean selected) {
-        isSelected = selected;
     }
 }

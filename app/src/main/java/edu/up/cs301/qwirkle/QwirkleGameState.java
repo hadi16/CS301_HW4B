@@ -121,15 +121,12 @@ public class QwirkleGameState extends GameState {
     public int getTurn() {
         return turn;
     }
-
     public int getNumPlayers() {
         return numPlayers;
     }
-
     public QwirkleTile[][] getPlayerHands() {
         return playerHands;
     }
-
     public QwirkleTile[][] getBoard() {
         return board;
     }
@@ -137,29 +134,11 @@ public class QwirkleGameState extends GameState {
         return myPlayerHand;
     }
 
+    // Setters
     public void setBoardAtIdx(int x, int y, QwirkleTile tile) {
         board[x][y] = tile;
     }
-
     public void setPlayerHandsAtIdx(int playerIdx, int handIdx, QwirkleTile tile) {
         playerHands[playerIdx][handIdx] = tile;
-    }
-
-    public void resetMyPlayerHandIsSelected() {
-        for (int i=0; i<myPlayerHand.length; i++) {
-            myPlayerHand[i].setSelected(false);
-        }
-    }
-
-    public void setMyPlayerHandIsSelectedAtIdx(int y, boolean isSelected) {
-        myPlayerHand[y].setSelected(isSelected);
-    }
-
-    public void setMyPlayerHand(int idx, QwirkleTile tile) {
-        this.myPlayerHand[idx] = tile;
-    }
-
-    public int[] getPlayerScores() {
-        return playerScores;
     }
 }

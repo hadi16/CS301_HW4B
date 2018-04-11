@@ -1,5 +1,6 @@
 package edu.up.cs301.qwirkle;
 
+import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,8 @@ import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
 import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameInfo;
+import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
+import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
@@ -33,6 +36,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
     private String playerName;
     private TextView textViewTurnLabel;
     private TextView textViewScoreLabel;
+    private boolean[] isSelected = new boolean[QwirkleGameState.HAND_NUM];
 
     /**
      * Constructor: QwirkleHumanPlayer
@@ -77,7 +81,14 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
 
     @Override
     public void receiveInfo(GameInfo info) {
-        if (!(info instanceof QwirkleGameState)) return;
+        if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {
+            flash(Color.RED, 50);
+            return;
+        }
+        else if (!(info instanceof QwirkleGameState)) {
+            return;
+        }
+
         this.state = (QwirkleGameState)info;
         mainBoard.setGameState(state);
         sideBoard.setGameState(state);
@@ -101,7 +112,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
             int handSelectedIdx = -1;
             for (int i=0; i<myPlayerHand.length; i++) {
                 QwirkleTile tile = myPlayerHand[i];
-                if (tile.isSelected()) {
+                if (isSelected[i]) {
                     handSelected = tile;
                     handSelectedIdx = i;
                     break;
@@ -117,7 +128,9 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
 
             PlaceTileAction pta = new PlaceTileAction(this, xyPos[0], xyPos[1], handSelectedIdx);
             game.sendAction(pta);
+
             mainBoard.invalidate();
+            sideBoard.invalidate();
 
             return true;
         }
@@ -125,9 +138,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
             int yPos = getSelectedHandIdx(x, y);
             if (yPos == -1) return false;
 
-            state.resetMyPlayerHandIsSelected();
-            state.setMyPlayerHandIsSelectedAtIdx(yPos, true);
+            for (int i=0; i<isSelected.length; i++) isSelected[i] = false;
+            isSelected[yPos] = true;
+
+            mainBoard.invalidate();
             sideBoard.invalidate();
+
             return false;
         }
 
