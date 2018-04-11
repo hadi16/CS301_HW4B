@@ -87,6 +87,8 @@ public class QwirkleGameState extends GameState {
         for (int i = 0; i<playerScores.length; i++) {
             playerScores[i] = orig.playerScores[i];
         }
+
+        board = orig.getBoard();
     }
 
     private void initDrawPile() {
