@@ -32,14 +32,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         implements View.OnTouchListener, View.OnClickListener {
     private GameMainActivity activity;
     private QwirkleGameState state;
-    private Button buttonSwap;
     private MainBoard mainBoard;
     private SideBoard sideBoard;
-    private String playerName;
     private TextView textViewTurnLabel;
-    private TextView textViewScoreLabel;
     private boolean[] isSelected = new boolean[QwirkleGameState.HAND_NUM];
     private boolean swap = false;
+    private Button buttonSwap;
 
     /**
      * Constructor: QwirkleHumanPlayer
@@ -49,7 +47,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      */
     public QwirkleHumanPlayer(String name) {
         super(name);
-        this.playerName = name;
     }
 
     @Override
@@ -62,7 +59,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         textViewPlayerLabel.setText("My Name: " + name);
 
         textViewTurnLabel = (TextView)activity.findViewById(R.id.textViewTurnLabel);
-        textViewScoreLabel = (TextView)activity.findViewById(R.id.textViewPlayerScore);
 
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         buttonSwap.setOnClickListener(this);
@@ -80,7 +76,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
     @Override
     public View getTopView() {
-        return null;
+        return activity.findViewById(R.id.top_gui_layout);
     }
 
     @Override
@@ -110,7 +106,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         int y = (int)event.getY();
 
         if (v.getId() == R.id.mainBoard) {
-            // To prevent the user from selecting board before a tile in the hand
+            // To prevent the user from selecting board before tile in hand
             QwirkleTile[] myPlayerHand = state.getMyPlayerHand();
             QwirkleTile handSelected = null;
             int handSelectedIdx = -1;
@@ -130,7 +126,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 return false;
             }
 
-            PlaceTileAction pta = new PlaceTileAction(this, xyPos[0], xyPos[1], handSelectedIdx);
+            PlaceTileAction pta = new PlaceTileAction(this, xyPos[0], xyPos[1],
+                    handSelectedIdx);
             game.sendAction(pta);
 
             mainBoard.invalidate();
@@ -164,7 +161,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     private int[] getSelectedBoardIdx(int x, int y) {
-        if (x < QwirkleTile.OFFSET_MAIN || x > QwirkleTile.RECTDIM_MAIN * MainBoard.BOARD_WIDTH + QwirkleTile.OFFSET_MAIN) {
+        if (x < QwirkleTile.OFFSET_MAIN || x > QwirkleTile.RECTDIM_MAIN *
+                MainBoard.BOARD_WIDTH + QwirkleTile.OFFSET_MAIN) {
             return null;
         }
 
@@ -178,10 +176,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     private int getSelectedHandIdx(int x, int y) {
-        if (x < QwirkleTile.OFFSET_SIDE || x > QwirkleTile.RECTDIM_SIDE * QwirkleGameState.HAND_NUM + QwirkleTile.OFFSET_SIDE) {
+        if (x < QwirkleTile.OFFSET_SIDE || x > QwirkleTile.RECTDIM_SIDE *
+                QwirkleGameState.HAND_NUM + QwirkleTile.OFFSET_SIDE) {
             return -1;
         }
-
         return y / QwirkleTile.RECTDIM_SIDE;
     }
 
@@ -197,5 +195,11 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             game.sendAction(sta);
         }
         swap = !swap;
+        if (swap) {
+            buttonSwap.setText("Swap");
+        }
+        else {
+            buttonSwap.setText("End Swap");
+        }
     }
 }
