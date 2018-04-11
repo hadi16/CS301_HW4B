@@ -35,10 +35,10 @@ public class QwirkleTile {
     private boolean mainBoard;
 
     // Constants to make bitmaps draw properly on the screen.
-    private static final int RECTDIM_MAIN = 74;
-    private static final int RECTDIM_SIDE = 175;
-    private static final int OFFSET_MAIN = 2;
-    private static final int OFFSET_SIDE = 26;
+    public static final int RECTDIM_MAIN = 74;
+    public static final int RECTDIM_SIDE = 175;
+    public static final int OFFSET_MAIN = 2;
+    public static final int OFFSET_SIDE = 26;
 
     public QwirkleTile(QwirkleAnimal animal, QwirkleColor color) {
         this.qwirkleAnimal = animal;

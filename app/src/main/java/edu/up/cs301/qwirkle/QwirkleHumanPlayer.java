@@ -95,7 +95,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() != MotionEvent.ACTION_DOWN) {
-            return true;
+            return false;
         }
 
         int x = (int)event.getX();
@@ -104,41 +104,63 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
         Log.i("X-position", Integer.toString(x));
         Log.i("Y-position", Integer.toString(y));
 
-        for (int i = 0; i < 6; i++) {
-            if (x > state.getMyPlayerHand()[i].getxPos() && x < state.getMyPlayerHand()[i].getxPos()
-            && y > state.getMyPlayerHand()[i].getyPos() && y < state.getMyPlayerHand()[i].getyPos()) {
-                selectTile(state.getMyPlayerHand()[i]);
-                game.sendAction((new PlaceTileAction(this, x, y, i)));
-            }
-            else {
-                break;
-            }
-        }
-
-        for (int i = 0; i < 6; i++) {
-            if (buttonSwap.isPressed()) {
-                if (x > state.getMyPlayerHand()[i].getxPos() && x < state.getMyPlayerHand()[i].getxPos()
-                        && y > state.getMyPlayerHand()[i].getyPos() && y < state.getMyPlayerHand()[i].getyPos()) {
-                    selectTile(state.getMyPlayerHand()[i]);
-                    game.sendAction((new SwapTileAction(this, x, y, i)));
+        if (v.getId() == R.id.mainBoard) {
+            // To prevent the user from selecting board before a tile in the hand
+            QwirkleTile[] myPlayerHand = state.getMyPlayerHand();
+            QwirkleTile handSelected = null;
+            int handSelectedIdx = -1;
+            for (int i=0; i<myPlayerHand.length; i++) {
+                QwirkleTile tile = myPlayerHand[i];
+                if (tile.isSelected()) {
+                    handSelected = tile;
+                    handSelectedIdx = i;
+                    break;
                 }
             }
-            else {
-                break;
-            }
-        }
+            if (handSelected == null) return false;
 
-        if (v.getId() == R.id.mainBoard) {
+            // Get where board is selected.
+            int[] xyPos = getSelectedBoardIdx(x, y);
+            if (xyPos == null) {
+                return false;
+            }
+
+            PlaceTileAction pta = new PlaceTileAction(this, xyPos[0], xyPos[1], handSelectedIdx);
+            game.sendAction(pta);
+
             return true;
         }
         else if (v.getId() == R.id.sideBoard) {
-            return true;
+            int yPos = getSelectedHandIdx(x, y);
+            if (yPos == -1) return false;
+
+            state.resetMyPlayerHandIsSelected();
+            state.setMyPlayerHandIsSelectedAtIdx(yPos, true);
+            return false;
         }
 
-        return true;
+        return false;
     }
 
-    public QwirkleTile selectTile(QwirkleTile tile) {
-        return tile;
+    private int[] getSelectedBoardIdx(int x, int y) {
+        if (x < QwirkleTile.OFFSET_MAIN || x > QwirkleTile.RECTDIM_MAIN * MainBoard.BOARD_WIDTH + QwirkleTile.OFFSET_MAIN) {
+            return null;
+        }
+
+        int[] xyPos = new int[2];
+        // X position
+        xyPos[0] = (x - QwirkleTile.OFFSET_MAIN) / QwirkleTile.RECTDIM_MAIN;
+        // Y position
+        xyPos[1] = y / QwirkleTile.RECTDIM_MAIN;
+
+        return xyPos;
+    }
+
+    private int getSelectedHandIdx(int x, int y) {
+        if (x < QwirkleTile.OFFSET_SIDE || x > QwirkleTile.RECTDIM_SIDE * QwirkleGameState.HAND_NUM + QwirkleTile.OFFSET_SIDE) {
+            return -1;
+        }
+
+        return y / QwirkleTile.RECTDIM_SIDE;
     }
 }
