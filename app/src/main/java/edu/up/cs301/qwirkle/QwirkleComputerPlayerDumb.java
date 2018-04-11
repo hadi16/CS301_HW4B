@@ -54,6 +54,8 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     }
 
     private void playRandomMove() {
+        sleep(3000);
+
         //Check each tile in the hand to the whole board to see if there's a valid move
         //Iterate through each tile in the player's hand
         for (int i = 0; i < QwirkleGameState.HAND_NUM; i++){

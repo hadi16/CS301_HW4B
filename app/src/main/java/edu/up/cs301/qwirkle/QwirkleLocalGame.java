@@ -25,7 +25,6 @@ public class QwirkleLocalGame extends LocalGame {
         this.gameState = new QwirkleGameState();
     }
 
-
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
         p.sendInfo(new QwirkleGameState(gameState, getPlayerIdx(p)));
@@ -111,8 +110,7 @@ public class QwirkleLocalGame extends LocalGame {
         for (int i = 0; i < gameState.getNumPlayers(); i++) {
             if (gameState.getPlayerScores()[i] >= 100) {
                 break;
-                }
             }
         }
     }
-
+}
