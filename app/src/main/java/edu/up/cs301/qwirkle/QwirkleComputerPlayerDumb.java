@@ -1,12 +1,14 @@
 package edu.up.cs301.qwirkle;
 
+import android.graphics.Color;
+
 import edu.up.cs301.game.GameComputerPlayer;
-import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.infoMsg.GameInfo;
+import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
+import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
-import edu.up.cs301.qwirkle.ui.SideBoard;
 
 /**
  * Class: QwirkleComputerPlayerDumb
@@ -31,12 +33,14 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
 
     @Override
     protected void receiveInfo(GameInfo info) {
-        if (!(info instanceof QwirkleGameState)) return;
+        if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {
+            return;
+        }
+        else if (!(info instanceof QwirkleGameState)) {
+            return;
+        }
 
         this.gameState = (QwirkleGameState)info;
-        if (gameState.getTurn() != this.playerNum) return;
-
-        this.myTurn = true;
         this.board = gameState.getBoard();
         this.myPlayerHand = gameState.getMyPlayerHand();
 
@@ -44,9 +48,6 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     }
 
     private void playRandomMove(){
-        //If it's not the player's turn, exit out of the code
-        if(!myTurn) return;
-
         //Check each tile in the hand to the whole board to see if there's a valid move
         //Iterate through each tile in the player's hand
         for (int i = 0; i < QwirkleGameState.HAND_NUM; i++){
