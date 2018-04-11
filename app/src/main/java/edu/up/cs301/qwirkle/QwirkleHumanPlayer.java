@@ -13,6 +13,7 @@ import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
+import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
 import edu.up.cs301.qwirkle.ui.SideBoard;
@@ -132,6 +133,14 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
             mainBoard.invalidate();
             sideBoard.invalidate();
 
+            if (buttonSwap.isPressed()) {
+                SwapTileAction sta = new SwapTileAction(this, xyPos[0], xyPos[1], handSelectedIdx);
+                game.sendAction(sta);
+
+                mainBoard.invalidate();
+                sideBoard.invalidate();
+            }
+            
             return true;
         }
         else if (v.getId() == R.id.sideBoard) {
