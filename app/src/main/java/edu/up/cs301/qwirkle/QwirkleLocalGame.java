@@ -19,7 +19,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
 public class QwirkleLocalGame extends LocalGame {
     private QwirkleGameState gameState;
     private QwirkleRules rules = new QwirkleRules();
-    
+
     public QwirkleLocalGame() {
         this.gameState = new QwirkleGameState();
     }
