@@ -27,8 +27,6 @@ public class PlaceTileAction extends GameAction {
         this.handIdx = handIdx;
     }
 
-    for (int i = 0; i < )
-
     public int getxPos() {
         return xPos;
     }
