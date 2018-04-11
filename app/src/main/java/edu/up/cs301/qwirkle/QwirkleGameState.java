@@ -146,7 +146,7 @@ public class QwirkleGameState extends GameState {
     }
 
     public void resetMyPlayerHandIsSelected() {
-        for (int i=0; i<board.length; i++) {
+        for (int i=0; i<myPlayerHand.length; i++) {
             myPlayerHand[i].setSelected(false);
         }
     }
