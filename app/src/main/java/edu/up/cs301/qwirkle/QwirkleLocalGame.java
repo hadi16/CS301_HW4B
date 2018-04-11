@@ -62,17 +62,7 @@ public class QwirkleLocalGame extends LocalGame {
 
             gameState.setBoardAtIdx(x, y, tile);
 
-            QwirkleTile newTile;
-            if (gameState.hasTilesInPile()) {
-                newTile = gameState.getRandomTile();
-                newTile.setyPos(handIdx);
-                newTile.setMainBoard(false);
-            }
-            else {
-                newTile = null;
-            }
-
-            gameState.setPlayerHandsAtIdx(playerIdx, handIdx, newTile);
+            gameState.setPlayerHandsAtIdx(playerIdx, handIdx, gameState.getRandomTile());
             gameState.changeTurn();
 
             return true;

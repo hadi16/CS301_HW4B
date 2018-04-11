@@ -135,14 +135,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
             mainBoard.invalidate();
             sideBoard.invalidate();
-
-            if (buttonSwap.isPressed()) {
-                SwapTileAction sta = new SwapTileAction(this, xyPos[0], xyPos[1], handSelectedIdx);
-                game.sendAction(sta);
-
-                mainBoard.invalidate();
-                sideBoard.invalidate();
-            }
             
             return true;
         }
@@ -151,7 +143,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 int yPos = getSelectedHandIdx(x, y);
                 if (yPos == -1) return false;
 
-                isSelected[yPos] = !isSelected[yPos];
+                isSelected[yPos] = true;
             }
             else {
                 int yPos = getSelectedHandIdx(x, y);
