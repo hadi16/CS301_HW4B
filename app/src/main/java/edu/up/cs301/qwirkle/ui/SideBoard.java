@@ -105,7 +105,11 @@ public class SideBoard extends View {
         for (QwirkleTile tile : myPlayerHand) {
             if (tile != null) tile.drawTile(canvas);
         }
+
+
     }
+
+
 
     public void setGameState(QwirkleGameState gameState) {
         this.gameState = gameState;

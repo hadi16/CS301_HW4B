@@ -24,6 +24,8 @@ public class QwirkleTile {
     private Bitmap bitmapMain;
     private Bitmap bitmapSide;
 
+    private boolean isSelected = false;
+
     private int xPos;
     private int yPos;
     private QwirkleAnimal qwirkleAnimal;
@@ -33,10 +35,10 @@ public class QwirkleTile {
     private boolean mainBoard;
 
     // Constants to make bitmaps draw properly on the screen.
-    private static final int RECTDIM_MAIN = 74;
-    private static final int RECTDIM_SIDE = 175;
-    private static final int OFFSET_MAIN = 2;
-    private static final int OFFSET_SIDE = 26;
+    public static final int RECTDIM_MAIN = 74;
+    public static final int RECTDIM_SIDE = 175;
+    public static final int OFFSET_MAIN = 2;
+    public static final int OFFSET_SIDE = 26;
 
     public QwirkleTile(QwirkleAnimal animal, QwirkleColor color) {
         this.qwirkleAnimal = animal;
@@ -143,6 +145,7 @@ public class QwirkleTile {
         }
     }
 
+
     /**
      * Method: drawTile
      * Used to draw a bitmap onto a view given a Canvas object.
@@ -176,6 +179,9 @@ public class QwirkleTile {
     public boolean isMainBoard() {
         return mainBoard;
     }
+    public boolean isSelected() {
+        return isSelected;
+    }
 
     // Setters
     public void setxPos(int xPos) {
@@ -186,5 +192,8 @@ public class QwirkleTile {
     }
     public void setMainBoard(boolean mainBoard) {
         this.mainBoard = mainBoard;
+    }
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

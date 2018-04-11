@@ -145,6 +145,16 @@ public class QwirkleGameState extends GameState {
         playerHands[playerIdx][handIdx] = tile;
     }
 
+    public void resetMyPlayerHandIsSelected() {
+        for (int i=0; i<myPlayerHand.length; i++) {
+            myPlayerHand[i].setSelected(false);
+        }
+    }
+
+    public void setMyPlayerHandIsSelectedAtIdx(int y, boolean isSelected) {
+        myPlayerHand[y].setSelected(isSelected);
+    }
+
     public int[] getPlayerScores() {
         return playerScores;
     }
