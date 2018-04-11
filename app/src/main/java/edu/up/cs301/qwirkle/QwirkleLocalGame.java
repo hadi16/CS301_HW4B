@@ -55,9 +55,10 @@ public class QwirkleLocalGame extends LocalGame {
             int playerIdx = getPlayerIdx(pta.getPlayer());
             QwirkleTile tile = playerHands[playerIdx][handIdx];
 
-            if (!isValidMove(x, y, tile, gameState.getBoard())) {
+            // TODO: Add valid move functionality
+            /*if (!isValidMove(x, y, tile, gameState.getBoard())) {
                 return false;
-            }
+            }*/
 
             tile.setxPos(x);
             tile.setyPos(y);
