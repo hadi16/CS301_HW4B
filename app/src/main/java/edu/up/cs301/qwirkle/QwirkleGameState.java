@@ -62,6 +62,8 @@ public class QwirkleGameState extends GameState {
         numPlayers = orig.getNumPlayers();
         drawPile = null;
 
+        // TODO: Implement a deep copy of the board (this breaks the code).
+        /*
         board = new QwirkleTile[MainBoard.BOARD_WIDTH][MainBoard.BOARD_HEIGHT];
         for (int i = 0; i<board.length; i++) {
             for (int j = 0; j<board[i].length; j++) {
@@ -71,6 +73,11 @@ public class QwirkleGameState extends GameState {
                 }
             }
         }
+        */
+
+        // We will eventually change this to a deep copy.
+        board = orig.getBoard();
+
 
         myPlayerHand = new QwirkleTile[HAND_NUM];
         for (int i = 0; i<HAND_NUM; i++) {
