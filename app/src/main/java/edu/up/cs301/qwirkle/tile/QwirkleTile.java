@@ -52,6 +52,8 @@ public class QwirkleTile {
 
         this.mainBoard = orig.mainBoard;
         this.isSelected = orig.isSelected;
+
+        initBitmapInstance();
     }
 
     public QwirkleTile(QwirkleAnimal animal, QwirkleColor color) {

@@ -1,10 +1,7 @@
 package edu.up.cs301.qwirkle;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
-import edu.up.cs301.qwirkle.tile.QwirkleAnimal;
-import edu.up.cs301.qwirkle.tile.QwirkleColor;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
 
