@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import edu.up.cs301.qwirkle.QwirkleGameState;
@@ -93,6 +94,7 @@ public class MainBoard extends View {
             for (int j = 0; j< BOARD_HEIGHT; j++){
                 canvas.drawRect(i*rectDim+offset, j*rectDim,
                         (i+1)*rectDim+offset, (j+1)*rectDim, blackPaint);
+
             }
         }
 
@@ -105,6 +107,7 @@ public class MainBoard extends View {
         for (QwirkleTile[] x : board) {
             for (QwirkleTile tile : x) {
                 if (tile != null) tile.drawTile(canvas);
+                Log.i("wHAT'S WRONG WITH YOU?", "ok");
             }
         }
     }
