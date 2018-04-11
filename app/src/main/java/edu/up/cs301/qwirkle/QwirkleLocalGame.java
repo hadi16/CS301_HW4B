@@ -62,24 +62,26 @@ public class QwirkleLocalGame extends LocalGame {
 
             gameState.setBoardAtIdx(x, y, tile);
 
-            QwirkleTile newTile;
-            if (gameState.hasTilesInPile()) {
-                newTile = gameState.getRandomTile();
-                newTile.setyPos(handIdx);
-                newTile.setMainBoard(false);
-            }
-            else {
-                newTile = null;
-            }
-
-            gameState.setPlayerHandsAtIdx(playerIdx, handIdx, newTile);
+            gameState.setPlayerHandsAtIdx(playerIdx, handIdx, gameState.getRandomTile());
             gameState.changeTurn();
 
             return true;
         }
         else if (action instanceof SwapTileAction) {
-            // TODO: Add swap
             SwapTileAction sta = (SwapTileAction) action;
+            boolean[] tilesToSwap = sta.getSwapIdx();
+            for (int i=0; i<tilesToSwap.length; i++) {
+                boolean swapThisTile = tilesToSwap[i];
+                if (swapThisTile) {
+                    int playerId = getPlayerIdx(sta.getPlayer());
+                    QwirkleTile tileToSwap = gameState.getPlayerHands()[playerId][i];
+                    gameState.addToDrawPile(tileToSwap);
+                    gameState.setPlayerHandsAtIdx(playerId, i, gameState.getRandomTile());
+                }
+            }
+
+            gameState.changeTurn();
+
             return true;
         }
         else {
