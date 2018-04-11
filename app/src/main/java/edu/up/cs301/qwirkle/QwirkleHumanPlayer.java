@@ -31,11 +31,12 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
 public class QwirkleHumanPlayer extends GameHumanPlayer
         implements View.OnTouchListener, View.OnClickListener {
     private GameMainActivity activity;
-    private QwirkleGameState state;
+    private QwirkleGameState gameState;
+    private QwirkleTile[] myPlayerHand;
     private MainBoard mainBoard;
     private SideBoard sideBoard;
     private TextView textViewTurnLabel;
-    private boolean[] isSelected = new boolean[QwirkleGameState.HAND_NUM];
+    private boolean[] isSelectedBoolArr = new boolean[QwirkleGameState.HAND_NUM];
     private boolean swap = false;
     private Button buttonSwap;
 
@@ -89,9 +90,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             return;
         }
 
-        this.state = (QwirkleGameState)info;
-        mainBoard.setGameState(state);
-        sideBoard.setGameState(state);
+        this.gameState = (QwirkleGameState)info;
+        this.myPlayerHand = gameState.getMyPlayerHand();
+
+        mainBoard.setGameState(gameState);
+        sideBoard.setGameState(gameState);
+
         mainBoard.invalidate();
         sideBoard.invalidate();
     }
@@ -107,12 +111,11 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
         if (v.getId() == R.id.mainBoard) {
             // To prevent the user from selecting board before tile in hand
-            QwirkleTile[] myPlayerHand = state.getMyPlayerHand();
             QwirkleTile handSelected = null;
             int handSelectedIdx = -1;
             for (int i=0; i<myPlayerHand.length; i++) {
                 QwirkleTile tile = myPlayerHand[i];
-                if (isSelected[i]) {
+                if (isSelectedBoolArr[i]) {
                     handSelected = tile;
                     handSelectedIdx = i;
                     break;
@@ -140,19 +143,23 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 int yPos = getSelectedHandIdx(x, y);
                 if (yPos == -1) return false;
 
-                isSelected[yPos] = true;
+                isSelectedBoolArr[yPos] = true;
+                myPlayerHand[yPos].setSelected(true);
             }
             else {
                 int yPos = getSelectedHandIdx(x, y);
                 if (yPos == -1) return false;
 
-                for (int i = 0; i < isSelected.length; i++)
-                    isSelected[i] = false;
-                isSelected[yPos] = true;
-
-                mainBoard.invalidate();
-                sideBoard.invalidate();
+                for (int i = 0; i < isSelectedBoolArr.length; i++) {
+                    isSelectedBoolArr[i] = false;
+                    myPlayerHand[i].setSelected(false);
+                }
+                isSelectedBoolArr[yPos] = true;
+                myPlayerHand[yPos].setSelected(true);
             }
+
+            mainBoard.invalidate();
+            sideBoard.invalidate();
 
             return true;
         }
@@ -188,18 +195,29 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         if (v.getId() != R.id.buttonSwap) return;
         if (swap) {
             boolean somethingToSwap = false;
-            for (boolean selected: isSelected) if (selected) somethingToSwap = true;
+            for (boolean selected: isSelectedBoolArr) {
+                if (selected) {
+                    somethingToSwap = true;
+                }
+            }
             if (!somethingToSwap) return;
 
-            SwapTileAction sta = new SwapTileAction(this, isSelected);
+            SwapTileAction sta = new SwapTileAction(this, isSelectedBoolArr);
             game.sendAction(sta);
+            for (int i = 0; i< isSelectedBoolArr.length; i++) {
+                isSelectedBoolArr[i] = false;
+                myPlayerHand[i].setSelected(false);
+            }
         }
         swap = !swap;
-        if (swap) {
+        if (!swap) {
             buttonSwap.setText("Swap");
         }
         else {
-            buttonSwap.setText("End Swap");
+            buttonSwap.setText("End");
         }
+
+        mainBoard.invalidate();
+        sideBoard.invalidate();
     }
 }

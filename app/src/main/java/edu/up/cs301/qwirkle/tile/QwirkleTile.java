@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 
 import java.util.Hashtable;
 
@@ -22,6 +23,7 @@ public class QwirkleTile {
 
     private Bitmap bitmapMain;
     private Bitmap bitmapSide;
+    private Bitmap bitmapSideSelected;
 
     private int xPos;
     private int yPos;
@@ -30,6 +32,8 @@ public class QwirkleTile {
 
     // Boolean to see if tile belongs to main board (true) or side board (false)
     private boolean mainBoard;
+
+    private boolean isSelected;
 
     // Constants to make bitmaps draw properly on the screen.
     public static int RECTDIM_MAIN = 74;
@@ -110,6 +114,29 @@ public class QwirkleTile {
         Bitmap bitmap = tileImages.get(this.toString());
         bitmapMain = Bitmap.createScaledBitmap(bitmap, RECTDIM_MAIN, RECTDIM_MAIN, false);
         bitmapSide = Bitmap.createScaledBitmap(bitmap, RECTDIM_SIDE, RECTDIM_SIDE, false);
+
+        /*
+        External Citation
+        Date: 10 April 2018
+        Problem: Could not replace color in a bitmap.
+        Resource:
+        https://stackoverflow.com/questions/7237915/replace-black-color-in-
+        bitmap-with-red
+        Solution:
+        Used a slightly modified version of the StackOverflow code.
+        */
+        Bitmap bitmapSideCopy = bitmapSide.copy(bitmapSide.getConfig(), true);
+        int[] allpixels = new int [bitmapSideCopy.getHeight()*bitmapSideCopy.getWidth()];
+        bitmapSideCopy.getPixels(allpixels, 0, bitmapSideCopy.getWidth(), 0, 0,
+                bitmapSideCopy.getWidth(), bitmapSideCopy.getHeight());
+        for(int i = 0; i < allpixels.length; i++) {
+            if (allpixels[i] == Color.BLACK) {
+                allpixels[i] = Color.GRAY;
+            }
+        }
+        bitmapSideCopy.setPixels(allpixels, 0, bitmapSideCopy.getWidth(), 0, 0,
+                bitmapSideCopy.getWidth(), bitmapSideCopy.getHeight());
+        this.bitmapSideSelected = bitmapSideCopy;
     }
 
     public static void initBitmaps(Activity activity) {
@@ -155,8 +182,16 @@ public class QwirkleTile {
         if (this.mainBoard) {
             canvas.drawBitmap(bitmapMain, xPos*RECTDIM_MAIN+OFFSET_MAIN,
                     yPos*RECTDIM_MAIN, null);
-        } else {
-            canvas.drawBitmap(bitmapSide, OFFSET_SIDE, yPos*RECTDIM_SIDE, null);
+        }
+        else {
+            Bitmap bitmap;
+            if (isSelected) {
+                bitmap = bitmapSideSelected;
+            }
+            else {
+                bitmap = bitmapSide;
+            }
+            canvas.drawBitmap(bitmap, OFFSET_SIDE, yPos*RECTDIM_SIDE, null);
         }
     }
 
@@ -183,5 +218,8 @@ public class QwirkleTile {
     }
     public void setMainBoard(boolean mainBoard) {
         this.mainBoard = mainBoard;
+    }
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }
