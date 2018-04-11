@@ -26,6 +26,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     private QwirkleTile[] myPlayerHand;
     private QwirkleTile[][] board;
     private QwirkleRules rules = new QwirkleRules();
+    private boolean isWinner;
 
     public QwirkleComputerPlayerDumb(String name) {
         super(name);
