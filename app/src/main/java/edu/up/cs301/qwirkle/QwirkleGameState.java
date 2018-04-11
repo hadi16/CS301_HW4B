@@ -163,6 +163,13 @@ public class QwirkleGameState extends GameState {
     public QwirkleTile[] getMyPlayerHand() {
         return myPlayerHand;
     }
+    public int getCompPlayerScores() {
+        return playerScores[1];
+    }
+
+    public int getMyPlayerScore() {
+        return playerScores[0];
+    }
 
     public int[] getPlayerScores() {
         return playerScores;
@@ -186,10 +193,10 @@ public class QwirkleGameState extends GameState {
         myPlayerHand[idx].setSelected(isSelected);
     }
 
-    public void setPlayerScores(int playerIdx, int score, boolean isQwirkle) {
+    public void setPlayerScores(int playerIdx, boolean isQwirkle) {
         if (isQwirkle) {
-            score +=6;
+            playerScores[playerIdx] +=6;
         }
-        score +=1;
+        playerScores[playerIdx] +=1;
     }
 }
