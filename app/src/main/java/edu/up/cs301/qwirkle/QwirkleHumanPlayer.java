@@ -1,25 +1,15 @@
 package edu.up.cs301.qwirkle;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
-import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameInfo;
-import edu.up.cs301.game.infoMsg.GameState;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
-import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
 import edu.up.cs301.qwirkle.ui.SideBoard;
@@ -104,9 +94,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
         int x = (int)event.getX();
         int y = (int)event.getY();
 
-        Log.i("X-position", Integer.toString(x));
-        Log.i("Y-position", Integer.toString(y));
-
         if (v.getId() == R.id.mainBoard) {
             // To prevent the user from selecting board before a tile in the hand
             QwirkleTile[] myPlayerHand = state.getMyPlayerHand();
@@ -129,11 +116,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
             }
 
             PlaceTileAction pta = new PlaceTileAction(this, xyPos[0], xyPos[1], handSelectedIdx);
-            state.setBoardAtIdx(x/QwirkleTile.RECTDIM_MAIN,y/QwirkleTile.RECTDIM_MAIN, handSelected);
-            //state.setPlayerHandsAtIdx(0, handSelectedIdx, state.getRandomTile());
             game.sendAction(pta);
             mainBoard.invalidate();
-
 
             return true;
         }

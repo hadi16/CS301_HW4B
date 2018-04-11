@@ -1,12 +1,10 @@
 package edu.up.cs301.qwirkle;
 
 import edu.up.cs301.game.GameComputerPlayer;
-import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
-import edu.up.cs301.qwirkle.ui.SideBoard;
 
 /**
  * Class: QwirkleComputerPlayerDumb
