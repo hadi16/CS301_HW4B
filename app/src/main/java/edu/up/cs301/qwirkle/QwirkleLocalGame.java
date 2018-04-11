@@ -55,7 +55,7 @@ public class QwirkleLocalGame extends LocalGame {
 
             QwirkleTile[][] playerHands = gameState.getPlayerHands();
             // TODO: Fix this line! (bad cast)
-            int playerIdx = getPlayerIdx((GamePlayer)action);
+            int playerIdx = getPlayerIdx(pta.getPlayer());
             QwirkleTile tile = playerHands[playerIdx][handIdx];
 
             if (!isValidMove(x, y, tile, gameState.getBoard())) {
@@ -210,4 +210,6 @@ public class QwirkleLocalGame extends LocalGame {
         // If all checks passed, then it must be a valid move.
         return true;
     }
+
+
 }
