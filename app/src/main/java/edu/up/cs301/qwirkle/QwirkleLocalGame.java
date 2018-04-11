@@ -21,7 +21,8 @@ public class QwirkleLocalGame extends LocalGame {
     private QwirkleRules rules = new QwirkleRules();
 
     public QwirkleLocalGame() {
-        this.gameState = new QwirkleGameState();
+        // TODO: Fix number of players
+        this.gameState = new QwirkleGameState(2);
     }
 
     @Override
