@@ -69,6 +69,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer implements View.OnTouchL
         mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
         mainBoard.setOnTouchListener(this);
         sideBoard = (SideBoard)activity.findViewById(R.id.sideBoard);
+        sideBoard.setOnTouchListener(this);
     }
 
     @Override
