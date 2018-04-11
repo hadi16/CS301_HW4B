@@ -22,7 +22,7 @@ public class QwirkleLocalGame extends LocalGame {
 
     public QwirkleLocalGame() {
         // TODO: Fix number of players
-        this.gameState = new QwirkleGameState(2);
+        this.gameState = new QwirkleGameState();
     }
 
     @Override
@@ -59,9 +59,8 @@ public class QwirkleLocalGame extends LocalGame {
             }
 
             gameState.setBoardAtIdx(x, y, tile);
-            int currentScore = gameState.getPlayerScores()[playerIdx];
-            gameState.setPlayerScores(playerIdx, currentScore, false);
-
+            boolean isQwirkle = false;
+            gameState.setPlayerScores(playerIdx, isQwirkle);
             gameState.setPlayerHandsAtIdx(playerIdx, handIdx, gameState.getRandomTile());
             gameState.changeTurn();
 
