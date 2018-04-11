@@ -101,6 +101,24 @@ public class QwirkleGameState extends GameState {
         }
     }
 
+    private void initPlayerHands() {
+        this.playerHands = new QwirkleTile[numPlayers][HAND_NUM];
+        for (int i = 0; i < playerHands.length; i++) {
+            for (int j = 0; j < playerHands[i].length; j++) {
+                playerHands[i][j] = getRandomTile();
+                playerHands[i][j].setyPos(j);
+                playerHands[i][j].setMainBoard(false);
+            }
+        }
+    }
+
+    private void initPlayerScores() {
+        this.playerScores = new int[numPlayers];
+        for (int i = 0; i < playerScores.length; i++) {
+            playerScores[i] = 0;
+        }
+    }
+
     public void addToDrawPile(QwirkleTile tile) {
         drawPile.add(tile);
     }
@@ -144,10 +162,6 @@ public class QwirkleGameState extends GameState {
     }
     public QwirkleTile[] getMyPlayerHand() {
         return myPlayerHand;
-    }
-
-    public int[] getPlayerScores() {
-        return playerScores;
     }
 
     // Setters

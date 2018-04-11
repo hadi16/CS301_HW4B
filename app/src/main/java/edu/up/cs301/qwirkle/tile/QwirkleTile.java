@@ -30,9 +30,8 @@ public class QwirkleTile {
     private QwirkleAnimal qwirkleAnimal;
     private QwirkleColor qwirkleColor;
 
-    // Boolean to see if tile belongs to main board (true) or side board (false)
+    // Booleans
     private boolean mainBoard;
-
     private boolean isSelected;
 
     // Constants to make bitmaps draw properly on the screen.
@@ -40,6 +39,22 @@ public class QwirkleTile {
     public static int RECTDIM_SIDE = 175;
     public static int OFFSET_MAIN = 2;
     public static int OFFSET_SIDE = 26;
+
+    public QwirkleTile(QwirkleTile orig) {
+        this.bitmapMain = orig.bitmapMain;
+        this.bitmapSide = orig.bitmapSide;
+        this.bitmapSideSelected = orig.bitmapSideSelected;
+
+        this.xPos = orig.xPos;
+        this.yPos = orig.yPos;
+        this.qwirkleAnimal = orig.qwirkleAnimal;
+        this.qwirkleColor = orig.qwirkleColor;
+
+        this.mainBoard = orig.mainBoard;
+        this.isSelected = orig.isSelected;
+
+        initBitmapInstance();
+    }
 
     public QwirkleTile(QwirkleAnimal animal, QwirkleColor color) {
         this.qwirkleAnimal = animal;
