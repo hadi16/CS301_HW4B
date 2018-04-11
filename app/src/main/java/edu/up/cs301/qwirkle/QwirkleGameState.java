@@ -146,6 +146,10 @@ public class QwirkleGameState extends GameState {
         return myPlayerHand;
     }
 
+    public int[] getPlayerScores() {
+        return playerScores;
+    }
+
     // Setters
     public void setBoardAtIdx(int x, int y, QwirkleTile tile) {
         board[x][y] = tile;
@@ -162,5 +166,12 @@ public class QwirkleGameState extends GameState {
     }
     public void setPlayerHandsIsSelectedAtIdx(int idx, boolean isSelected) {
         myPlayerHand[idx].setSelected(isSelected);
+    }
+
+    public void setPlayerScores(int playerIdx, int score, boolean isQwirkle) {
+        if (isQwirkle) {
+            score +=6;
+        }
+        score +=1;
     }
 }

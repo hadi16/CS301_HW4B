@@ -36,9 +36,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private MainBoard mainBoard;
     private SideBoard sideBoard;
     private TextView textViewTurnLabel;
+    private TextView myScoreView;
+    private TextView scoreBoardView;
     private boolean[] isSelectedBoolArr = new boolean[QwirkleGameState.HAND_NUM];
     private boolean swap = false;
     private Button buttonSwap;
+    private boolean isWinner = false;
 
     /**
      * Constructor: QwirkleHumanPlayer
@@ -60,6 +63,11 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         textViewPlayerLabel.setText("My Name: " + name);
 
         textViewTurnLabel = (TextView)activity.findViewById(R.id.textViewTurnLabel);
+        myScoreView = (TextView)activity.findViewById(R.id.textViewPlayerScore);
+        scoreBoardView = (TextView)activity.findViewById(R.id.textViewScoreboardLabel);
+
+        myScoreView.setText("My Score: 0");
+        scoreBoardView.setText("Scoreboard:\n"+name+": 0\n"+"Computer: 0");
 
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         buttonSwap.setOnClickListener(this);
@@ -74,6 +82,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         super.initAfterReady();
         textViewTurnLabel.setText("Current Turn: "+allPlayerNames[playerNum]);
     }
+
 
     @Override
     public View getTopView() {
