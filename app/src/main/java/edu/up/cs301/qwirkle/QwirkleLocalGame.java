@@ -60,9 +60,6 @@ public class QwirkleLocalGame extends LocalGame {
                 return false;
             }*/
 
-            tile.setxPos(x);
-            tile.setyPos(y);
-            tile.setMainBoard(true);
             gameState.setBoardAtIdx(x, y, tile);
 
             QwirkleTile newTile;
