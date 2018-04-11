@@ -66,7 +66,7 @@ public class QwirkleGameState extends GameState {
         for (int i = 0; i<board.length; i++) {
             for (int j = 0; j<board[i].length; j++) {
                 if (board[i][j] != null) {
-                    QwirkleTile oldTile = orig.board[i][j];
+                    QwirkleTile oldTile = orig.getBoard()[i][j];
                     board[i][j] = new QwirkleTile(oldTile.getxPos(), oldTile.getyPos(), oldTile.getQwirkleAnimal(), oldTile.getQwirkleColor());
                 }
             }
@@ -137,6 +137,9 @@ public class QwirkleGameState extends GameState {
     // Setters
     public void setBoardAtIdx(int x, int y, QwirkleTile tile) {
         board[x][y] = tile;
+        board[x][y].setxPos(x);
+        board[x][y].setyPos(y);
+        board[x][y].setMainBoard(true);
     }
     public void setPlayerHandsAtIdx(int playerIdx, int handIdx, QwirkleTile tile) {
         playerHands[playerIdx][handIdx] = tile;

@@ -77,7 +77,6 @@ public class QwirkleTile {
 
     @Override
     public String toString() {
-        System.out.println(qwirkleAnimal.toString()+"_"+qwirkleColor.toString());
         return qwirkleAnimal.toString()+"_"+qwirkleColor.toString();
     }
 
@@ -153,7 +152,7 @@ public class QwirkleTile {
         if (bitmapMain == null || bitmapSide == null) initBitmapInstance();
 
         // No paint needed to draw the bitmap.
-        if (mainBoard) {
+        if (this.mainBoard) {
             canvas.drawBitmap(bitmapMain, xPos*RECTDIM_MAIN+OFFSET_MAIN,
                     yPos*RECTDIM_MAIN, null);
         } else {
