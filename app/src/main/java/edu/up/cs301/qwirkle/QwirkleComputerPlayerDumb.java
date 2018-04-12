@@ -1,8 +1,17 @@
 package edu.up.cs301.qwirkle;
 
+import android.app.Activity;
+import android.os.Handler;
+import android.widget.TextView;
+
 import java.util.Random;
 
+
 import edu.up.cs301.game.GameComputerPlayer;
+import edu.up.cs301.game.GameMainActivity;
+import edu.up.cs301.game.LocalGame;
+import edu.up.cs301.game.R;
+import edu.up.cs301.game.config.GameConfig;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
@@ -26,6 +35,9 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     private QwirkleTile[] myPlayerHand;
     private QwirkleTile[][] board;
     private QwirkleRules rules = new QwirkleRules();
+    private GameMainActivity activity = null;
+    private TextView textViewTurnLabel = null;
+    private Handler guiHandler;
     private boolean isWinner;
 
     // In milliseconds
@@ -40,14 +52,34 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     public QwirkleComputerPlayerDumb(String name) {
         super(name);
     }
+    @Override
+    public void setAsGui(GameMainActivity a) {
+        this.activity = a;
+        activity.setContentView(R.layout.qwirkle_human_player);
+        this.guiHandler = new Handler();
+        this.textViewTurnLabel = (TextView)activity.findViewById(R.id.textViewTurnLabel);
+
+        if(gameState != null) {
+            updateDisplay();
+        }
+    }
+
+    protected void updateDisplay() {
+        if (guiHandler != null) {
+            guiHandler.post(
+                    new Runnable() {
+                        public void run() {
+                            if (textViewTurnLabel != null && gameState != null) {
+                                textViewTurnLabel.setText("Current Turn: " + allPlayerNames[playerNum]);
+                            }
+                        }
+                    }
+            );
+        }
+    }
 
 
-    /**
-     * callback method when the game state has changed
-     *
-     * @param info
-     *          the information (presumably containing the game's state)
-     */
+
     @Override
     protected void receiveInfo(GameInfo info) {
         if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {
@@ -58,7 +90,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
         }
 
         this.gameState = (QwirkleGameState)info;
-
+        updateDisplay();
         if (gameState.getTurn() != playerNum) {
             return;
         }
@@ -66,13 +98,14 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
         this.board = gameState.getBoard();
         this.myPlayerHand = gameState.getMyPlayerHand();
 
-        // make a random move, based on the valid positions
         playRandomMove();
     }
 
     private void playRandomMove() {
         sleep(TIME_TO_SLEEP);
 
+        //Check each tile in the hand to the whole board to see if there's a valid move
+        //Iterate through each tile in the player's hand
         // Check each tile in the hand w/ board to see if there's a valid move
         // Iterate through each tile in the player's hand
         for (int i = 0; i < QwirkleGameState.HAND_NUM; i++){

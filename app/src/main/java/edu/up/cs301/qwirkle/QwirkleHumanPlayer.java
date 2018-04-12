@@ -19,8 +19,8 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
 import edu.up.cs301.qwirkle.ui.SideBoard;
 
 /**
- * A GUI that allows a human to play Qwirkle. Moves are made by selecting tiles
- * on the side board and placing them on the main board.
+ * Class: QwirkleHumanPlayer
+ * The human player configuration of Qwirkle.
  *
  * @author Alex Hadi
  * @author Michael Quach
@@ -66,18 +66,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         myScoreView = (TextView)activity.findViewById(R.id.textViewPlayerScore);
         scoreBoardView = (TextView)activity.findViewById(R.id.textViewScoreboardLabel);
 
-        // initialize the score to 0
-        myScoreView.setText("My Score: 0");
 
-        // initialize the scoreboard to 0
-        scoreBoardView.setText("Scoreboard:\n"+name+": 0"+ "\n"+"Computer: 0");
-
-
-        // initialize the swap button, main board, and side board.
-        /*
-        myScoreView.setText("My Score: " + gameState.getPlayerScores()[0]);
-        scoreBoardView.setText("Scoreboard:\n"+name+": "+ gameState.getPlayerScores()[0]+ "\n"+"Computer: "+gameState.getPlayerScores()[1]);
-        */
 
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         buttonSwap.setOnClickListener(this);
@@ -90,7 +79,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     @Override
     protected void initAfterReady() {
         super.initAfterReady();
-        textViewTurnLabel.setText("Current Turn: "+allPlayerNames[playerNum]);
     }
 
 
@@ -105,12 +93,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         scoreBoardView.setText("Scoreboard:\n"+name+ gameState.getMyPlayerScore() + "\n"+"Computer: " + gameState.getCompPlayerScores());
     }
 
-    /**
-     * Callback method, called when player gets a message
-     *
-     * @param info
-     *           the message;
-     */
     @Override
     public void receiveInfo(GameInfo info) {
         if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {
@@ -126,6 +108,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
         mainBoard.setGameState(gameState);
         sideBoard.setGameState(gameState);
+        updateDisplay();
 
         mainBoard.invalidate();
         sideBoard.invalidate();
@@ -136,16 +119,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         if (event.getAction() != MotionEvent.ACTION_DOWN) {
             return false;
         }
-
-        /**
-         External Citation
-         Date: 11 April 2018
-         Problem: Did not know how to implement the Motion Event
-         Resource:
-         https://stackoverflow.com/questions/32526332/
-         android-ontouch-motionevent-actions
-         Solution: I used this example code as reference.
-         */
 
         int x = (int)event.getX();
         int y = (int)event.getY();

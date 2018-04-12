@@ -146,6 +146,12 @@ public class QwirkleGameState extends GameState {
     public QwirkleTile[] getMyPlayerHand() {
         return myPlayerHand;
     }
+    public int getCompPlayerScores() {
+        return playerScores[1];
+    }
+    public int getMyPlayerScore() {
+        return playerScores[0];
+    }
 
     public int[] getPlayerScores() {
         return playerScores;
