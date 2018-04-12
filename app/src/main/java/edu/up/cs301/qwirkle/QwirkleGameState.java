@@ -159,37 +159,27 @@ public class QwirkleGameState extends GameState {
         board[x][y].setyPos(y);
         board[x][y].setMainBoard(true);
     }
+
     public void setPlayerHandsAtIdx(int playerIdx, int handIdx, QwirkleTile tile) {
         playerHands[playerIdx][handIdx] = tile;
         if (tile == null) return;
         playerHands[playerIdx][handIdx].setyPos(handIdx);
         playerHands[playerIdx][handIdx].setMainBoard(false);
     }
-    public void setPlayerHandsIsSelectedAtIdx(int idx, boolean isSelected) {
-        myPlayerHand[idx].setSelected(isSelected);
-    }
 
     /**
      * Set each players' scores
      *
-     * @param playerIdx
-     *          a specific player
-     * @param score
-     *          the current score of a player
-     * @param isQwirkle
-     *          the maximum points a player can get from completing a qwirkle
+     * @param playerIdx a specific player
+     * @param isQwirkle True if a Qwirkle, otherwise false.
      */
-    public void setPlayerScores(int playerIdx, int score, boolean isQwirkle) {
+    public void setPlayerScores(int playerIdx, boolean isQwirkle) {
         // if a player managed to complete a line of either the same animal
         // or the same color, that is a Qwirkle and it adds on an additional 6
         // points to the player's current score
-    public void setPlayerScores(int playerIdx, boolean isQwirkle) {
         if (isQwirkle) {
-            score += 6;
             playerScores[playerIdx] +=6;
         }
         playerScores[playerIdx] +=1;
-        // add a point to each player's score for every tile placed
-        score += 1;
     }
 }
