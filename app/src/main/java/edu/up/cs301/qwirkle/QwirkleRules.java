@@ -1,7 +1,11 @@
 package edu.up.cs301.qwirkle;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
+import edu.up.cs301.qwirkle.tile.QwirkleAnimal;
+import edu.up.cs301.qwirkle.tile.QwirkleColor;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
 
@@ -87,9 +91,52 @@ public class QwirkleRules {
     }
 
     private boolean isValidLine(ArrayList<QwirkleTile> line) {
-        for (int i=0; i<line.size(); ++i) {
-            for (int j=0; j<line.size(); ++j) {
-                if (!(match(line.get(i), line.get(j)))) return false;
+        // True if animal is the same throughout line (otherwise false).
+        boolean sameAnimal;
+        String sameAttribute;
+
+        // Note: this function is only called if the line has more than 1 element.
+        QwirkleTile t1 = line.get(0);
+        QwirkleTile t2 = line.get(1);
+
+        String animal1 = t1.getQwirkleAnimal().toString();
+        String color1 = t1.getQwirkleColor().toString();
+        String animal2 = t2.getQwirkleAnimal().toString();
+        String color2 = t2.getQwirkleColor().toString();
+
+        if (animal1.equals(animal2) && color1.equals(color2)) {
+            return false;
+        }
+        else if (animal1.equals(animal2)) {
+            sameAnimal = true;
+            sameAttribute = animal1;
+        }
+        else if (color1.equals(color2)) {
+            sameAnimal = false;
+            sameAttribute = color1;
+        }
+        else {
+            return false;
+        }
+
+        boolean[] differentAttributes = new boolean[6];
+        for (int i=0; i<differentAttributes.length; i++) {
+            differentAttributes[i] = false;
+        }
+        for (int i=0; i<line.size(); i++) {
+            QwirkleTile theTile = line.get(i);
+            QwirkleAnimal animal = theTile.getQwirkleAnimal();
+            QwirkleColor color = theTile.getQwirkleColor();
+
+            if (sameAnimal) {
+                if (!animal.toString().equals(sameAttribute)) return false;
+                if (differentAttributes[color.ordinal()]) return false;
+                else differentAttributes[color.ordinal()] = true;
+            }
+            else {
+                if (!color.toString().equals(sameAttribute)) return false;
+                if (differentAttributes[animal.ordinal()]) return false;
+                else differentAttributes[animal.ordinal()] = true;
             }
         }
         return true;
@@ -135,12 +182,16 @@ public class QwirkleRules {
         if (lineNS.size() == 1 && lineEW.size() == 1) {
             return false;
         }
+        // Check to make sure no lines can be longer than 6.
+        if (lineNS.size() > 6 || lineEW.size() > 6) {
+            return false;
+        }
         if (lineNS.size() > 1) {
             if (!isValidLine(lineNS)) {
                 return false;
             }
         }
-        if (!(lineEW.size() > 1)) {
+        if (lineEW.size() > 1) {
             if (!isValidLine(lineEW)) {
                 return false;
             }

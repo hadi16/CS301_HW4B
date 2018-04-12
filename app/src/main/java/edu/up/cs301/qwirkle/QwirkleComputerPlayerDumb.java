@@ -28,6 +28,9 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     private QwirkleRules rules = new QwirkleRules();
     private boolean isWinner;
 
+    // In milliseconds
+    private static final int TIME_TO_SLEEP = 1000;
+
     public QwirkleComputerPlayerDumb(String name) {
         super(name);
     }
@@ -54,7 +57,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     }
 
     private void playRandomMove() {
-        sleep(3000);
+        sleep(TIME_TO_SLEEP);
 
         //Check each tile in the hand to the whole board to see if there's a valid move
         //Iterate through each tile in the player's hand
