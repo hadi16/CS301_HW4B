@@ -41,7 +41,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private boolean[] isSelectedBoolArr = new boolean[QwirkleGameState.HAND_NUM];
     private boolean swap = false;
     private Button buttonSwap;
-    private boolean isWinner = false;
 
     /**
      * Constructor: QwirkleHumanPlayer
@@ -87,7 +86,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         return activity.findViewById(R.id.top_gui_layout);
     }
 
-    protected void updateDisplay() {
+    private void updateDisplay() {
         textViewTurnLabel.setText("Current Turn: " + allPlayerNames[playerNum]);
         myScoreView.setText("My Score: " + gameState.getMyPlayerScore());
         scoreBoardView.setText("Scoreboard:\n"+name+ gameState.getMyPlayerScore() + "\n"+"Computer: " + gameState.getCompPlayerScores());
