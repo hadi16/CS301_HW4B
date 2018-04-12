@@ -146,7 +146,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     protected void updateDisplay() {
         textViewTurnLabel.setText("Current Turn: " + allPlayerNames[playerNum]);
         myScoreView.setText("My Score: " + gameState.getMyPlayerScore());
-        scoreBoardView.setText("Scoreboard:\n"+name+ gameState.getMyPlayerScore() + "\n"+"Computer: " + gameState.getCompPlayerScores());
+        scoreBoardView.setText("Scoreboard:\n"+name + ": " + gameState.getMyPlayerScore() + "\n"+"Computer: " + gameState.getCompPlayerScores());
     }
 
     /**
