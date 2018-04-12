@@ -4,33 +4,29 @@ import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.actionMsg.GameAction;
 
 /**
- * A game-move object that a Qwirkle player sends to the game
- * to swap tiles from their hand with ones in the drawpile.
+ * Class: SwapTileAction
+ * Allows the player to swap tiles from their hand with ones in the draw pile.
  *
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 10, 2018
+ * @version April 11, 2018
  */
 public class SwapTileAction extends GameAction {
-    // instance variable
-
-    // Array of boolean for tiles to swap
+    // Array of boolean for tile indices to swap.
     private boolean[] swapIdx;
 
     /**
-     * Constructor for SwapTileAction
+     * Constructor: SwapTileAction
      *
-     * @param player
-     *          the player making the move
-     * @param swapIdx
-     *          the index of the tile being swapped
+     * @param player the player making the move
+     * @param swapIdx the array of indices for the tiles to swap
      */
     public SwapTileAction(GamePlayer player, boolean[] swapIdx) {
         // invoke superclass constructor to set the player
         super(player);
 
-        //initialize arguments
+        // initialize instance variables
         this.swapIdx = new boolean[swapIdx.length];
         for (int i=0; i<swapIdx.length; i++) {
             this.swapIdx[i] = swapIdx[i];
@@ -38,9 +34,10 @@ public class SwapTileAction extends GameAction {
     }
 
     /**
-     * get the index of the tile being swapped
+     * Method: getSwapIdx
+     * Gets the boolean array of indices for the tiles to swap.
      *
-     * @return index of the tile being swapped
+     * @return array that has indices to swap
      */
     public boolean[] getSwapIdx() {
         return swapIdx;

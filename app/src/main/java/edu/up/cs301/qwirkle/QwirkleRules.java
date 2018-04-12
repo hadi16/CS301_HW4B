@@ -11,7 +11,7 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
 
 /**
  * Class: QwirkleRules
- * This class checks if the move is valid by checking if the tiles match up correctly
+ * This class checks if the move is valid by checking if the moves are valid.
  *
  * @author Alex Hadi
  * @author Michael Quach
@@ -91,8 +91,9 @@ public class QwirkleRules {
      * @param board board of the game
      * @return updated arraylist
      */
-    private ArrayList<QwirkleTile> addAdj(int x, int y, ArrayList<QwirkleTile> line, String dir,
-                        QwirkleTile[][] board) {
+    private ArrayList<QwirkleTile> addAdj(int x, int y,
+                                          ArrayList<QwirkleTile> line,
+                                          String dir, QwirkleTile[][] board) {
         int currentX = x;
         int currentY = y;
         //Go in all 4 directions to see which line to add tile
@@ -161,6 +162,15 @@ public class QwirkleRules {
             QwirkleAnimal animal = theTile.getQwirkleAnimal();
             QwirkleColor color = theTile.getQwirkleColor();
 
+            /*
+            External Citation
+            Date: 11 April 2018
+            Problem: Could not get the index of something in an enum.
+            Resource:
+            https://stackoverflow.com/questions/14769655/
+            use-of-ordinal-inside-java-enum-definition
+            Solution: Used the ordinal feature of enums.
+            */
             if (sameAnimal) {
                 if (!animal.toString().equals(sameAttribute)) return false;
                 if (differentAttributes[color.ordinal()]) return false;
@@ -184,7 +194,8 @@ public class QwirkleRules {
      * @param board board of the game
      * @return true if it's a coner case
      */
-    private boolean checkCornerCase(int x, int y, QwirkleTile tileToPlace, QwirkleTile[][] board) {
+    private boolean checkCornerCase(int x, int y, QwirkleTile tileToPlace,
+                                    QwirkleTile[][] board) {
         //Check north
         QwirkleTile tileN = board[x][y-1];
         if (tileN != null) {
@@ -212,7 +223,9 @@ public class QwirkleRules {
 
     /**
      * Method: isValidMove
-     * When the user is placing a piece on the board, check to see if that move is valid
+     * When the user is placing a piece on the board,
+     * check to see if that move is valid
+     *
      * @param x x position of tile being put
      * @param y y position of tile being put
      * @param tile tile being put
@@ -224,8 +237,7 @@ public class QwirkleRules {
         // Step 1: Check to see that x,y is empty spot on board
         if (board[x][y] != null) return false;
 
-        // Step 2: If entire board is empty, then return true (any placement is
-        // ok)
+        // Step 2: If entire board is empty, then return true (any placement ok)
         boolean empty = true;
         for (QwirkleTile[] tileArr : board) {
             for (QwirkleTile t : tileArr) {
@@ -282,5 +294,4 @@ public class QwirkleRules {
         // If all checks passed, then it must be a valid move.
         return true;
     }
-
 }

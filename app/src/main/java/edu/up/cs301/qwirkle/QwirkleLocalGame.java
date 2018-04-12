@@ -29,18 +29,19 @@ public class QwirkleLocalGame extends LocalGame {
      * Constructor for the QwirkleLocalGame
      */
     public QwirkleLocalGame() {
+        /*
+        External Citation
+        Date: 11 April 2018
+        Problem: Needed some guidance regarding the local game
+        Resource:
+        https://github.com/srvegdahl/HeartsApplication/
+        blob/master/app/src/main/java/edu/up/cs301/slapjack/SJLocalGame.java
+        Solution: I used Professor Vegdahl's code as reference.
+        */
+
         // initializes a new game state
-        this.gameState = new QwirkleGameState(4);
+        this.gameState = new QwirkleGameState(2);
     }
-    /**
-     External Citation
-     Date: 11 April 2018
-     Problem: Needed some guidance regarding the local game
-     Resource:
-     https://github.com/srvegdahl/HeartsApplication/
-     blob/master/app/src/main/java/edu/up/cs301/slapjack/SJLocalGame.java
-     Solution: I used Professor Vegdahl's code as reference.
-     */
 
     /**
      * Notify the given player that its state has changed. This should involve
@@ -120,7 +121,8 @@ public class QwirkleLocalGame extends LocalGame {
 
             // replace the tile in the player's hand with a random one from the
             // drawpile, then change the turn
-            gameState.setPlayerHandsAtIdx(playerIdx, handIdx, gameState.getRandomTile());
+            gameState.setPlayerHandsAtIdx(playerIdx, handIdx,
+                    gameState.getRandomTile());
             gameState.changeTurn();
 
             // return true if a move has been made
@@ -135,9 +137,11 @@ public class QwirkleLocalGame extends LocalGame {
                 boolean swapThisTile = tilesToSwap[i];
                 if (swapThisTile) {
                     int playerId = getPlayerIdx(sta.getPlayer());
-                    QwirkleTile tileToSwap = gameState.getPlayerHands()[playerId][i];
+                    QwirkleTile tileToSwap =
+                            gameState.getPlayerHands()[playerId][i];
                     gameState.addToDrawPile(tileToSwap);
-                    gameState.setPlayerHandsAtIdx(playerId, i, gameState.getRandomTile());
+                    gameState.setPlayerHandsAtIdx(playerId, i,
+                            gameState.getRandomTile());
                 }
             }
 
@@ -168,7 +172,8 @@ public class QwirkleLocalGame extends LocalGame {
             for (QwirkleTile tileInHand : playerHand) {
                 for (QwirkleTile[] tileArr : board) {
                     for (QwirkleTile tile : tileArr) {
-                        if (rules.isValidMove(tile.getxPos(), tile.getyPos(), tileInHand, board)) {
+                        if (rules.isValidMove(tile.getxPos(), tile.getyPos(),
+                                tileInHand, board)) {
                             return true;
                         }
                     }

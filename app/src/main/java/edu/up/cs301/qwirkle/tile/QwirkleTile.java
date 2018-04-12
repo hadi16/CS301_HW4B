@@ -22,17 +22,17 @@ public class QwirkleTile {
     private static Hashtable<String, Bitmap> tileImages = null;
     private static Hashtable<String, Bitmap> selectedTileImages = null;
 
-    //Instance variables for bitmaps
+    // Instance variables for bitmaps
     private Bitmap bitmapMain;
     private Bitmap bitmapSide;
     private Bitmap bitmapSideSelected;
 
-    private int xPos; //x position of bitmap
-    private int yPos; //y postion of bitmap
-    private QwirkleAnimal qwirkleAnimal; //Animal of tile
-    private QwirkleColor qwirkleColor; //Color of tile
+    private int xPos; // x position of tile
+    private int yPos; // y position of tile
+    private QwirkleAnimal qwirkleAnimal; // Animal of tile
+    private QwirkleColor qwirkleColor; // Color of tile
 
-    // Booleans
+    // Booleans to tell if tiles are on main board and if selected.
     private boolean mainBoard;
     private boolean isSelected;
 
@@ -43,78 +43,55 @@ public class QwirkleTile {
     public static int OFFSET_SIDE = 26;
 
     /**
-     * ctor
-     * Deep copy constructor of the original constructor
-     * @param orig original QwirkleTile constructor
+     * Constructor: QwirkleTile
+     * Deep copy constructor for QwirkleTile
+     *
+     * @param orig The original QwirkleTile object instance.
      */
     public QwirkleTile(QwirkleTile orig) {
-        //Set orig bitmaps
+        // Set bitmaps
         this.bitmapMain = orig.bitmapMain;
         this.bitmapSide = orig.bitmapSide;
         this.bitmapSideSelected = orig.bitmapSideSelected;
 
-        //Set orig position and tile properties of bitmaps
+        // Set position and tile animal/color of bitmaps
         this.xPos = orig.xPos;
         this.yPos = orig.yPos;
         this.qwirkleAnimal = orig.qwirkleAnimal;
         this.qwirkleColor = orig.qwirkleColor;
 
-        //Set the mainboard and get the selected tile
+        // Set the mainBoard and isSelected booleans
         this.mainBoard = orig.mainBoard;
         this.isSelected = orig.isSelected;
-        //Initialize all bitmaps
+
+        // Initialize the bitmaps (if needed)
         initBitmapInstance();
     }
 
     /**
-     * ctor
-     * Constructor or QwirleTile
-     * Use to create a new tile
+     * Constructor: QwirkleTile
+     * Use to create a new tile from scratch.
+     *
      * @param animal QwirkleAnimal for bitmap
      * @param color QwirkleColor for bitmap
      */
     public QwirkleTile(QwirkleAnimal animal, QwirkleColor color) {
         this.qwirkleAnimal = animal;
         this.qwirkleColor = color;
-        //Initialize all bitmaps
+
+        //Initialize all bitmaps (if needed)
         initBitmapInstance();
     }
 
     /**
-     * Constructor: QwirkleTile
-     * Used for the main board.
-     * @param xPos The x position of the bitmap.
-     * @param yPos The y position of the bitmap.
-     * @param animal The QwirkleAnimal for the bitmap.
-     * @param color The QwirkleColor for the bitmap.
+     * Method: toString
+     * Returns a string representation of the tile.
+     *
+     * @return The string to represent the tile.
      */
-    public QwirkleTile(int xPos, int yPos, QwirkleAnimal animal,
-                       QwirkleColor color) {
-        this.mainBoard = true;
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.qwirkleAnimal = animal;
-        this.qwirkleColor = color;
-        initBitmapInstance();
-    }
-
-    /**
-     * Constructor: QwirkleTile
-     * Used for the SideBoards.
-     * @param yPos The y position of the bitmap.
-     * @param animal The QwirkleAnimal for the bitmap.
-     * @param color The QwirkleColor for the bitmap.
-     */
-    public QwirkleTile(int yPos, QwirkleAnimal animal, QwirkleColor color) {
-        this.mainBoard = false;
-        this.yPos = yPos;
-        this.qwirkleAnimal = animal;
-        this.qwirkleColor = color;
-        initBitmapInstance();
-    }
-
     @Override
     public String toString() {
+        // Use underscore to separate animal from color.
         return qwirkleAnimal.toString()+"_"+qwirkleColor.toString();
     }
 
@@ -146,29 +123,40 @@ public class QwirkleTile {
 
     /**
      * Method: initBitmapInstance
-     * Initialize all bitmaps
+     * Initialize all bitmaps (returns if all set).
      */
     private void initBitmapInstance() {
-        //If there's not bitmap, ignore
+        // If the HashTable is null, ignore
         if (tileImages == null) return;
+
+        // If all the bitmaps are set, ignore.
+        if (bitmapMain != null && bitmapSide != null &&
+                bitmapSideSelected != null) {
+            return;
+        }
+
+        // Get and set the main bitmaps.
         Bitmap bitmap = tileImages.get(this.toString());
-        //Create bitmaps according the scale of the main board or side board
         bitmapMain = Bitmap.createScaledBitmap(bitmap, RECTDIM_MAIN,
                 RECTDIM_MAIN, false);
         bitmapSide = Bitmap.createScaledBitmap(bitmap, RECTDIM_SIDE,
                 RECTDIM_SIDE, false);
 
+        // Get and set the selected bitmap.
         Bitmap selectedBitmap = selectedTileImages.get(this.toString());
-        bitmapSideSelected = Bitmap.createScaledBitmap(selectedBitmap, RECTDIM_SIDE,
-                RECTDIM_SIDE, false);
+        bitmapSideSelected = Bitmap.createScaledBitmap(selectedBitmap,
+                RECTDIM_SIDE, RECTDIM_SIDE, false);
     }
 
     /**
      * Method: initBitmaps
-     * put all bitmaps in the tiles image list
+     * Puts all bitmaps in the tileImages Hashtable.
+     * Called from QwirkleMainActivity.
+     *
      * @param activity activity to get the resources
      */
     public static void initBitmaps(Activity activity) {
+        // Return if the hash tables are set
         if (tileImages != null && selectedTileImages != null) return;
 
         tileImages = new Hashtable<>();
@@ -202,13 +190,24 @@ public class QwirkleTile {
                 Date: 10 April 2018
                 Problem: Could not replace color in a bitmap.
                 Resource:
-                https://stackoverflow.com/questions/7237915/replace-black-color-in-
-                bitmap-with-red
+                https://stackoverflow.com/questions/7237915/replace-black-
+                color-in-bitmap-with-red
                 Solution:
                 Used a slightly modified version of the StackOverflow code.
                 */
+                /*
+                External Citation
+                Date: 9 April 2018
+                Problem: Could not get the bitmap to copy.
+                Resource:
+                https://stackoverflow.com/questions/17044439/how-can-i-copy-
+                bitmap-to-another-bitmap-without-using-createbitmap-and-copy
+                Solution:
+                Used the copy method on the Bitmap.
+                */
                 Bitmap bitmapCopy = bitmap.copy(bitmap.getConfig(), true);
-                int[] allpixels = new int [bitmapCopy.getHeight()* bitmapCopy.getWidth()];
+                int[] allpixels = new int [bitmapCopy.getHeight()*
+                        bitmapCopy.getWidth()];
                 bitmapCopy.getPixels(allpixels, 0, bitmapCopy.getWidth(), 0, 0,
                         bitmapCopy.getWidth(), bitmapCopy.getHeight());
                 for(int i = 0; i < allpixels.length; i++) {
@@ -230,7 +229,11 @@ public class QwirkleTile {
      * @param canvas Canvas object to allow the bitmap to be drawn.
      */
     public void drawTile(Canvas canvas) {
-        if (bitmapMain == null || bitmapSide == null || bitmapSideSelected == null) initBitmapInstance();
+        // Bitmaps must be initialized first if they are null.
+        if (bitmapMain == null || bitmapSide == null ||
+                bitmapSideSelected == null) {
+            initBitmapInstance();
+        }
 
         // To prevent out of memory error.
         if (bitmapSideSelected == null && isSelected) initBitmapInstance();
@@ -241,19 +244,15 @@ public class QwirkleTile {
                     yPos*RECTDIM_MAIN, null);
         }
         else {
+            // SideBoard bitmaps can be selected or not.
             Bitmap bitmap;
-            if (isSelected) {
-                bitmap = bitmapSideSelected;
-            }
-            else {
-                bitmap = bitmapSide;
-            }
+            if (isSelected) bitmap = bitmapSideSelected;
+            else bitmap = bitmapSide;
             canvas.drawBitmap(bitmap, OFFSET_SIDE, yPos*RECTDIM_SIDE, null);
         }
     }
 
     // Getters
-
     /**
      * Method: getxPos
      * @return x position of bitmap
@@ -261,7 +260,6 @@ public class QwirkleTile {
     public int getxPos() {
         return xPos;
     }
-
     /**
      * Method: getyPos
      * @return y position of bitmap
@@ -269,7 +267,6 @@ public class QwirkleTile {
     public int getyPos() {
         return yPos;
     }
-
     /**
      * Method: getQwirkleAnimal
      * @return the QwirkleAnimal of bitmap
@@ -277,7 +274,6 @@ public class QwirkleTile {
     public QwirkleAnimal getQwirkleAnimal() {
         return qwirkleAnimal;
     }
-
     /**
      * Method: getQwirkleColor
      * @return the QwirkleColor of bitmap
@@ -287,37 +283,33 @@ public class QwirkleTile {
     }
 
     // Setters
-
     /**
      * Method: setxPos
      * Set x position of bitmap
-     * @param xPos x coordinate
+     * @param xPos x coordinate to set
      */
     public void setxPos(int xPos) {
         this.xPos = xPos;
     }
-
     /**
      * Method: setyPos
      * Set y position of bitmap
-     * @param yPos y coordinate
+     * @param yPos y coordinate to set
      */
     public void setyPos(int yPos) {
         this.yPos = yPos;
     }
-
     /**
      * Method: setMainBoard
-     * @param mainBoard boolean if true to draw on main board
+     * @param mainBoard True if tile on the main board, otherwise false.
      */
     public void setMainBoard(boolean mainBoard) {
         this.mainBoard = mainBoard;
     }
-
     /**
      * Method: setSelected
      * Set the selected bitmaps
-     * @param selected true to bitmaps being selected
+     * @param selected True if tile is selected, otherwise false.
      */
     public void setSelected(boolean selected) {
         isSelected = selected;

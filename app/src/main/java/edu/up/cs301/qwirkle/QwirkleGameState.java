@@ -11,91 +11,91 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
 
 /**
  * Contains the state of the Qwirkle game. Sent by the game when a player wants
- * to enquire about the state of the game. (E.g., to display it, or to help
- * figure out its next move.)
+ * to enquire about the state of the game. (i.e. to display it or to help
+ * figure out its next move)
  *
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 10, 2018
+ * @version April 11, 2018
  */
 public class QwirkleGameState extends GameState {
-    // instance variables
+    private int turn; // The current turn
+    private int numPlayers; // The number of players
 
-    // Int that determines who's turn it currently is
-    private int turn;
-
-    // Int that determines the number of players currently playing
-    private int numPlayers;
-
-    // Arraylist of QwirkleTiles that represents the location of all the
-    // other tiles not currently in play on the main or side boards
+    // ArrayList of QwirkleTiles that represents all tiles that
+    // haven't been played or dealt to players.
     private ArrayList<QwirkleTile> drawPile = new ArrayList<>();
 
-    // The number of tiles a player can have in their hand is 6
+    // A constant for number of tiles a player can have in their hand
     public static final int HAND_NUM = 6;
 
     // Array for the current state of the board
     private QwirkleTile board[][] = new QwirkleTile[MainBoard.BOARD_WIDTH]
             [MainBoard.BOARD_HEIGHT];
 
-    // Array for the player hands
+    // Array for all player hands
     private QwirkleTile playerHands[][];
 
-    // Array to store each player's score (index corresponds to playerId)
+    // Array to store all player scores (index corresponds to playerId)
     private int[] playerScores;
 
-    // Array for each tile in the players' hand
+    // Array for each tile in the current player's hand
     private QwirkleTile[] myPlayerHand;
 
     /**
-     * Constructor for objects of class OwirkleGameState
+     * Constructor: QwirkleGameState
+     * Initializes the game state with the given number of players.
+     *
+     * @param numPlayers the number of players.
      */
     public QwirkleGameState(int numPlayers) {
-        // initialize the state to be a brand new game for two players
+        // initialize the state to be a brand new game
         this.turn = 0;
         this.numPlayers = numPlayers;
         this.drawPile = new ArrayList<>();
         this.board =
                 new QwirkleTile[MainBoard.BOARD_WIDTH][MainBoard.BOARD_HEIGHT];
 
+        // Initialize the draw pile, player hands, and player scores.
         initDrawPile();
         initPlayerHands();
         initPlayerScores();
     }
 
     /**
-     * Copy constructor for class QwirkleGameState
+     * Constructor: QwirkleGameState
+     * Copy constructor for the game state.
      *
-     * @param orig
-     *          the QwirkleGameState that we want to access
-     * @param playerId
-     *          each unique player currently in the game
+     * @param orig The original QwirkleGameState object.
+     * @param playerId The player ID to copy the game state for.
      */
     public QwirkleGameState(QwirkleGameState orig, int playerId) {
-        // create a new QwirkleGameState that copies the values from the
-        // original state
+        // Copy the integers.
         turn = orig.getTurn();
         numPlayers = orig.getNumPlayers();
+
+        // Hide the draw pile from the user.
         drawPile = null;
 
-        // Give the board of new game state.
+        // Copy the board to the new game state.
         board = new QwirkleTile[MainBoard.BOARD_WIDTH][MainBoard.BOARD_HEIGHT];
         for (int i = 0; i<board.length; i++) {
             for (int j = 0; j<board[i].length; j++) {
                 if (orig.board[i][j] != null) {
+                    // Use QwirkleTile's copy constructor.
                     board[i][j] = new QwirkleTile(orig.board[i][j]);
                 }
             }
         }
 
-        // initializes each player's hand
+        // Copy each player's hand
         myPlayerHand = new QwirkleTile[HAND_NUM];
         for (int i = 0; i<HAND_NUM; i++) {
             myPlayerHand[i] = orig.getPlayerHands()[playerId][i];
         }
 
-        // initializes each player's score
+        // Copy the player scores.
         playerScores = new int[orig.numPlayers];
         for (int i = 0; i<playerScores.length; i++) {
             playerScores[i] = orig.playerScores[i];
@@ -103,11 +103,12 @@ public class QwirkleGameState extends GameState {
     }
 
     /**
-     * Initializes the drawpile to contain the 108 tiles used to deal out
-     * to each player's hands
+     * Method: initDrawPile
+     * Initializes the draw pile to contain the 108 tiles used to deal out
+     * to the players.
      */
     private void initDrawPile() {
-        // adds the 36 unique Qwirkle tiles 3 times to the drawpile
+        // Adds the 36 unique Qwirkle tiles 3 times to the draw pile.
         for (QwirkleAnimal animal : QwirkleAnimal.values()) {
             for (QwirkleColor color : QwirkleColor.values()) {
                 for (int i = 0; i < 3; i++) {
@@ -118,11 +119,11 @@ public class QwirkleGameState extends GameState {
     }
 
     /**
-     * Initializes each player's hands with random tiles from the drawpile
+     * Method: initPlayerHands
+     * Initializes each player's hands with random tiles from the draw pile.
      */
     private void initPlayerHands() {
-        // adds 6 random tiles to the player's hand at the beginning of the
-        // game from the drawpile
+        // adds 6 tiles to each player's hand randomly.
         this.playerHands = new QwirkleTile[numPlayers][HAND_NUM];
         for (int i = 0; i < playerHands.length; i++) {
             for (int j = 0; j < playerHands[i].length; j++) {
@@ -134,10 +135,11 @@ public class QwirkleGameState extends GameState {
     }
 
     /**
-     * Initializes each players' scores to 0 at the beginning of the game
+     * Method: initPlayerScores
+     * Initializes each player's scores to 0 at the beginning of the game
      */
     private void initPlayerScores() {
-        // set all scores to 0
+        // Set all scores to 0
         this.playerScores = new int[numPlayers];
         for (int i = 0; i < playerScores.length; i++) {
             playerScores[i] = 0;
@@ -145,28 +147,29 @@ public class QwirkleGameState extends GameState {
     }
 
     /**
-     * Add a Qwirkle tile to the draw pile after swapping
+     * Method: addToDrawPile
+     * Public helper method to add a tile to the draw pile (after swapping).
      *
-     * @param tile
-     *          the Qwirkle tile being swapped out
+     * @param tile the Qwirkle tile being added back to the draw pile.
      */
     public void addToDrawPile(QwirkleTile tile) {
-        // add the Qwirkle tile selected to be swapped out to the drawpile
+        // add the Qwirkle tile selected to be swapped out to the draw pile.
         drawPile.add(tile);
     }
 
     /**
-     * Returns a random tile from drawpile
+     * Method: getRandomTile
+     * Gets a random tile from the draw pile.
      *
-     * @return
-     *          the Qwirkle Tile randomly selected from the drawpile to swap in
+     * @return the Qwirkle Tile randomly selected from the draw pile.
      */
     public QwirkleTile getRandomTile() {
-        // if there are no more tiles in the drawpile, do nothing
+        // If there are no more tiles in the draw pile, return null.
         if (drawPile.size() == 0) {
             return null;
         }
-        // randomly remove a tile from the drawpile and return it
+
+        // Randomly remove a tile from the draw pile and return it.
         Random random = new Random();
         int i = random.nextInt(drawPile.size());
         QwirkleTile tile = drawPile.get(i);
@@ -175,7 +178,8 @@ public class QwirkleGameState extends GameState {
     }
 
     /**
-     * Change the turn of each player after they have completed their move
+     * Method: changeTurn
+     * Changes the current turn.
      */
     public void changeTurn() {
         // Change the turn based on the amount of players currently in game
@@ -188,100 +192,77 @@ public class QwirkleGameState extends GameState {
     }
 
     /**
-     * Check to see whether there are still tiles in the drawpile
+     * Method: hasTilesInPile
+     * Check to see whether there are still tiles in the draw pile.
      *
-     * @return
-     *          true if there are and false if there is none left
+     * @return True if there are tiles left (otherwise false)
      */
     public boolean hasTilesInPile() {
         return drawPile.size() > 0;
     }
-
-    // Getters
     /**
-     * Return each players' turn
+     * Method: getTurn
+     * Gets the current turn.
      *
-     * @return
-     *          a player's turn
+     * @return the current turn
      */
     public int getTurn() {
         return turn;
     }
-
     /**
-     * Return the number of players in game
+     * Method: getNumPlayers
+     * Return the number of players in the game
      *
-     * @return
-     *          total number of players currently in game
+     * @return total number of players in game
      */
     public int getNumPlayers() {
         return numPlayers;
     }
-
     /**
-     * Return each players' hand
+     * Method: getPlayerHands
+     * Return the array of player hands.
      *
-     * @return
-     *          the Qwirkle tiles in each players' hand based on different
-     *          player IDs
+     * @return the Qwirkle tiles in each player's hand as an int[].
      */
     public QwirkleTile[][] getPlayerHands() {
         return playerHands;
     }
-
     /**
-     * Return the current board state
+     * Method: getBoard
+     * Gets the board.
      *
-     * @return
-     *          the board state at a given moment
+     * @return the board
      */
     public QwirkleTile[][] getBoard() {
         return board;
     }
-
     /**
+     * Method: getMyPlayerHand
      * Return the current player's hand
      *
-     * @return
-     *          the tiles in the current player's hand
+     * @return the tiles in the current player's hand
      */
     public QwirkleTile[] getMyPlayerHand() {
         return myPlayerHand;
     }
-
     /**
-     * Return the computer player's score
+     * Method: getCompPlayerScores
+     * Gets the computer player's score
      *
-     * @return
-     *          the scores of the AI at a given moment
+     * @return the scores of the AI at a given moment
      */
     public int getCompPlayerScores() {
         return playerScores[1];
     }
-
     /**
-     * Return each players' score
+     * Method: getMyPlayerScore
+     * Get the human player's score
      *
-     * @return
-     *          the scores of the players at a given moment
+     * @return the human player's score.
      */
     public int getMyPlayerScore() {
         return playerScores[0];
     }
-
-    /**
-     * Return each player's score
-     *
-     * @return
-     *          the scores of each players at a given moment
-     */
-    public int[] getPlayerScores() {
-        return playerScores;
-    }
-
-
-
-    // Setters
     /**
      * Set the current board state
      *
@@ -311,7 +292,8 @@ public class QwirkleGameState extends GameState {
      * @param tile
      *          tile currently in the player's hand
      */
-    public void setPlayerHandsAtIdx(int playerIdx, int handIdx, QwirkleTile tile) {
+    public void setPlayerHandsAtIdx(int playerIdx, int handIdx,
+                                    QwirkleTile tile) {
         // define the current condition of the player's hand
         playerHands[playerIdx][handIdx] = tile;
         if (tile == null) return;

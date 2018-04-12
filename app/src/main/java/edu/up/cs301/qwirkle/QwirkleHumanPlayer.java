@@ -92,17 +92,20 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         activity.setContentView(R.layout.qwirkle_human_player);
 
         // set the Textview to display each pleyer's name on their turn.
-        TextView textViewPlayerLabel = (TextView)activity.findViewById(R.id.textViewPlayerLabel);
+        TextView textViewPlayerLabel = (TextView)activity.findViewById(
+                R.id.textViewPlayerLabel);
         textViewPlayerLabel.setText("My Name: " + name);
 
         // initialize the Textviews going on the interface.
-        textViewTurnLabel = (TextView)activity.findViewById(R.id.textViewTurnLabel);
+        textViewTurnLabel = (TextView)activity.findViewById(
+                R.id.textViewTurnLabel);
 
         // initialize the score to 0
         myScoreView = (TextView)activity.findViewById(R.id.textViewPlayerScore);
 
         // initialize the scoreboard to 0
-        scoreBoardView = (TextView)activity.findViewById(R.id.textViewScoreboardLabel);
+        scoreBoardView = (TextView)activity.findViewById(
+                R.id.textViewScoreboardLabel);
 
 
 
@@ -116,14 +119,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     /**
-     * Display each player's names for "Current Turn: "
-     */
-    @Override
-    protected void initAfterReady() {
-        super.initAfterReady();
-    }
-
-    /**
      * The top view of the current state
      *
      * @return
@@ -133,20 +128,23 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     public View getTopView() {
         return activity.findViewById(R.id.top_gui_layout);
     }
+
     /**
      * External Citation
      * Date: April 11 2018
      * Problem: Couldn't update the GUI correctly
      * Source:
-     *      https://github.com/srvegdahl/CounterGame/blob/master/app/src/main/java/edu/up/cs301/counter/CounterHumanPlayer.java
+     * https://github.com/srvegdahl/CounterGame/blob/master/app/src/main/java/
+     * edu/up/cs301/counter/CounterHumanPlayer.java
      * Solution:
-     *      Use vegdahl's code as reference
+     * Used Vegdahl's code as reference
      */
-
-    protected void updateDisplay() {
+    private void updateDisplay() {
         textViewTurnLabel.setText("Current Turn: " + allPlayerNames[playerNum]);
         myScoreView.setText("My Score: " + gameState.getMyPlayerScore());
-        scoreBoardView.setText("Scoreboard:\n"+name + ": " + gameState.getMyPlayerScore() + "\n"+"Computer: " + gameState.getCompPlayerScores());
+        scoreBoardView.setText("Scoreboard:\n"+name + ": " +
+                gameState.getMyPlayerScore() + "\n"+"Computer: " +
+                gameState.getCompPlayerScores());
     }
 
     /**
@@ -158,7 +156,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     @Override
     public void receiveInfo(GameInfo info) {
         // if the move was out of turn or otherwise illegal, flast the screen
-        if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {
+        if (info instanceof IllegalMoveInfo||info instanceof NotYourTurnInfo) {
             flash(Color.RED, 50);
             return;
         }
