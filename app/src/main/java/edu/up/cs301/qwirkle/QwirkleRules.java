@@ -174,6 +174,31 @@ public class QwirkleRules {
         }
         return true;
     }
+
+    private boolean checkCornerCase(int x, int y, QwirkleTile tileToPlace, QwirkleTile[][] board) {
+        QwirkleTile tileN = board[x][y-1];
+        if (tileN != null) {
+            if (!match(tileToPlace, tileN)) return false;
+        }
+
+        QwirkleTile tileS = board[x][y+1];
+        if (tileS != null) {
+            if (!match(tileToPlace, tileS)) return false;
+        }
+
+        QwirkleTile tileW = board[x-1][y];
+        if (tileW != null) {
+            if (!match(tileToPlace, tileW)) return false;
+        }
+
+        QwirkleTile tileE = board[x+1][y];
+        if (tileE != null) {
+            if (!match(tileToPlace, tileE)) return false;
+        }
+
+        return true;
+    }
+
     /**
      * Method: isValidMove
      * When the user is placing a piece on the board, check to see if that move is valid
@@ -234,6 +259,11 @@ public class QwirkleRules {
         }
         if (lineEW.size() > 1) {
             if (!isValidLine(lineEW)) {
+                return false;
+            }
+        }
+        if (lineEW.size() > 1 && lineNS.size() > 1) {
+            if (!checkCornerCase(x, y, tile, board)) {
                 return false;
             }
         }
