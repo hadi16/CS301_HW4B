@@ -104,14 +104,12 @@ public class MainBoard extends View {
             for (int j = 0; j< BOARD_HEIGHT; j++){
                 canvas.drawRect(i*rectDim+offset, j*rectDim,
                         (i+1)*rectDim+offset, (j+1)*rectDim, blackPaint);
-
             }
         }
         //If there's nothing in the game state, ignore
         if (gameState == null) {
             return;
         }
-
 
         // Draws the tiles.
         QwirkleTile[][] board = gameState.getBoard();

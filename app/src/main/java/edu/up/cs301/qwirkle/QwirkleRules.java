@@ -1,7 +1,5 @@
 package edu.up.cs301.qwirkle;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 import edu.up.cs301.qwirkle.tile.QwirkleAnimal;
