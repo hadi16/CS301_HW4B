@@ -1,9 +1,11 @@
 package edu.up.cs301.qwirkle;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.widget.TextView;
 
 import java.util.Random;
+
 
 import edu.up.cs301.game.GameComputerPlayer;
 import edu.up.cs301.game.GameMainActivity;
@@ -33,6 +35,9 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     private QwirkleTile[] myPlayerHand;
     private QwirkleTile[][] board;
     private QwirkleRules rules = new QwirkleRules();
+    private GameMainActivity activity = null;
+    private TextView textViewTurnLabel = null;
+    private Handler guiHandler;
     private boolean isWinner;
 
     // In milliseconds
@@ -41,6 +46,32 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     public QwirkleComputerPlayerDumb(String name) {
         super(name);
     }
+    @Override
+    public void setAsGui(GameMainActivity a) {
+        this.activity = a;
+        activity.setContentView(R.layout.qwirkle_human_player);
+        this.guiHandler = new Handler();
+        this.textViewTurnLabel = (TextView)activity.findViewById(R.id.textViewTurnLabel);
+
+        if(gameState != null) {
+            updateDisplay();
+        }
+    }
+
+    protected void updateDisplay() {
+        if (guiHandler != null) {
+            guiHandler.post(
+                    new Runnable() {
+                        public void run() {
+                            if (textViewTurnLabel != null && gameState != null) {
+                                textViewTurnLabel.setText("Current Turn: " + allPlayerNames[playerNum]);
+                            }
+                        }
+                    }
+            );
+        }
+    }
+
 
 
     @Override
@@ -53,13 +84,14 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
         }
 
         this.gameState = (QwirkleGameState)info;
-
+        updateDisplay();
         if (gameState.getTurn() != playerNum) {
             return;
         }
 
         this.board = gameState.getBoard();
         this.myPlayerHand = gameState.getMyPlayerHand();
+
         playRandomMove();
     }
 
