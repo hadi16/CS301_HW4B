@@ -195,6 +195,7 @@ public class QwirkleGameState extends GameState {
 
     public void setPlayerScores(int playerIdx, boolean isQwirkle) {
         if (isQwirkle) {
+            System.out.println("HEH");
             playerScores[playerIdx] +=6;
         }
         playerScores[playerIdx] +=1;

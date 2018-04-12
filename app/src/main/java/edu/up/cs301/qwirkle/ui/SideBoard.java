@@ -21,6 +21,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 3, 2018
  */
 public class SideBoard extends View {
+    //Instance variables
     private Paint blackPaint;
 
     private QwirkleGameState gameState;
@@ -67,6 +68,10 @@ public class SideBoard extends View {
         initPaint();
     }
 
+    /**
+     * Method: initPaint
+     * the color and stroke with of the paint
+     */
     private void initPaint() {
         blackPaint = new Paint();
         blackPaint.setColor(Color.BLACK);
@@ -100,6 +105,7 @@ public class SideBoard extends View {
                     blackPaint);
         }
 
+        //If there's nothing in the game state, ignore
         if (gameState == null) {
             return;
         }
@@ -113,8 +119,11 @@ public class SideBoard extends View {
 
     }
 
-
-
+    /**
+     * Method: setGameState
+     * set the game state the the current game state
+     * @param gameState current game state
+     */
     public void setGameState(QwirkleGameState gameState) {
         this.gameState = gameState;
     }

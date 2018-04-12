@@ -11,6 +11,7 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
 
 /**
  * Class: QwirkleRules
+ * This class checks if the move is valid by checking if the tiles match up correctly
  *
  * @author Alex Hadi
  * @author Michael Quach
@@ -18,6 +19,13 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
  * @version April 11, 2018
  */
 public class QwirkleRules {
+    /**
+     * Method: match
+     * Check 2 tiles to see if they are the same animal or same color
+     * @param tile1 first tile to be check
+     * @param tile2 second tile to be check
+     * @return true the tiles are the same color or same animal
+     */
     private boolean match(QwirkleTile tile1, QwirkleTile tile2) {
         String animal1 = tile1.getQwirkleAnimal().toString();
         String color1 = tile1.getQwirkleColor().toString();
@@ -33,7 +41,15 @@ public class QwirkleRules {
         }
         return false;
     }
-
+    /**
+     * Method: matchAdj
+     * Check the tiles in a direction to see if they match
+     * @param x x position on the board
+     * @param y y position on the board
+     * @param dir direction to check in
+     * @param board the board of the game
+     * @return true if the adjacent tile match
+     */
     private boolean matchAdj(int x, int y, String dir, QwirkleTile[][] board) {
         // Step 1: Check for valid x & y position
         if (!(x>=0 && y>=0 && x<MainBoard.BOARD_WIDTH &&
@@ -65,11 +81,21 @@ public class QwirkleRules {
         // Step 4: return the match of tile1, tile2
         return match(tile1, tile2);
     }
-
+    /**
+     * Method: addAdj
+     * Method that adds the correct tile to the line
+     * @param x x position of tile on the board
+     * @param y y postion of tile on the board
+     * @param line the arraylist to add tile in
+     * @param dir direction to add tile
+     * @param board board of the game
+     * @return updated arraylist
+     */
     private ArrayList<QwirkleTile> addAdj(int x, int y, ArrayList<QwirkleTile> line, String dir,
                         QwirkleTile[][] board) {
         int currentX = x;
         int currentY = y;
+        //Go in all 4 directions to see which line to add tile
         while (matchAdj(currentX, currentY, dir, board)) {
             switch (dir) {
                 case "E":
@@ -85,11 +111,18 @@ public class QwirkleRules {
                     currentY++;
                     break;
             }
+            //Add tile to the line
             line.add(board[currentX][currentY]);
         }
+        //Return the updated line
         return line;
     }
-
+    /**
+     * Method: isValidLine
+     * Method to check if the lime is valid for the tile to go in
+     * @param line ArrayList of QwirkleTile
+     * @return true if line it's the correct line
+     */
     private boolean isValidLine(ArrayList<QwirkleTile> line) {
         // True if animal is the same throughout line (otherwise false).
         boolean sameAnimal;
@@ -141,7 +174,15 @@ public class QwirkleRules {
         }
         return true;
     }
-
+    /**
+     * Method: isValidMove
+     * When the user is placing a piece on the board, check to see if that move is valid
+     * @param x x position of tile being put
+     * @param y y position of tile being put
+     * @param tile tile being put
+     * @param board board to be put
+     * @return return true if move is valid
+     */
     public boolean isValidMove(int x, int y, QwirkleTile tile,
                                QwirkleTile[][] board) {
         // Step 1: Check to see that x,y is empty spot on board

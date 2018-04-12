@@ -59,8 +59,7 @@ public class QwirkleLocalGame extends LocalGame {
             }
 
             gameState.setBoardAtIdx(x, y, tile);
-            boolean isQwirkle = false;
-            gameState.setPlayerScores(playerIdx, isQwirkle);
+            gameState.setPlayerScores(playerIdx, false);
             gameState.setPlayerHandsAtIdx(playerIdx, handIdx, gameState.getRandomTile());
             gameState.changeTurn();
 
