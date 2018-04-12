@@ -69,8 +69,7 @@ public class QwirkleLocalGame extends LocalGame {
 
             gameState.setBoardAtIdx(x, y, tile);
             gameState.setPlayerScores(playerIdx, false);
-            int currentScore = gameState.getPlayerScores()[playerIdx];
-            gameState.setPlayerScores(playerIdx, currentScore, false);
+            gameState.setPlayerScores(playerIdx, false);
 
             // replace the tile in the player's hand with a random one from the
             // drawpile, then change the turn
@@ -117,7 +116,6 @@ public class QwirkleLocalGame extends LocalGame {
         }
         return false;
     }
-}
 
     private void winRound(boolean isWinner) {
         for (int i = 0; i < gameState.getNumPlayers(); i++) {

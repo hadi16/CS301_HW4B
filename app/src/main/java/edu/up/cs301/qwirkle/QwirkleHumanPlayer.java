@@ -137,6 +137,16 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             return false;
         }
 
+        /**
+         External Citation
+         Date: 11 April 2018
+         Problem: Did not know how to implement the Motion Event
+         Resource:
+         https://stackoverflow.com/questions/32526332/
+         android-ontouch-motionevent-actions
+         Solution: I used this example code as reference.
+         */
+
         int x = (int)event.getX();
         int y = (int)event.getY();
 
