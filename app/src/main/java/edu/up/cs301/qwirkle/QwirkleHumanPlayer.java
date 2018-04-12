@@ -19,8 +19,8 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
 import edu.up.cs301.qwirkle.ui.SideBoard;
 
 /**
- * Class: QwirkleHumanPlayer
- * The human player configuration of Qwirkle.
+ * A GUI that allows a human to play Qwirkle. Moves are made by selecting tiles
+ * on the side board and placing them on the main board.
  *
  * @author Alex Hadi
  * @author Michael Quach
@@ -30,49 +30,82 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
 
 public class QwirkleHumanPlayer extends GameHumanPlayer
         implements View.OnTouchListener, View.OnClickListener {
+
+    // the current activity
     private GameMainActivity activity;
+
+    // the current game state
     private QwirkleGameState gameState;
+
+    // Array of the current player's hand
     private QwirkleTile[] myPlayerHand;
+
+    // the main board
     private MainBoard mainBoard;
+
+    // the side board
     private SideBoard sideBoard;
+
+    // the Textview for the turns
     private TextView textViewTurnLabel;
+
+    // the Textview for the scores
     private TextView myScoreView;
+
+    // the Textview for the score board
     private TextView scoreBoardView;
-    private boolean[] isSelectedBoolArr = new boolean[QwirkleGameState.HAND_NUM];
+
+    // Array of the selected tiles from the player's hand
+    private boolean[] isSelectedBoolArr = new boolean[
+            QwirkleGameState.HAND_NUM];
+
+    // boolean that tells whether swap was used
     private boolean swap = false;
+
+    // button used to determine swapping
     private Button buttonSwap;
-    private boolean isWinner = false;
 
     /**
-     * Constructor: QwirkleHumanPlayer
-     * Creates a new QwirkleHumanPlayer.
+     * Constructor for QwirkleHumanPlayer
      *
-     * @param name The player's name.
+     * @param name
+     *          The player's name.
      */
     public QwirkleHumanPlayer(String name) {
         super(name);
     }
 
+    /**
+     * sets the current player as the activity's GUI
+     *
+     * @param activity
+     *          an action that can be performed by the human
+     */
     @Override
+    // remember the activity and initialize it
     public void setAsGui(GameMainActivity activity) {
         this.activity = activity;
         QwirkleTile.initBitmaps(activity);
+
+        // load the layout resource for the new configuration
         activity.setContentView(R.layout.qwirkle_human_player);
 
+        // set the Textview to display each pleyer's name on their turn.
         TextView textViewPlayerLabel = (TextView)activity.findViewById(R.id.textViewPlayerLabel);
         textViewPlayerLabel.setText("My Name: " + name);
 
+        // initialize the Textviews going on the interface.
         textViewTurnLabel = (TextView)activity.findViewById(R.id.textViewTurnLabel);
         myScoreView = (TextView)activity.findViewById(R.id.textViewPlayerScore);
         scoreBoardView = (TextView)activity.findViewById(R.id.textViewScoreboardLabel);
 
+        // initialize the score to 0
         myScoreView.setText("My Score: 0");
+
+        // initialize the scoreboard to 0
         scoreBoardView.setText("Scoreboard:\n"+name+": 0"+ "\n"+"Computer: 0");
 
-        /*
-        myScoreView.setText("My Score: " + gameState.getPlayerScores()[0]);
-        scoreBoardView.setText("Scoreboard:\n"+name+": "+ gameState.getPlayerScores()[0]+ "\n"+"Computer: "+gameState.getPlayerScores()[1]);
-*/
+        // initialize the swap button, main board, and side board.
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         buttonSwap.setOnClickListener(this);
         mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
@@ -81,28 +114,45 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         sideBoard.setOnTouchListener(this);
     }
 
+    /**
+     * Display each player's names for "Current Turn: "
+     */
     @Override
     protected void initAfterReady() {
         super.initAfterReady();
         textViewTurnLabel.setText("Current Turn: "+allPlayerNames[playerNum]);
     }
 
-
+    /**
+     * The top view of the current state
+     *
+     * @return
+     *         the top view of the project
+     */
     @Override
     public View getTopView() {
         return activity.findViewById(R.id.top_gui_layout);
     }
 
+    /**
+     * Callback method, called when player gets a message
+     *
+     * @param info
+     *           the message;
+     */
     @Override
     public void receiveInfo(GameInfo info) {
+        // if the move was out of turn or otherwise illegal, flast the screen
         if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {
             flash(Color.RED, 50);
             return;
         }
         else if (!(info instanceof QwirkleGameState)) {
+            // if we do not have a QwirkleGameState, ignore
             return;
         }
 
+        // initializes the game state and redraws it accordingly
         this.gameState = (QwirkleGameState)info;
         this.myPlayerHand = gameState.getMyPlayerHand();
 
@@ -113,15 +163,33 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         sideBoard.invalidate();
     }
 
+    /**
+     * callback method when the screen is touched. We're looking for a screen
+     * touch (which we'll detect on the "down" movement onto a Qwirkle board
+     * spot)
+     *
+     * @param v
+     *          the surface view
+     * @param event
+     *          the motion event that was detected
+     * @return
+     *          true if the touch was registered
+     */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        // ignore if not an "down" event
         if (event.getAction() != MotionEvent.ACTION_DOWN) {
             return false;
         }
 
+        // get the x and y coordinates of the touch-location;
+        // convert them to square coordinates (where both values are in the
+        // range 0..2)
         int x = (int)event.getX();
         int y = (int)event.getY();
 
+        // access the main board in order to allow touch
+        // detection
         if (v.getId() == R.id.mainBoard) {
             // To prevent the user from selecting board before tile in hand
             QwirkleTile handSelected = null;
@@ -134,24 +202,33 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                     break;
                 }
             }
+            // if the hand a player selected in empty, do nothing
             if (handSelected == null) return false;
 
-            // Get where board is selected.
+            // Get where the board is selected
             int[] xyPos = getSelectedBoardIdx(x, y);
             if (xyPos == null) {
                 return false;
             }
 
+            // send the PlaceTileAction to allow for tiles to be placed on
+            // the main board
             PlaceTileAction pta = new PlaceTileAction(this, xyPos[0], xyPos[1],
                     handSelectedIdx);
             game.sendAction(pta);
 
+            // redraw after each iteration
             mainBoard.invalidate();
             sideBoard.invalidate();
-            
+
+            // return true if touch has been registered
             return true;
         }
+
+        // access the side board in order to allow touch detection
         else if (v.getId() == R.id.sideBoard) {
+            // if swap has been selected, allow the tile to be accessed in the
+            // player's hand. If there is nothing there, do nothing.
             if (swap) {
                 int yPos = getSelectedHandIdx(x, y);
                 if (yPos == -1) return false;
@@ -180,7 +257,18 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         return false;
     }
 
+    /**
+     * return a position in main board while taking into account of the offset
+     *
+     * @param x
+     *          x-position of spot on board
+     * @param y
+     *          y-position of spot on board
+     * @return
+     *          position of main board
+     */
     private int[] getSelectedBoardIdx(int x, int y) {
+        // if the position selected is outside the main board, do nothing
         if (x < QwirkleTile.OFFSET_MAIN || x > QwirkleTile.RECTDIM_MAIN *
                 MainBoard.BOARD_WIDTH + QwirkleTile.OFFSET_MAIN) {
             return null;
@@ -192,20 +280,43 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         // Y position
         xyPos[1] = y / QwirkleTile.RECTDIM_MAIN;
 
+        // return position on main board
         return xyPos;
     }
 
+    /**
+     * return a position in player's hand while taking into account of the
+     * offset
+     *
+     * @param x
+     *          x-position of spot in hand
+     * @param y
+     *          y-position of spot in hand
+     * @return
+     *          position in player's hand
+     */
     private int getSelectedHandIdx(int x, int y) {
+        // if the position selected is outside the side board, do nothing
         if (x < QwirkleTile.OFFSET_SIDE || x > QwirkleTile.RECTDIM_SIDE *
                 QwirkleGameState.HAND_NUM + QwirkleTile.OFFSET_SIDE) {
             return -1;
         }
+        // return the hand index selected
         return y / QwirkleTile.RECTDIM_SIDE;
     }
 
+    /**
+     * callback method when something is clicked on the screen
+     *
+     * @param v
+     *          the surface view
+     */
     @Override
     public void onClick(View v) {
+        // if the swap button is not pressed, do nothing
         if (v.getId() != R.id.buttonSwap) return;
+        // if the swap button is pressed and there is nothing to swap,
+        // do nothing.
         if (swap) {
             boolean somethingToSwap = false;
             for (boolean selected: isSelectedBoolArr) {
@@ -215,6 +326,9 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             }
             if (!somethingToSwap) return;
 
+            // if there is something to swap, call the SwapTileAction class and
+            // send it to the game to replace the selected tile with a random
+            // one.
             SwapTileAction sta = new SwapTileAction(this, isSelectedBoolArr);
             game.sendAction(sta);
             for (int i = 0; i< isSelectedBoolArr.length; i++) {
@@ -222,14 +336,18 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 myPlayerHand[i].setSelected(false);
             }
         }
+
+        // if swap has not been clicked, keep the button as "Swap"
         swap = !swap;
         if (!swap) {
             buttonSwap.setText("Swap");
         }
+        // if swap has been clicked, change the text of the button to "End"
         else {
             buttonSwap.setText("End");
         }
 
+        // redraw after performing the action
         mainBoard.invalidate();
         sideBoard.invalidate();
     }
