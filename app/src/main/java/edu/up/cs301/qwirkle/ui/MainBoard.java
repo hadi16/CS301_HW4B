@@ -25,6 +25,7 @@ public class MainBoard extends View {
     public static final int BOARD_HEIGHT = 16;
     private Paint blackPaint;
 
+    //Instace of the game state
     private QwirkleGameState gameState;
 
     /**
@@ -67,6 +68,10 @@ public class MainBoard extends View {
         initPaint();
     }
 
+    /**
+     * Method: initPaint
+     * Set the color and stroke width of the paint
+     */
     private void initPaint() {
         blackPaint = new Paint();
         blackPaint.setColor(Color.BLACK);
@@ -102,7 +107,7 @@ public class MainBoard extends View {
 
             }
         }
-
+        //If there's nothing in the game state, ignore
         if (gameState == null) {
             return;
         }
@@ -117,6 +122,11 @@ public class MainBoard extends View {
         }
     }
 
+    /**
+     * Method: setGameState
+     * set the game state to the current game state
+     * @param gameState current game state
+     */
     public void setGameState(QwirkleGameState gameState) {
         this.gameState = gameState;
     }
