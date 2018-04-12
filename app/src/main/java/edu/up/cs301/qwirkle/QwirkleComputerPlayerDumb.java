@@ -1,8 +1,15 @@
 package edu.up.cs301.qwirkle;
 
+import android.app.Activity;
+import android.widget.TextView;
+
 import java.util.Random;
 
 import edu.up.cs301.game.GameComputerPlayer;
+import edu.up.cs301.game.GameMainActivity;
+import edu.up.cs301.game.LocalGame;
+import edu.up.cs301.game.R;
+import edu.up.cs301.game.config.GameConfig;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
@@ -35,6 +42,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
         super(name);
     }
 
+
     @Override
     protected void receiveInfo(GameInfo info) {
         if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {
@@ -52,7 +60,6 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
 
         this.board = gameState.getBoard();
         this.myPlayerHand = gameState.getMyPlayerHand();
-
         playRandomMove();
     }
 
