@@ -51,25 +51,17 @@ public class QwirkleGameState extends GameState {
     /**
      * Constructor for objects of class OwirkleGameState
      */
-    public QwirkleGameState() {
+    public QwirkleGameState(int numPlayers) {
         // initialize the state to be a brand new game for two players
         this.turn = 0;
-        this.numPlayers = 2;
+        this.numPlayers = numPlayers;
+        this.drawPile = new ArrayList<>();
+        this.board =
+                new QwirkleTile[MainBoard.BOARD_WIDTH][MainBoard.BOARD_HEIGHT];
+
         initDrawPile();
-        // randomizes each player's hands
-        this.playerHands = new QwirkleTile[numPlayers][HAND_NUM];
-        for (int i = 0; i < playerHands.length; i++) {
-            for (int j = 0; j < playerHands[i].length; j++) {
-                playerHands[i][j] = getRandomTile();
-                playerHands[i][j].setyPos(j);
-                playerHands[i][j].setMainBoard(false);
-            }
-        }
-        // set all players' scores to 0 at the start of the game
-        this.playerScores = new int[numPlayers];
-        for (int i = 0; i < playerScores.length; i++) {
-            playerScores[i] = 0;
-        }
+        initPlayerHands();
+        initPlayerScores();
     }
 
     /**
@@ -88,7 +80,14 @@ public class QwirkleGameState extends GameState {
         drawPile = null;
 
         // Give the board of new game state.
-        board = orig.getBoard();
+        board = new QwirkleTile[MainBoard.BOARD_WIDTH][MainBoard.BOARD_HEIGHT];
+        for (int i = 0; i<board.length; i++) {
+            for (int j = 0; j<board[i].length; j++) {
+                if (orig.board[i][j] != null) {
+                    board[i][j] = new QwirkleTile(orig.board[i][j]);
+                }
+            }
+        }
 
         // initializes each player's hand
         myPlayerHand = new QwirkleTile[HAND_NUM];
@@ -101,9 +100,6 @@ public class QwirkleGameState extends GameState {
         for (int i = 0; i<playerScores.length; i++) {
             playerScores[i] = orig.playerScores[i];
         }
-
-        // draw the main board of the new state
-        board = orig.getBoard();
     }
 
     /**

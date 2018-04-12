@@ -151,7 +151,7 @@ public class QwirkleRules {
         else {
             return false;
         }
-
+        //See if they have different attributes
         boolean[] differentAttributes = new boolean[6];
         for (int i=0; i<differentAttributes.length; i++) {
             differentAttributes[i] = false;
@@ -175,22 +175,33 @@ public class QwirkleRules {
         return true;
     }
 
+    /**
+     * Method checkCornerCase
+     * Check to see if the tile is at the corner of 2 tiles
+     * @param x x position of tile
+     * @param y y position of tile
+     * @param tileToPlace tile to be place
+     * @param board board of the game
+     * @return true if it's a coner case
+     */
     private boolean checkCornerCase(int x, int y, QwirkleTile tileToPlace, QwirkleTile[][] board) {
+        //Check north
         QwirkleTile tileN = board[x][y-1];
         if (tileN != null) {
             if (!match(tileToPlace, tileN)) return false;
         }
-
+        //Check south
         QwirkleTile tileS = board[x][y+1];
         if (tileS != null) {
             if (!match(tileToPlace, tileS)) return false;
         }
-
+        //Check west
         QwirkleTile tileW = board[x-1][y];
         if (tileW != null) {
             if (!match(tileToPlace, tileW)) return false;
         }
 
+        //Check east
         QwirkleTile tileE = board[x+1][y];
         if (tileE != null) {
             if (!match(tileToPlace, tileE)) return false;
@@ -271,4 +282,5 @@ public class QwirkleRules {
         // If all checks passed, then it must be a valid move.
         return true;
     }
+
 }

@@ -21,10 +21,8 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
 
 /**
- * A simple computer version of a Qwirkle player. Since this is meant to act as
- * an "easy-mode" opponent for the human player, the actions of this AI include
- * placing random tiles whenever they are valid, without taking into account of
- * scoring and win condition.
+ * Class: QwirkleComputerPlayerDumb
+ * The dumb computer player.
  *
  * @author Alex Hadi
  * @author Michael Quach
