@@ -133,6 +133,15 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     public View getTopView() {
         return activity.findViewById(R.id.top_gui_layout);
     }
+    /**
+     * External Citation
+     * Date: April 11 2018
+     * Problem: Couldn't update the GUI correctly
+     * Source:
+     *      https://github.com/srvegdahl/CounterGame/blob/master/app/src/main/java/edu/up/cs301/counter/CounterHumanPlayer.java
+     * Solution:
+     *      Use vegdahl's code as reference
+     */
 
     protected void updateDisplay() {
         textViewTurnLabel.setText("Current Turn: " + allPlayerNames[playerNum]);
