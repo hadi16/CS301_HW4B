@@ -12,7 +12,7 @@ import edu.up.cs301.game.actionMsg.GameAction;
  * @version April 10, 2018
  */
 public class PlaceTileAction extends GameAction {
-    //instance variables: tile position and player hands
+    // instance variables: tile position and player hands
     private int xPos;
     private int yPos;
     private int handIdx;

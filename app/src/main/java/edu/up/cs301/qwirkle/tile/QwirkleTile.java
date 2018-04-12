@@ -86,7 +86,8 @@ public class QwirkleTile {
      * @param animal The QwirkleAnimal for the bitmap.
      * @param color The QwirkleColor for the bitmap.
      */
-    public QwirkleTile(int xPos, int yPos, QwirkleAnimal animal, QwirkleColor color) {
+    public QwirkleTile(int xPos, int yPos, QwirkleAnimal animal,
+                       QwirkleColor color) {
         this.mainBoard = true;
         this.xPos = xPos;
         this.yPos = yPos;
@@ -125,7 +126,7 @@ public class QwirkleTile {
     */
     /**
      * Method: equals
-     * Checks two QwirkleTile objects are equivalent. Needed to make HashTable work.
+     * Checks two QwirkleTile objects are equivalent. Needed for HashTable.
      * @param o Object to be checked.
      * @return true if objects are equivalent, otherwise false.
      */
@@ -135,7 +136,8 @@ public class QwirkleTile {
         if (o instanceof QwirkleTile) {
             // Cast object as QwirkleTile
             QwirkleTile tile = (QwirkleTile)o;
-            return this.qwirkleAnimal.equals(tile.qwirkleAnimal) && this.qwirkleColor.equals(tile.qwirkleColor);
+            return this.qwirkleAnimal.equals(tile.qwirkleAnimal) &&
+                    this.qwirkleColor.equals(tile.qwirkleColor);
         }
         return false;
     }
@@ -148,9 +150,11 @@ public class QwirkleTile {
         //If there's not bitmap, ignore
         if (tileImages == null) return;
         Bitmap bitmap = tileImages.get(this.toString());
-        //Create all the bitmap according the the scale of the main board or side board
-        bitmapMain = Bitmap.createScaledBitmap(bitmap, RECTDIM_MAIN, RECTDIM_MAIN, false);
-        bitmapSide = Bitmap.createScaledBitmap(bitmap, RECTDIM_SIDE, RECTDIM_SIDE, false);
+        //Create bitmaps according the scale of the main board or side board
+        bitmapMain = Bitmap.createScaledBitmap(bitmap, RECTDIM_MAIN,
+                RECTDIM_MAIN, false);
+        bitmapSide = Bitmap.createScaledBitmap(bitmap, RECTDIM_SIDE,
+                RECTDIM_SIDE, false);
 
         /*
         External Citation
@@ -163,7 +167,8 @@ public class QwirkleTile {
         Used a slightly modified version of the StackOverflow code.
         */
         Bitmap bitmapSideCopy = bitmapSide.copy(bitmapSide.getConfig(), true);
-        int[] allpixels = new int [bitmapSideCopy.getHeight()*bitmapSideCopy.getWidth()];
+        int[] allpixels = new int [bitmapSideCopy.getHeight()*
+                bitmapSideCopy.getWidth()];
         bitmapSideCopy.getPixels(allpixels, 0, bitmapSideCopy.getWidth(), 0, 0,
                 bitmapSideCopy.getWidth(), bitmapSideCopy.getHeight());
         for(int i = 0; i < allpixels.length; i++) {
@@ -202,9 +207,10 @@ public class QwirkleTile {
                 Solution:
                 Used the getIdentifier method with the getPackage method.
                  */
-                int id = activity.getResources().getIdentifier(idName, "drawable",
-                        activity.getPackageName());
-                Bitmap bitmap = BitmapFactory.decodeResource(activity.getResources(), id);
+                int id = activity.getResources().getIdentifier(idName,
+                        "drawable", activity.getPackageName());
+                Bitmap bitmap = BitmapFactory.decodeResource(
+                        activity.getResources(), id);
                 // Add id and bitmap to hash table.
                 if (bitmap != null) tileImages.put(idName, bitmap);
             }
