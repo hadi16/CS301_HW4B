@@ -25,6 +25,15 @@ public class QwirkleLocalGame extends LocalGame {
         this.gameState = new QwirkleGameState();
     }
 
+    /**
+     * Notify the given player that its state has changed. This should involve
+     * sending a GameInfo object to the player. If the game is not a perfect-
+     * information game, this method should remove any information from the game
+     * that the player is not allowed to know.
+     *
+     * @param p
+     *          the player to notify
+     */
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
         p.sendInfo(new QwirkleGameState(gameState, getPlayerIdx(p)));
@@ -60,6 +69,11 @@ public class QwirkleLocalGame extends LocalGame {
 
             gameState.setBoardAtIdx(x, y, tile);
             gameState.setPlayerScores(playerIdx, false);
+            int currentScore = gameState.getPlayerScores()[playerIdx];
+            gameState.setPlayerScores(playerIdx, currentScore, false);
+
+            // replace the tile in the player's hand with a random one from the
+            // drawpile, then change the turn
             gameState.setPlayerHandsAtIdx(playerIdx, handIdx, gameState.getRandomTile());
             gameState.changeTurn();
 
@@ -103,6 +117,7 @@ public class QwirkleLocalGame extends LocalGame {
         }
         return false;
     }
+}
 
     private void winRound(boolean isWinner) {
         for (int i = 0; i < gameState.getNumPlayers(); i++) {
@@ -112,3 +127,4 @@ public class QwirkleLocalGame extends LocalGame {
         }
     }
 }
+

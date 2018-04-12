@@ -19,8 +19,8 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
 import edu.up.cs301.qwirkle.ui.SideBoard;
 
 /**
- * Class: QwirkleHumanPlayer
- * The human player configuration of Qwirkle.
+ * A GUI that allows a human to play Qwirkle. Moves are made by selecting tiles
+ * on the side board and placing them on the main board.
  *
  * @author Alex Hadi
  * @author Michael Quach
@@ -66,9 +66,14 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         myScoreView = (TextView)activity.findViewById(R.id.textViewPlayerScore);
         scoreBoardView = (TextView)activity.findViewById(R.id.textViewScoreboardLabel);
 
+        // initialize the score to 0
         myScoreView.setText("My Score: 0");
+
+        // initialize the scoreboard to 0
         scoreBoardView.setText("Scoreboard:\n"+name+": 0"+ "\n"+"Computer: 0");
 
+
+        // initialize the swap button, main board, and side board.
         /*
         myScoreView.setText("My Score: " + gameState.getPlayerScores()[0]);
         scoreBoardView.setText("Scoreboard:\n"+name+": "+ gameState.getPlayerScores()[0]+ "\n"+"Computer: "+gameState.getPlayerScores()[1]);
@@ -85,15 +90,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     @Override
     protected void initAfterReady() {
         super.initAfterReady();
-
-        int playerIdx;
-        if (gameState != null) {
-            playerIdx = gameState.getTurn();
-        }
-        else {
-            playerIdx = playerNum;
-        }
-        textViewTurnLabel.setText("Current Turn: "+allPlayerNames[playerIdx]);
+        textViewTurnLabel.setText("Current Turn: "+allPlayerNames[playerNum]);
     }
 
 
@@ -102,6 +99,18 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         return activity.findViewById(R.id.top_gui_layout);
     }
 
+    protected void updateDisplay() {
+        textViewTurnLabel.setText("Current Turn: " + allPlayerNames[playerNum]);
+        myScoreView.setText("My Score: " + gameState.getMyPlayerScore());
+        scoreBoardView.setText("Scoreboard:\n"+name+ gameState.getMyPlayerScore() + "\n"+"Computer: " + gameState.getCompPlayerScores());
+    }
+
+    /**
+     * Callback method, called when player gets a message
+     *
+     * @param info
+     *           the message;
+     */
     @Override
     public void receiveInfo(GameInfo info) {
         if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {

@@ -31,10 +31,23 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     // In milliseconds
     private static final int TIME_TO_SLEEP = 1000;
 
+    /**
+     * Constructor for objects of class QwirkleComputerPlayerDumb
+     *
+     * @param name
+     *          the computer player's name
+     */
     public QwirkleComputerPlayerDumb(String name) {
         super(name);
     }
 
+
+    /**
+     * callback method when the game state has changed
+     *
+     * @param info
+     *          the information (presumably containing the game's state)
+     */
     @Override
     protected void receiveInfo(GameInfo info) {
         if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {
@@ -53,6 +66,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
         this.board = gameState.getBoard();
         this.myPlayerHand = gameState.getMyPlayerHand();
 
+        // make a random move, based on the valid positions
         playRandomMove();
     }
 
@@ -61,6 +75,10 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
 
         //Check each tile in the hand to the whole board to see if there's a valid move
         //Iterate through each tile in the player's hand
+        // Check each tile in the hand to the whole board to see if there's a
+        // valid move
+
+        // Iterate through each tile in the player's hand
         for (int i = 0; i < QwirkleGameState.HAND_NUM; i++){
             //Iterate through all x position
             for (int x = 0; x < MainBoard.BOARD_WIDTH; x++){
