@@ -73,11 +73,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     private void playRandomMove() {
         sleep(TIME_TO_SLEEP);
 
-        //Check each tile in the hand to the whole board to see if there's a valid move
-        //Iterate through each tile in the player's hand
-        // Check each tile in the hand to the whole board to see if there's a
-        // valid move
-
+        // Check each tile in the hand w/ board to see if there's a valid move
         // Iterate through each tile in the player's hand
         for (int i = 0; i < QwirkleGameState.HAND_NUM; i++){
             //Iterate through all x position
@@ -85,7 +81,8 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
                 //Iterate through all y position
                 for (int y = 0; y < MainBoard.BOARD_HEIGHT; y++) {
                     if (rules.isValidMove(x, y, myPlayerHand[i], board)) {
-                        PlaceTileAction action = new PlaceTileAction(this, x, y, i);
+                        PlaceTileAction action = new PlaceTileAction(this,
+                                x, y, i);
                         game.sendAction(action);
                         return;
                     }

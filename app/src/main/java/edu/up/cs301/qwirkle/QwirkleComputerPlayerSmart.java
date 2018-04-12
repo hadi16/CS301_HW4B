@@ -4,10 +4,11 @@ import edu.up.cs301.game.GameComputerPlayer;
 import edu.up.cs301.game.infoMsg.GameInfo;
 
 /**
+ * Class: QwirkleComputerPlayerSmart
  * A complex computer version of a Qwirkle player. Since this is meant to act as
- * an "hard-mode" opponent for the human player, the actions of this AI include
+ * a "hard-mode" opponent for the human player, the actions of this AI include
  * detecting and calculating the best course of action when it comes to placing
- * a tile on the board. The main objective of this AI is to gather as much
+ * a tile on the board. The main objective of this AI is to gather as many
  * points as possible with the least amount of tiles.
  *
  * @author Alex Hadi
