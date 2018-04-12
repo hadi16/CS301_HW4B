@@ -46,8 +46,22 @@ public class QwirkleLocalGame extends LocalGame {
 
     @Override
     protected String checkIfGameOver() {
-        if (gameState.hasTilesInPile()) return null;
-        if (validMovesExist()) return null;
+        if(gameState.hasTilesInPile()) return null;
+        if(!gameState.hasTilesInPile()) {
+            if (!validMovesExist()) {
+                int highestScore = gameState.getPlayerScores()[0];
+                for (int playerId = 0; playerId < gameState.getNumPlayers(); playerId++) {
+                    if (gameState.getPlayerScores()[playerId] > highestScore) {
+                        highestScore = gameState.getPlayerScores()[playerId];
+                    }
+                }
+                for (int playerId = 0; playerId < gameState.getNumPlayers(); playerId++) {
+                    if (highestScore == gameState.getPlayerScores()[playerId]) {
+                        return playerNames[playerId];
+                    }
+                }
+            }
+        }
         return null;
     }
 
@@ -102,6 +116,8 @@ public class QwirkleLocalGame extends LocalGame {
             return false;
         }
     }
+
+
 
     private boolean validMovesExist() {
         for (int playerId=0; playerId<gameState.getNumPlayers(); ++playerId) {
