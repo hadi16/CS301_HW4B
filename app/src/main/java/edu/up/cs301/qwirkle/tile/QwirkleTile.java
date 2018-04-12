@@ -20,15 +20,15 @@ import java.util.Hashtable;
 public class QwirkleTile {
     // Hashtable for all Bitmaps
     private static Hashtable<String, Bitmap> tileImages = null;
-
+    //Instance variables for bitmaps
     private Bitmap bitmapMain;
     private Bitmap bitmapSide;
     private Bitmap bitmapSideSelected;
 
-    private int xPos;
-    private int yPos;
-    private QwirkleAnimal qwirkleAnimal;
-    private QwirkleColor qwirkleColor;
+    private int xPos; //x position of bitmap
+    private int yPos; //y postion of bitmap
+    private QwirkleAnimal qwirkleAnimal; //Animal of tile
+    private QwirkleColor qwirkleColor; //Color of tile
 
     // Booleans
     private boolean mainBoard;
@@ -40,25 +40,41 @@ public class QwirkleTile {
     public static int OFFSET_MAIN = 2;
     public static int OFFSET_SIDE = 26;
 
+    /**
+     * ctor
+     * Deep copy constructor of the original constructor
+     * @param orig original QwirkleTile constructor
+     */
     public QwirkleTile(QwirkleTile orig) {
+        //Set orig bitmaps
         this.bitmapMain = orig.bitmapMain;
         this.bitmapSide = orig.bitmapSide;
         this.bitmapSideSelected = orig.bitmapSideSelected;
 
+        //Set orig position and tile properties of bitmaps
         this.xPos = orig.xPos;
         this.yPos = orig.yPos;
         this.qwirkleAnimal = orig.qwirkleAnimal;
         this.qwirkleColor = orig.qwirkleColor;
 
+        //Set the mainboard and get the selected tile
         this.mainBoard = orig.mainBoard;
         this.isSelected = orig.isSelected;
-
+        //Initialize all bitmaps
         initBitmapInstance();
     }
 
+    /**
+     * ctor
+     * Constructor or QwirleTile
+     * Use to create a new tile
+     * @param animal QwirkleAnimal for bitmap
+     * @param color QwirkleColor for bitmap
+     */
     public QwirkleTile(QwirkleAnimal animal, QwirkleColor color) {
         this.qwirkleAnimal = animal;
         this.qwirkleColor = color;
+        //Initialize all bitmaps
         initBitmapInstance();
     }
 
@@ -124,9 +140,15 @@ public class QwirkleTile {
         return false;
     }
 
+    /**
+     * Method: initBitmapInstance
+     * Initialize all bitmaps
+     */
     private void initBitmapInstance() {
+        //If there's not bitmap, ignore
         if (tileImages == null) return;
         Bitmap bitmap = tileImages.get(this.toString());
+        //Create all the bitmap according the the scale of the main board or side board
         bitmapMain = Bitmap.createScaledBitmap(bitmap, RECTDIM_MAIN, RECTDIM_MAIN, false);
         bitmapSide = Bitmap.createScaledBitmap(bitmap, RECTDIM_SIDE, RECTDIM_SIDE, false);
 
@@ -154,6 +176,11 @@ public class QwirkleTile {
         this.bitmapSideSelected = bitmapSideCopy;
     }
 
+    /**
+     * Method: initBitmaps
+     * put all bitmaps in the tiles image list
+     * @param activity activity to get the resources
+     */
     public static void initBitmaps(Activity activity) {
         if (tileImages != null) return;
 
@@ -211,29 +238,72 @@ public class QwirkleTile {
     }
 
     // Getters
+
+    /**
+     * Method: getxPos
+     * @return x position of bitmap
+     */
     public int getxPos() {
         return xPos;
     }
+
+    /**
+     * Method: getyPos
+     * @return y position of bitmap
+     */
     public int getyPos() {
         return yPos;
     }
+
+    /**
+     * Method: getQwirkleAnimal
+     * @return the QwirkleAnimal of bitmap
+     */
     public QwirkleAnimal getQwirkleAnimal() {
         return qwirkleAnimal;
     }
+
+    /**
+     * Method: getQwirkleColor
+     * @return the QwirkleColor of bitmap
+     */
     public QwirkleColor getQwirkleColor() {
         return qwirkleColor;
     }
 
     // Setters
+
+    /**
+     * Method: setxPos
+     * Set x position of bitmap
+     * @param xPos x coordinate
+     */
     public void setxPos(int xPos) {
         this.xPos = xPos;
     }
+
+    /**
+     * Method: setyPos
+     * Set y position of bitmap
+     * @param yPos y coordinate
+     */
     public void setyPos(int yPos) {
         this.yPos = yPos;
     }
+
+    /**
+     * Method: setMainBoard
+     * @param mainBoard boolean if true to draw on main board
+     */
     public void setMainBoard(boolean mainBoard) {
         this.mainBoard = mainBoard;
     }
+
+    /**
+     * Method: setSelected
+     * Set the selected bitmaps
+     * @param selected true to bitmaps being selected
+     */
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
