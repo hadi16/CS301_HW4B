@@ -48,7 +48,7 @@ public class QwirkleMainActivity extends GameMainActivity {
         // - from 1 to 2 players
         // - name of game is "Qwirkle"
         // - port number as defined above
-        GameConfig defaultConfig = new GameConfig(playerTypes, 1, 2, "Qwirkle",
+        GameConfig defaultConfig = new GameConfig(playerTypes, 2, 4, "Qwirkle",
                 PORT_NUMBER);
 
         // Add the default players to the configuration

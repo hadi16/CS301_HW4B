@@ -20,6 +20,8 @@ import java.util.Hashtable;
 public class QwirkleTile {
     // Hashtable for all Bitmaps
     private static Hashtable<String, Bitmap> tileImages = null;
+    private static Hashtable<String, Bitmap> selectedTileImages = null;
+
     //Instance variables for bitmaps
     private Bitmap bitmapMain;
     private Bitmap bitmapSide;
@@ -156,29 +158,9 @@ public class QwirkleTile {
         bitmapSide = Bitmap.createScaledBitmap(bitmap, RECTDIM_SIDE,
                 RECTDIM_SIDE, false);
 
-        /*
-        External Citation
-        Date: 10 April 2018
-        Problem: Could not replace color in a bitmap.
-        Resource:
-        https://stackoverflow.com/questions/7237915/replace-black-color-in-
-        bitmap-with-red
-        Solution:
-        Used a slightly modified version of the StackOverflow code.
-        */
-        Bitmap bitmapSideCopy = bitmapSide.copy(bitmapSide.getConfig(), true);
-        int[] allpixels = new int [bitmapSideCopy.getHeight()*
-                bitmapSideCopy.getWidth()];
-        bitmapSideCopy.getPixels(allpixels, 0, bitmapSideCopy.getWidth(), 0, 0,
-                bitmapSideCopy.getWidth(), bitmapSideCopy.getHeight());
-        for(int i = 0; i < allpixels.length; i++) {
-            if (allpixels[i] == Color.BLACK) {
-                allpixels[i] = Color.GRAY;
-            }
-        }
-        bitmapSideCopy.setPixels(allpixels, 0, bitmapSideCopy.getWidth(), 0, 0,
-                bitmapSideCopy.getWidth(), bitmapSideCopy.getHeight());
-        this.bitmapSideSelected = bitmapSideCopy;
+        Bitmap selectedBitmap = selectedTileImages.get(this.toString());
+        bitmapSideSelected = Bitmap.createScaledBitmap(selectedBitmap, RECTDIM_SIDE,
+                RECTDIM_SIDE, false);
     }
 
     /**
@@ -187,9 +169,10 @@ public class QwirkleTile {
      * @param activity activity to get the resources
      */
     public static void initBitmaps(Activity activity) {
-        if (tileImages != null) return;
+        if (tileImages != null && selectedTileImages != null) return;
 
         tileImages = new Hashtable<>();
+        selectedTileImages = new Hashtable<>();
         // Iterate over all QwirkleAnimals and QwirkleColors.
         for (QwirkleAnimal animal: QwirkleAnimal.values()) {
             for (QwirkleColor color: QwirkleColor.values()) {
@@ -213,6 +196,29 @@ public class QwirkleTile {
                         activity.getResources(), id);
                 // Add id and bitmap to hash table.
                 if (bitmap != null) tileImages.put(idName, bitmap);
+
+                /*
+                External Citation
+                Date: 10 April 2018
+                Problem: Could not replace color in a bitmap.
+                Resource:
+                https://stackoverflow.com/questions/7237915/replace-black-color-in-
+                bitmap-with-red
+                Solution:
+                Used a slightly modified version of the StackOverflow code.
+                */
+                Bitmap bitmapCopy = bitmap.copy(bitmap.getConfig(), true);
+                int[] allpixels = new int [bitmapCopy.getHeight()* bitmapCopy.getWidth()];
+                bitmapCopy.getPixels(allpixels, 0, bitmapCopy.getWidth(), 0, 0,
+                        bitmapCopy.getWidth(), bitmapCopy.getHeight());
+                for(int i = 0; i < allpixels.length; i++) {
+                    if (allpixels[i] == Color.BLACK) {
+                        allpixels[i] = Color.GRAY;
+                    }
+                }
+                bitmapCopy.setPixels(allpixels, 0, bitmapCopy.getWidth(), 0, 0,
+                        bitmapCopy.getWidth(), bitmapCopy.getHeight());
+                selectedTileImages.put(idName, bitmapCopy);
             }
         }
     }
@@ -224,7 +230,10 @@ public class QwirkleTile {
      * @param canvas Canvas object to allow the bitmap to be drawn.
      */
     public void drawTile(Canvas canvas) {
-        if (bitmapMain == null || bitmapSide == null) initBitmapInstance();
+        if (bitmapMain == null || bitmapSide == null || bitmapSideSelected == null) initBitmapInstance();
+
+        // To prevent out of memory error.
+        if (bitmapSideSelected == null && isSelected) initBitmapInstance();
 
         // No paint needed to draw the bitmap.
         if (this.mainBoard) {
