@@ -30,7 +30,7 @@ public class QwirkleLocalGame extends LocalGame {
      */
     public QwirkleLocalGame() {
         // initializes a new game state
-        this.gameState = new QwirkleGameState();
+        this.gameState = new QwirkleGameState(2);
     }
     /**
      External Citation
