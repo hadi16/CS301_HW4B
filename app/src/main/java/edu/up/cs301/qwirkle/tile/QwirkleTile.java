@@ -37,10 +37,10 @@ public class QwirkleTile {
     private boolean isSelected;
 
     // Constants to make bitmaps draw properly on the screen.
-    public static int RECTDIM_MAIN = 74;
-    public static int RECTDIM_SIDE = 175;
-    public static int OFFSET_MAIN = 2;
-    public static int OFFSET_SIDE = 26;
+    public static int RECTDIM_MAIN;
+    public static int RECTDIM_SIDE;
+    public static int OFFSET_MAIN;
+    public static int OFFSET_SIDE;
 
     /**
      * Constructor: QwirkleTile

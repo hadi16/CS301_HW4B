@@ -66,6 +66,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     // button used to determine swapping
     private Button buttonSwap;
 
+    private boolean init = false;
+
 
     /**
      * Constructor for QwirkleHumanPlayer
@@ -118,11 +120,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
 
         System.out.println(mainBoard.getHeight());
-        //QwirkleTile.RECTDIM_MAIN = mainBoard.getHeight() / MainBoard.BOARD_HEIGHT;
-        //QwirkleTile.OFFSET_MAIN = (mainBoard.getWidth() - (MainBoard.BOARD_WIDTH*QwirkleTile.RECTDIM_MAIN)) / 2;
 
 
-        QwirkleTile.initBitmaps(activity);
+
+
     }
 
     /**
@@ -154,6 +155,13 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 gameState.getCompPlayerScores());
     }
 
+    private void setBitmaps() {
+        QwirkleTile.RECTDIM_MAIN = mainBoard.getHeight() / MainBoard.BOARD_HEIGHT;
+        QwirkleTile.OFFSET_MAIN = (mainBoard.getWidth() - (MainBoard.BOARD_WIDTH*QwirkleTile.RECTDIM_MAIN)) / 2;
+        QwirkleTile.initBitmaps(activity);
+        init = true;
+    }
+
     /**
      * Callback method, called when player gets a message
      *
@@ -162,6 +170,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      */
     @Override
     public void receiveInfo(GameInfo info) {
+        if (!init) {
+            setBitmaps();
+        }
+
         // if the move was out of turn or otherwise illegal, flast the screen
         if (info instanceof IllegalMoveInfo||info instanceof NotYourTurnInfo) {
             flash(Color.RED, 50);
