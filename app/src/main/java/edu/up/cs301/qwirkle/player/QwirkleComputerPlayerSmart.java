@@ -1,4 +1,4 @@
-package edu.up.cs301.qwirkle;
+package edu.up.cs301.qwirkle.player;
 
 import edu.up.cs301.game.GameComputerPlayer;
 import edu.up.cs301.game.infoMsg.GameInfo;

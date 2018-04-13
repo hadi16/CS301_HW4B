@@ -1,4 +1,4 @@
-package edu.up.cs301.qwirkle;
+package edu.up.cs301.qwirkle.player;
 
 import android.graphics.Color;
 import android.view.MotionEvent;
@@ -12,6 +12,7 @@ import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
+import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
@@ -86,7 +87,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     public void setAsGui(GameMainActivity activity) {
         // remember the activity and initialize it
         this.activity = activity;
-        QwirkleTile.initBitmaps(activity);
 
         // load the layout resource for the new configuration
         activity.setContentView(R.layout.qwirkle_human_player);
@@ -107,8 +107,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         scoreBoardView = (TextView)activity.findViewById(
                 R.id.textViewScoreboardLabel);
 
-
-
         // initialize the swap button, main board, and side board.
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         buttonSwap.setOnClickListener(this);
@@ -116,6 +114,15 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         mainBoard.setOnTouchListener(this);
         sideBoard = (SideBoard)activity.findViewById(R.id.sideBoard);
         sideBoard.setOnTouchListener(this);
+
+
+
+        System.out.println(mainBoard.getHeight());
+        //QwirkleTile.RECTDIM_MAIN = mainBoard.getHeight() / MainBoard.BOARD_HEIGHT;
+        //QwirkleTile.OFFSET_MAIN = (mainBoard.getWidth() - (MainBoard.BOARD_WIDTH*QwirkleTile.RECTDIM_MAIN)) / 2;
+
+
+        QwirkleTile.initBitmaps(activity);
     }
 
     /**
@@ -246,19 +253,33 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 int yPos = getSelectedHandIdx(x, y);
                 if (yPos == -1) return false;
 
-                isSelectedBoolArr[yPos] = true;
-                myPlayerHand[yPos].setSelected(true);
+                if (isSelectedBoolArr[yPos]) {
+                    isSelectedBoolArr[yPos] = false;
+                    myPlayerHand[yPos].setSelected(false);
+                }
+                else {
+                    isSelectedBoolArr[yPos] = true;
+                    myPlayerHand[yPos].setSelected(true);
+                }
             }
             else {
                 int yPos = getSelectedHandIdx(x, y);
                 if (yPos == -1) return false;
 
                 for (int i = 0; i < isSelectedBoolArr.length; i++) {
+                    if (yPos == i) continue;
                     isSelectedBoolArr[i] = false;
                     myPlayerHand[i].setSelected(false);
                 }
-                isSelectedBoolArr[yPos] = true;
-                myPlayerHand[yPos].setSelected(true);
+
+                if (isSelectedBoolArr[yPos]) {
+                    isSelectedBoolArr[yPos] = false;
+                    myPlayerHand[yPos].setSelected(false);
+                }
+                else {
+                    isSelectedBoolArr[yPos] = true;
+                    myPlayerHand[yPos].setSelected(true);
+                }
             }
 
             mainBoard.invalidate();

@@ -25,6 +25,12 @@ public class QwirkleLocalGame extends LocalGame {
     //the rules of the game
     private QwirkleRules rules = new QwirkleRules();
 
+    @Override
+    public void start(GamePlayer[] players) {
+        super.start(players);
+        this.gameState = new QwirkleGameState(players.length);
+    }
+
     /**
      * Constructor for the QwirkleLocalGame
      */
@@ -38,9 +44,6 @@ public class QwirkleLocalGame extends LocalGame {
         blob/master/app/src/main/java/edu/up/cs301/slapjack/SJLocalGame.java
         Solution: I used Professor Vegdahl's code as reference.
         */
-
-        // initializes a new game state
-        this.gameState = new QwirkleGameState(2);
     }
 
     /**

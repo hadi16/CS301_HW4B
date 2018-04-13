@@ -7,6 +7,9 @@ import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.LocalGame;
 import edu.up.cs301.game.config.GameConfig;
 import edu.up.cs301.game.config.GamePlayerType;
+import edu.up.cs301.qwirkle.player.QwirkleComputerPlayerDumb;
+import edu.up.cs301.qwirkle.player.QwirkleComputerPlayerSmart;
+import edu.up.cs301.qwirkle.player.QwirkleHumanPlayer;
 
 /**
  * Class: QwirkleMainActivity

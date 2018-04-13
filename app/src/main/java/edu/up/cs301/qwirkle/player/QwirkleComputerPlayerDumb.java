@@ -1,4 +1,4 @@
-package edu.up.cs301.qwirkle;
+package edu.up.cs301.qwirkle.player;
 
 import java.util.Random;
 
@@ -6,6 +6,8 @@ import edu.up.cs301.game.GameComputerPlayer;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
+import edu.up.cs301.qwirkle.QwirkleGameState;
+import edu.up.cs301.qwirkle.QwirkleRules;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;

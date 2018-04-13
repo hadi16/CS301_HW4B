@@ -222,7 +222,6 @@ public class QwirkleTile {
         }
     }
 
-
     /**
      * Method: drawTile
      * Used to draw a bitmap onto a view given a Canvas object.

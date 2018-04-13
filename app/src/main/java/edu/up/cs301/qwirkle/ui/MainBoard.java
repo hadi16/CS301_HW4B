@@ -86,7 +86,6 @@ public class MainBoard extends View {
      */
     @Override
     public void onDraw(Canvas canvas){
-        //Offset needed to center the board.
         int rectDim = canvas.getHeight() /BOARD_HEIGHT;
         if (rectDim != QwirkleTile.RECTDIM_MAIN) {
             QwirkleTile.RECTDIM_MAIN = rectDim;
