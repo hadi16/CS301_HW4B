@@ -27,6 +27,12 @@ public class QwirkleLocalGame extends LocalGame {
     //the rules of the game
     private QwirkleRules rules = new QwirkleRules();
 
+    @Override
+    public void start(GamePlayer[] players) {
+        super.start(players);
+        this.gameState = new QwirkleGameState(players.length);
+    }
+
     /**
      * Constructor for the QwirkleLocalGame
      */

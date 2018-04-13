@@ -86,24 +86,14 @@ public class MainBoard extends View {
      */
     @Override
     public void onDraw(Canvas canvas){
-        //Offset needed to center the board.
-        int rectDim = canvas.getHeight() /BOARD_HEIGHT;
-        if (rectDim != QwirkleTile.RECTDIM_MAIN) {
-            QwirkleTile.RECTDIM_MAIN = rectDim;
-        }
-        int offset = (canvas.getWidth() - (BOARD_WIDTH*rectDim)) / 2;
-        if (offset != QwirkleTile.OFFSET_MAIN) {
-            QwirkleTile.OFFSET_MAIN = offset;
-        }
-
         // Sets background color to white.
         canvas.drawColor(Color.WHITE);
 
         // Draws the board.
         for (int i = 0; i< BOARD_WIDTH; i++){
             for (int j = 0; j< BOARD_HEIGHT; j++){
-                canvas.drawRect(i*rectDim+offset, j*rectDim,
-                        (i+1)*rectDim+offset, (j+1)*rectDim, blackPaint);
+                canvas.drawRect(i*QwirkleTile.RECTDIM_MAIN+QwirkleTile.OFFSET_MAIN, j*QwirkleTile.RECTDIM_MAIN,
+                        (i+1)*QwirkleTile.RECTDIM_MAIN+QwirkleTile.OFFSET_MAIN, (j+1)*QwirkleTile.RECTDIM_MAIN, blackPaint);
             }
         }
         //If there's nothing in the game state, ignore

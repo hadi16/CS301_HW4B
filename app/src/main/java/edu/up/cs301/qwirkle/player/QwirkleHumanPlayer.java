@@ -1,4 +1,4 @@
-package edu.up.cs301.qwirkle;
+package edu.up.cs301.qwirkle.player;
 
 import android.graphics.Color;
 import android.view.MotionEvent;
@@ -12,6 +12,7 @@ import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
+import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
@@ -65,6 +66,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     // button used to determine swapping
     private Button buttonSwap;
 
+    private boolean init = false;
+
 
     /**
      * Constructor for QwirkleHumanPlayer
@@ -86,7 +89,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     public void setAsGui(GameMainActivity activity) {
         // remember the activity and initialize it
         this.activity = activity;
-        QwirkleTile.initBitmaps(activity);
 
         // load the layout resource for the new configuration
         activity.setContentView(R.layout.qwirkle_human_player);
@@ -106,8 +108,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         // initialize the scoreboard to 0
         scoreBoardView = (TextView)activity.findViewById(
                 R.id.textViewScoreboardLabel);
-
-
 
         // initialize the swap button, main board, and side board.
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
@@ -147,6 +147,13 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 gameState.getPlayerScore(playerNum+1));
     }
 
+    private void setBitmaps() {
+        QwirkleTile.RECTDIM_MAIN = mainBoard.getHeight() / MainBoard.BOARD_HEIGHT;
+        QwirkleTile.OFFSET_MAIN = (mainBoard.getWidth() - (MainBoard.BOARD_WIDTH*QwirkleTile.RECTDIM_MAIN)) / 2;
+        QwirkleTile.initBitmaps(activity);
+        init = true;
+    }
+
     /**
      * Callback method, called when player gets a message
      *
@@ -155,6 +162,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      */
     @Override
     public void receiveInfo(GameInfo info) {
+        if (!init) {
+            setBitmaps();
+        }
+
         // if the move was out of turn or otherwise illegal, flast the screen
         if (info instanceof IllegalMoveInfo||info instanceof NotYourTurnInfo) {
             flash(Color.RED, 50);
@@ -251,16 +262,32 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             if (swap) {
                 isSelectedBoolArr[yPos] = true;
                 myPlayerHand[yPos].setSelected(true);
+                if (isSelectedBoolArr[yPos]) {
+                    isSelectedBoolArr[yPos] = false;
+                    myPlayerHand[yPos].setSelected(false);
+                }
+                else {
+                    isSelectedBoolArr[yPos] = true;
+                    myPlayerHand[yPos].setSelected(true);
+                }
             }
             else {
                 for (int i = 0; i < isSelectedBoolArr.length; i++) {
+                    if (yPos == i) continue;
                     isSelectedBoolArr[i] = false;
                     if (myPlayerHand[i] != null) {
                         myPlayerHand[i].setSelected(false);
                     }
                 }
-                isSelectedBoolArr[yPos] = true;
-                myPlayerHand[yPos].setSelected(true);
+
+                if (isSelectedBoolArr[yPos]) {
+                    isSelectedBoolArr[yPos] = false;
+                    myPlayerHand[yPos].setSelected(false);
+                }
+                else {
+                    isSelectedBoolArr[yPos] = true;
+                    myPlayerHand[yPos].setSelected(true);
+                }
             }
 
             mainBoard.invalidate();
