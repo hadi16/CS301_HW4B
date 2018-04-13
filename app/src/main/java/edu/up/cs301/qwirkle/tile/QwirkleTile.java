@@ -137,6 +137,7 @@ public class QwirkleTile {
 
         // Get and set the main bitmaps.
         Bitmap bitmap = tileImages.get(this.toString());
+
         bitmapMain = Bitmap.createScaledBitmap(bitmap, RECTDIM_MAIN,
                 RECTDIM_MAIN, false);
         bitmapSide = Bitmap.createScaledBitmap(bitmap, RECTDIM_SIDE,

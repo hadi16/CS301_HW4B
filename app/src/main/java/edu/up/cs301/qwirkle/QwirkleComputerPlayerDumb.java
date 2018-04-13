@@ -27,7 +27,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     private QwirkleRules rules = new QwirkleRules(); // For valid moves
 
     // Constant for 1000-millisecond delay
-    private static final int TIME_TO_SLEEP = 1000;
+    private static final int TIME_TO_SLEEP = 0;
 
     /**
      * Constructor: QwirkleComputerPlayerDumb

@@ -140,11 +140,11 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      * Used Vegdahl's code as reference
      */
     private void updateDisplay() {
-        textViewTurnLabel.setText("Current Turn: " + allPlayerNames[playerNum]);
-        myScoreView.setText("My Score: " + gameState.getMyPlayerScore());
+        textViewTurnLabel.setText("Current Turn: " + allPlayerNames[gameState.getTurn()]);
+        myScoreView.setText("My Score: " + gameState.getPlayerScore(playerNum));
         scoreBoardView.setText("Scoreboard:\n"+name + ": " +
-                gameState.getMyPlayerScore() + "\n"+"Computer: " +
-                gameState.getCompPlayerScores());
+                gameState.getPlayerScore(playerNum) + "\n"+"Computer: " +
+                gameState.getPlayerScore(playerNum+1));
     }
 
     /**
@@ -242,20 +242,22 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         else if (v.getId() == R.id.sideBoard) {
             // if swap has been selected, allow the tile to be accessed in the
             // player's hand. If there is nothing there, do nothing.
-            if (swap) {
-                int yPos = getSelectedHandIdx(x, y);
-                if (yPos == -1) return false;
+            int yPos = getSelectedHandIdx(x, y);
+            if (yPos == -1) return false;
 
+            if (myPlayerHand[yPos] == null) {
+                return false;
+            }
+            if (swap) {
                 isSelectedBoolArr[yPos] = true;
                 myPlayerHand[yPos].setSelected(true);
             }
             else {
-                int yPos = getSelectedHandIdx(x, y);
-                if (yPos == -1) return false;
-
                 for (int i = 0; i < isSelectedBoolArr.length; i++) {
                     isSelectedBoolArr[i] = false;
-                    myPlayerHand[i].setSelected(false);
+                    if (myPlayerHand[i] != null) {
+                        myPlayerHand[i].setSelected(false);
+                    }
                 }
                 isSelectedBoolArr[yPos] = true;
                 myPlayerHand[yPos].setSelected(true);

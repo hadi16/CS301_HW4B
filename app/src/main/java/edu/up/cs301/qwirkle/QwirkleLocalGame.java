@@ -3,9 +3,11 @@ package edu.up.cs301.qwirkle;
 import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.LocalGame;
 import edu.up.cs301.game.actionMsg.GameAction;
+import edu.up.cs301.qwirkle.action.PassAction;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
+import edu.up.cs301.qwirkle.ui.MainBoard;
 
 /**
  * The QwirkleLocalGame class for a Qwirkle game. Defines and enforces the game
@@ -40,7 +42,7 @@ public class QwirkleLocalGame extends LocalGame {
         */
 
         // initializes a new game state
-        this.gameState = new QwirkleGameState(2);
+        this.gameState = new QwirkleGameState(4);
     }
 
     /**
@@ -84,6 +86,23 @@ public class QwirkleLocalGame extends LocalGame {
         // no valid moves left to complete
         if (gameState.hasTilesInPile()) return null;
         if (validMovesExist()) return null;
+        if(gameState.hasTilesInPile()) return null;
+        if(!gameState.hasTilesInPile()) {
+             if (!validMovesExist()) {
+                int highestScore = gameState.getPlayerScore(0);
+                for (int playerId = 0; playerId < gameState.getNumPlayers(); playerId++) {
+                    if (gameState.getPlayerScore(playerId) > highestScore) {
+                        highestScore = gameState.getPlayerScore(playerId);
+                        }
+                    }
+                for (int playerId = 0; playerId < gameState.getNumPlayers(); playerId++) {
+                    if (highestScore == gameState.getPlayerScore(playerId)) {
+                        return playerNames[playerId];
+                        }
+                    }
+                }
+            }
+
         return null;
     }
 
@@ -116,7 +135,6 @@ public class QwirkleLocalGame extends LocalGame {
 
             // draw the new tile on the board and update the score accordingly
             gameState.setBoardAtIdx(x, y, tile);
-            gameState.setPlayerScores(playerIdx, false);
             gameState.setPlayerScores(playerIdx, false);
 
             // replace the tile in the player's hand with a random one from the
@@ -151,6 +169,11 @@ public class QwirkleLocalGame extends LocalGame {
             // return true if a swap has been made, and false otherwise.
             return true;
         }
+
+        else if (action instanceof PassAction) {
+            gameState.changeTurn();
+            return true;
+        }
         else {
             return false;
         }
@@ -170,10 +193,9 @@ public class QwirkleLocalGame extends LocalGame {
             QwirkleTile[] playerHand = gameState.getPlayerHands()[playerId];
             QwirkleTile[][] board = gameState.getBoard();
             for (QwirkleTile tileInHand : playerHand) {
-                for (QwirkleTile[] tileArr : board) {
-                    for (QwirkleTile tile : tileArr) {
-                        if (rules.isValidMove(tile.getxPos(), tile.getyPos(),
-                                tileInHand, board)) {
+                for (int x = 0; x < MainBoard.BOARD_WIDTH; x++) {
+                    for (int y = 0; y < MainBoard.BOARD_HEIGHT; y++) {
+                        if (rules.isValidMove(x ,y, tileInHand, board)) {
                             return true;
                         }
                     }
@@ -184,5 +206,6 @@ public class QwirkleLocalGame extends LocalGame {
         // return false if there are no more valid moves.
         return false;
     }
+
 }
 

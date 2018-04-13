@@ -283,12 +283,13 @@ public class QwirkleRules {
                 return false;
             }
         }
+        /*
         if (lineEW.size() > 1 && lineNS.size() > 1) {
             if (!checkCornerCase(x, y, tile, board)) {
                 return false;
             }
         }
-
+*/
         // If all checks passed, then it must be a valid move.
         return true;
     }

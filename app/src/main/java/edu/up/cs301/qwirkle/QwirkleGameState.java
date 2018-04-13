@@ -246,22 +246,13 @@ public class QwirkleGameState extends GameState {
         return myPlayerHand;
     }
     /**
-     * Method: getCompPlayerScores
-     * Gets the computer player's score
-     *
-     * @return the scores of the AI at a given moment
-     */
-    public int getCompPlayerScores() {
-        return playerScores[1];
-    }
-    /**
      * Method: getMyPlayerScore
-     * Get the human player's score
+     * Get the scores at index
      *
      * @return the human player's score.
      */
-    public int getMyPlayerScore() {
-        return playerScores[0];
+    public int getPlayerScore(int playerIdx) {
+        return playerScores[playerIdx];
     }
     /**
      * Set the current board state
@@ -332,4 +323,6 @@ public class QwirkleGameState extends GameState {
         // add a point to each player's score for every tile placed
         playerScores[playerIdx] +=1;
     }
+
+
 }
