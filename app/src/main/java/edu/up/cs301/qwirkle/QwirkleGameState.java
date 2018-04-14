@@ -286,14 +286,10 @@ public class QwirkleGameState extends GameState {
      * @param isQwirkle
      *          the maximum points a player can get from completing a qwirkle
      */
-    public void setPlayerScores(int playerIdx, boolean isQwirkle) {
-        // if a player managed to complete a line of either the same animal
-        // or the same color, that is a Qwirkle and it adds on an additional 6
-        // points to the player's current score
-        if (isQwirkle) {
-            playerScores[playerIdx] +=6;
+    public void setPlayerScores(int playerIdx,int points, boolean isQwirkle) {
+        playerScores[playerIdx] += points;
+        if(isQwirkle) {
+            playerScores[playerIdx] += 5;
         }
-        // add a point to each player's score for every tile placed
-        playerScores[playerIdx] +=1;
     }
 }
