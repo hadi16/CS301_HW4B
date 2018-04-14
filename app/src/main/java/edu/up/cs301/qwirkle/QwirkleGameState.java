@@ -279,17 +279,12 @@ public class QwirkleGameState extends GameState {
     }
 
     /**
-     * Set each players' scores
+     * Method: setPlayerScore
+     * Set one of the player's scores.
      *
-     * @param playerIdx
-     *          a specific player
-     * @param isQwirkle
-     *          the maximum points a player can get from completing a qwirkle
+     * @param playerIdx the specific player idx
      */
-    public void setPlayerScores(int playerIdx,int points, boolean isQwirkle) {
-        playerScores[playerIdx] += points;
-        if(isQwirkle) {
-            playerScores[playerIdx] += 5;
-        }
+    public void setPlayerScore(int playerIdx, int score) {
+        this.playerScores[playerIdx] = score;
     }
 }

@@ -1,13 +1,12 @@
 package edu.up.cs301.qwirkle.player;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
+import java.util.Hashtable;
 
 import edu.up.cs301.game.GameComputerPlayer;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
-import edu.up.cs301.qwirkle.CONST;
 import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.QwirkleRules;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
@@ -71,54 +70,49 @@ public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
         playSmartMove();
     }
 
-    public void playSmartMove() {
-        //ArrayList that stores all score that can be earn
-        ArrayList<Integer> allScore = new ArrayList<>();
-        for(QwirkleTile tile : myPlayerHand) {
-            if(tile == null) continue;
-            for(int x = 0; x < CONST.BOARD_WIDTH; x++) {
-                for(int y = 0; y < CONST.BOARD_HEIGHT; y++) {
-                    if(rules.isValidMove(x, y , tile, board)) {
-                        int point = rules.getPoint();
-                        allScore.add(point);
+    private void playSmartMove() {
+        //ArrayList that stores all scores and its corresponding PlaceTileAction.
+        Hashtable<Integer, PlaceTileAction> allScores = new Hashtable<>();
+        for (int handIdx=0; handIdx<myPlayerHand.length; handIdx++) {
+            QwirkleTile tile = myPlayerHand[handIdx];
+            if (tile == null) continue;
+            for (int x=0; x<board.length; x++) {
+                for (int y=0; y<board[x].length; y++) {
+                    if (rules.isValidMove(x, y , tile, board)) {
+                        int points = rules.getPoints();
+                        PlaceTileAction pta = new PlaceTileAction(this, x, y, handIdx);
+                        allScores.put(points, pta);
                     }
                 }
             }
         }
-        //Get the highest score in the array
-        int highest = allScore.get(0);
-        for(int i = 0; i < allScore.size(); i++) {
-            if(allScore.get(i) > highest) {
-                highest = allScore.get(i);
-            }
-        }
-        //Check all the available moves again to see which one give the highest score
-        //Then play that move
-        for(int tileIdx = 0; tileIdx < myPlayerHand.length; tileIdx++) {
-            QwirkleTile tile = myPlayerHand[tileIdx];
-            if(tile == null) continue;
-            for(int x = 0; x < CONST.BOARD_WIDTH; x++) {
-                for(int y = 0; y < CONST.BOARD_HEIGHT; y++) {
-                    if(rules.isValidMove(x, y, tile, board)) {
-                        if(rules.getPoint() == highest) {
-                            PlaceTileAction pta = new PlaceTileAction(this, x, y, tileIdx);
-                            game.sendAction(pta);
-                            return;
-                        }
-                    }
+
+        if (allScores.size() == 0) {
+            // If no valid moves, allow all tiles in the computer's hand to be
+            // swapped out with random ones from the draw pile.
+            for (int i=0; i<myPlayerHand.length; i++) {
+                QwirkleTile tile = myPlayerHand[i];
+                if (tile != null) {
+                    tile.setSelected(true);
                 }
             }
+            SwapTileAction sta = new SwapTileAction(this, myPlayerHand);
+            game.sendAction(sta);
         }
-        // If no valid moves, allow the tiles in the computer's hand to be
-        // swapped out with random ones from the draw pile.
-        Random rand = new Random();
-        int idx = rand.nextInt(myPlayerHand.length);
-        // To prevent a null position from being selected.
-        while (myPlayerHand[idx] == null) {
-            idx = rand.nextInt(myPlayerHand.length);
-        }
-        myPlayerHand[idx].setSelected(true);
-        SwapTileAction sta = new SwapTileAction(this, myPlayerHand);
-        game.sendAction(sta);
+
+        /*
+        * External Citation
+        * Date: April 14 2018
+        * Problem: Want to find the max key in the Hashtable.
+        * Source:
+        * https://stackoverflow.com/questions/24200973/
+        * how-to-find-highest-key-value-from-hashmap
+        * Solution:
+        * Used Collections.max with allScores.keySet().
+        */
+        // Gets the max score in the Hashtable.
+        int maxScore = Collections.max(allScores.keySet());
+        PlaceTileAction placeTileAction = allScores.get(maxScore);
+        game.sendAction(placeTileAction);
     }
 }

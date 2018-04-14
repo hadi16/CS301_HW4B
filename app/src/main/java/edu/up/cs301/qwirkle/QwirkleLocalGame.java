@@ -133,10 +133,9 @@ public class QwirkleLocalGame extends LocalGame {
 
             // draw the new tile on the board and update the score accordingly
             gameState.setBoardAtIdx(x, y, tile);
-            int points = rules.getPoint();
-            if(rules.isFirstTurn()){points = 1;}
-            boolean isQwirkle = rules.isQwirkle();
-            gameState.setPlayerScores(playerIdx, points, isQwirkle);
+            int points = rules.getPoints();
+            int newScore = gameState.getPlayerScore(playerIdx) + points;
+            gameState.setPlayerScore(playerIdx, newScore);
 
             // replace the tile in the player's hand with a random one from the
             // draw pile, then change the turn
@@ -189,6 +188,7 @@ public class QwirkleLocalGame extends LocalGame {
             QwirkleTile[] playerHand = gameState.getPlayerHands()[playerId];
             QwirkleTile[][] board = gameState.getBoard();
             for (QwirkleTile tileInHand : playerHand) {
+                if (tileInHand == null) continue;
                 for (int x=0; x<board.length; x++) {
                     for (int y=0; y<board[x].length; y++) {
                         if (rules.isValidMove(x ,y, tileInHand, board)) {

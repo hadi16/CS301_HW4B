@@ -21,6 +21,7 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
 import edu.up.cs301.qwirkle.ui.SideBoard;
 
 /**
+ * Class: QwirkleHumanPlayer
  * A GUI that allows a human to play Qwirkle. Moves are made by selecting tiles
  * on the side board and placing them on the main board.
  *
@@ -111,7 +112,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         return activity.findViewById(R.id.top_gui_layout);
     }
 
-    /**
+    /*
      * External Citation
      * Date: April 11 2018
      * Problem: Couldn't update the GUI correctly
@@ -131,7 +132,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             scoreBoardText += allPlayerNames[i] + ": ";
             scoreBoardText += gameState.getPlayerScore(i);
         }
-        System.out.println(scoreBoardText);
         scoreBoardView.setText(scoreBoardText);
     }
 
