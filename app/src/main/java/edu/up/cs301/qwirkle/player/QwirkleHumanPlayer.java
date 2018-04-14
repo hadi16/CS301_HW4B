@@ -12,6 +12,7 @@ import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
+import edu.up.cs301.qwirkle.CONST;
 import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
@@ -26,7 +27,7 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 10, 2018
+ * @version April 14, 2018
  */
 
 public class QwirkleHumanPlayer extends GameHumanPlayer
@@ -58,7 +59,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private TextView scoreBoardView;
 
     // Array of the selected tiles from the player's hand
-    private boolean[] isSelectedBoolArr = new boolean[QwirkleGameState.HAND_NUM];
+    private boolean[] isSelectedBoolArr = new boolean[CONST.NUM_IN_HAND];
 
     // boolean that tells whether swap was used
     private boolean swap = false;
@@ -147,10 +148,18 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 gameState.getPlayerScore(playerNum+1));
     }
 
-    private void setBitmaps() {
-        QwirkleTile.RECTDIM_MAIN = mainBoard.getHeight() / MainBoard.BOARD_HEIGHT;
-        QwirkleTile.OFFSET_MAIN = (mainBoard.getWidth() - (MainBoard.BOARD_WIDTH*QwirkleTile.RECTDIM_MAIN)) / 2;
+    private void setConstants() {
+        // Constants for main board.
+        CONST.RECTDIM_MAIN = mainBoard.getHeight() / CONST.BOARD_HEIGHT;
+        CONST.OFFSET_MAIN = (mainBoard.getWidth() - (CONST.BOARD_WIDTH*CONST.RECTDIM_MAIN)) / 2;
+
+        // Constants for side board.
+        CONST.RECTDIM_SIDE = sideBoard.getHeight() / CONST.NUM_IN_HAND;
+        CONST.OFFSET_SIDE = (sideBoard.getWidth() - CONST.RECTDIM_SIDE) / 2;
+
+        // Initialize the bitmaps.
         QwirkleTile.initBitmaps(activity);
+
         init = true;
     }
 
@@ -163,7 +172,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     @Override
     public void receiveInfo(GameInfo info) {
         if (!init) {
-            setBitmaps();
+            setConstants();
         }
 
         // if the move was out of turn or otherwise illegal, flast the screen
@@ -311,16 +320,16 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      */
     private int[] getSelectedBoardIdx(int x, int y) {
         // if the position selected is outside the main board, do nothing
-        if (x < QwirkleTile.OFFSET_MAIN || x > QwirkleTile.RECTDIM_MAIN *
-                MainBoard.BOARD_WIDTH + QwirkleTile.OFFSET_MAIN) {
+        if (x < CONST.OFFSET_MAIN || x > CONST.RECTDIM_MAIN *
+                CONST.BOARD_WIDTH + CONST.OFFSET_MAIN) {
             return null;
         }
 
         int[] xyPos = new int[2];
         // X position
-        xyPos[0] = (x - QwirkleTile.OFFSET_MAIN) / QwirkleTile.RECTDIM_MAIN;
+        xyPos[0] = (x - CONST.OFFSET_MAIN) / CONST.RECTDIM_MAIN;
         // Y position
-        xyPos[1] = y / QwirkleTile.RECTDIM_MAIN;
+        xyPos[1] = y / CONST.RECTDIM_MAIN;
 
         // return position on main board
         return xyPos;
@@ -339,12 +348,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      */
     private int getSelectedHandIdx(int x, int y) {
         // if the position selected is outside the side board, do nothing
-        if (x < QwirkleTile.OFFSET_SIDE || x > QwirkleTile.RECTDIM_SIDE *
-                QwirkleGameState.HAND_NUM + QwirkleTile.OFFSET_SIDE) {
+        if (x < CONST.OFFSET_SIDE || x > CONST.RECTDIM_SIDE *
+                CONST.NUM_IN_HAND+ CONST.OFFSET_SIDE) {
             return -1;
         }
         // return the hand index selected
-        return y / QwirkleTile.RECTDIM_SIDE;
+        return y / CONST.RECTDIM_SIDE;
     }
 
     /**

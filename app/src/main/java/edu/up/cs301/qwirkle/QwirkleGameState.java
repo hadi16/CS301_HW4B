@@ -7,7 +7,6 @@ import edu.up.cs301.game.infoMsg.GameState;
 import edu.up.cs301.qwirkle.tile.QwirkleAnimal;
 import edu.up.cs301.qwirkle.tile.QwirkleColor;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
-import edu.up.cs301.qwirkle.ui.MainBoard;
 
 /**
  * Contains the state of the Qwirkle game. Sent by the game when a player wants
@@ -17,7 +16,7 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 11, 2018
+ * @version April 14, 2018
  */
 public class QwirkleGameState extends GameState {
     private int turn; // The current turn
@@ -27,12 +26,9 @@ public class QwirkleGameState extends GameState {
     // haven't been played or dealt to players.
     private ArrayList<QwirkleTile> drawPile = new ArrayList<>();
 
-    // A constant for number of tiles a player can have in their hand
-    public static final int HAND_NUM = 6;
-
     // Array for the current state of the board
-    private QwirkleTile board[][] = new QwirkleTile[MainBoard.BOARD_WIDTH]
-            [MainBoard.BOARD_HEIGHT];
+    private QwirkleTile board[][] = new QwirkleTile[CONST.BOARD_WIDTH]
+            [CONST.BOARD_HEIGHT];
 
     // Array for all player hands
     private QwirkleTile playerHands[][];
@@ -55,7 +51,7 @@ public class QwirkleGameState extends GameState {
         this.numPlayers = numPlayers;
         this.drawPile = new ArrayList<>();
         this.board =
-                new QwirkleTile[MainBoard.BOARD_WIDTH][MainBoard.BOARD_HEIGHT];
+                new QwirkleTile[CONST.BOARD_WIDTH][CONST.BOARD_HEIGHT];
 
         // Initialize the draw pile, player hands, and player scores.
         initDrawPile();
@@ -79,7 +75,7 @@ public class QwirkleGameState extends GameState {
         drawPile = null;
 
         // Copy the board to the new game state.
-        board = new QwirkleTile[MainBoard.BOARD_WIDTH][MainBoard.BOARD_HEIGHT];
+        board = new QwirkleTile[CONST.BOARD_WIDTH][CONST.BOARD_HEIGHT];
         for (int i = 0; i<board.length; i++) {
             for (int j = 0; j<board[i].length; j++) {
                 if (orig.board[i][j] != null) {
@@ -90,8 +86,8 @@ public class QwirkleGameState extends GameState {
         }
 
         // Copy each player's hand
-        myPlayerHand = new QwirkleTile[HAND_NUM];
-        for (int i = 0; i<HAND_NUM; i++) {
+        myPlayerHand = new QwirkleTile[CONST.NUM_IN_HAND];
+        for (int i = 0; i< CONST.NUM_IN_HAND; i++) {
             myPlayerHand[i] = orig.getPlayerHands()[playerId][i];
         }
 
@@ -124,7 +120,7 @@ public class QwirkleGameState extends GameState {
      */
     private void initPlayerHands() {
         // adds 6 tiles to each player's hand randomly.
-        this.playerHands = new QwirkleTile[numPlayers][HAND_NUM];
+        this.playerHands = new QwirkleTile[numPlayers][CONST.NUM_IN_HAND];
         for (int i = 0; i < playerHands.length; i++) {
             for (int j = 0; j < playerHands[i].length; j++) {
                 playerHands[i][j] = getRandomTile();

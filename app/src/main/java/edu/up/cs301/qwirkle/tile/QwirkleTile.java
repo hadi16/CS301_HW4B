@@ -8,6 +8,8 @@ import android.graphics.Color;
 
 import java.util.Hashtable;
 
+import edu.up.cs301.qwirkle.CONST;
+
 /**
  * Class: QwirkleTile
  * This class contains code to draw tiles using given Bitmap and dimensions.
@@ -15,7 +17,7 @@ import java.util.Hashtable;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 10, 2018
+ * @version April 14, 2018
  */
 public class QwirkleTile {
     // Hashtable for all Bitmaps
@@ -35,12 +37,6 @@ public class QwirkleTile {
     // Booleans to tell if tiles are on main board and if selected.
     private boolean mainBoard;
     private boolean isSelected;
-
-    // Constants to make bitmaps draw properly on the screen.
-    public static int RECTDIM_MAIN;
-    public static int RECTDIM_SIDE;
-    public static int OFFSET_MAIN;
-    public static int OFFSET_SIDE;
 
     /**
      * Constructor: QwirkleTile
@@ -138,15 +134,15 @@ public class QwirkleTile {
         // Get and set the main bitmaps.
         Bitmap bitmap = tileImages.get(this.toString());
 
-        bitmapMain = Bitmap.createScaledBitmap(bitmap, RECTDIM_MAIN,
-                RECTDIM_MAIN, false);
-        bitmapSide = Bitmap.createScaledBitmap(bitmap, RECTDIM_SIDE,
-                RECTDIM_SIDE, false);
+        bitmapMain = Bitmap.createScaledBitmap(bitmap, CONST.RECTDIM_MAIN,
+                CONST.RECTDIM_MAIN, false);
+        bitmapSide = Bitmap.createScaledBitmap(bitmap, CONST.RECTDIM_SIDE,
+                CONST.RECTDIM_SIDE, false);
 
         // Get and set the selected bitmap.
         Bitmap selectedBitmap = selectedTileImages.get(this.toString());
         bitmapSideSelected = Bitmap.createScaledBitmap(selectedBitmap,
-                RECTDIM_SIDE, RECTDIM_SIDE, false);
+                CONST.RECTDIM_SIDE, CONST.RECTDIM_SIDE, false);
     }
 
     /**
@@ -240,15 +236,15 @@ public class QwirkleTile {
 
         // No paint needed to draw the bitmap.
         if (this.mainBoard) {
-            canvas.drawBitmap(bitmapMain, xPos*RECTDIM_MAIN+OFFSET_MAIN,
-                    yPos*RECTDIM_MAIN, null);
+            canvas.drawBitmap(bitmapMain, xPos*CONST.RECTDIM_MAIN+CONST.OFFSET_MAIN,
+                    yPos*CONST.RECTDIM_MAIN, null);
         }
         else {
             // SideBoard bitmaps can be selected or not.
             Bitmap bitmap;
             if (isSelected) bitmap = bitmapSideSelected;
             else bitmap = bitmapSide;
-            canvas.drawBitmap(bitmap, OFFSET_SIDE, yPos*RECTDIM_SIDE, null);
+            canvas.drawBitmap(bitmap, CONST.OFFSET_SIDE, yPos*CONST.RECTDIM_SIDE, null);
         }
     }
 

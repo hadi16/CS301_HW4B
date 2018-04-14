@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import edu.up.cs301.qwirkle.CONST;
 import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 
@@ -24,8 +25,6 @@ public class SideBoard extends View {
     private Paint blackPaint;
 
     private QwirkleGameState gameState;
-    // Controls how many tiles are in each SideBoard.
-    private static final int NUM_TILES = 6;
 
     /**
      * Constructor: SideBoard
@@ -85,23 +84,14 @@ public class SideBoard extends View {
      */
     @Override
     public void onDraw(Canvas canvas) {
-        // Offset needed to center the SideBoard.
-        int rectDim = canvas.getHeight() / NUM_TILES;
-        if (rectDim != QwirkleTile.RECTDIM_SIDE) {
-            QwirkleTile.RECTDIM_SIDE = rectDim;
-        }
-        int offset = (canvas.getWidth() - rectDim) / 2;
-        if (offset != QwirkleTile.OFFSET_SIDE) {
-            QwirkleTile.OFFSET_SIDE = offset;
-        }
-
         // Sets background color to white.
         canvas.drawColor(Color.WHITE);
 
         // Draws the SideBoard.
-        for (int i = 0; i< NUM_TILES; i++){
-            canvas.drawRect(offset, i*rectDim, offset+rectDim, (i+1)*rectDim,
-                    blackPaint);
+        for (int i = 0; i< CONST.NUM_IN_HAND; i++){
+            canvas.drawRect(CONST.OFFSET_SIDE, i*CONST.RECTDIM_SIDE,
+                    CONST.OFFSET_SIDE+CONST.RECTDIM_SIDE,
+                    (i+1)*CONST.RECTDIM_SIDE, blackPaint);
         }
 
         //If there's nothing in the game state, ignore

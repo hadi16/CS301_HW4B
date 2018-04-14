@@ -6,12 +6,12 @@ import edu.up.cs301.game.GameComputerPlayer;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
+import edu.up.cs301.qwirkle.CONST;
 import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.QwirkleRules;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
-import edu.up.cs301.qwirkle.ui.MainBoard;
 
 /**
  * Class: QwirkleComputerPlayerDumb
@@ -20,7 +20,7 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 11, 2018
+ * @version April 14, 2018
  */
 public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     private QwirkleGameState gameState; // The game state sent to player.
@@ -79,11 +79,11 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
         sleep(TIME_TO_SLEEP);
 
         //Iterate through each tile in the player's hand
-        for (int i = 0; i < QwirkleGameState.HAND_NUM; i++){
+        for (int i = 0; i < CONST.NUM_IN_HAND; i++){
             //Iterate through all x positions
-            for (int x = 0; x < MainBoard.BOARD_WIDTH; x++){
+            for (int x = 0; x < CONST.BOARD_WIDTH; x++){
                 //Iterate through all y positions
-                for (int y = 0; y < MainBoard.BOARD_HEIGHT; y++) {
+                for (int y = 0; y < CONST.BOARD_HEIGHT; y++) {
                     if (rules.isValidMove(x, y, myPlayerHand[i], board)) {
                         PlaceTileAction action = new PlaceTileAction(this,
                                 x, y, i);
@@ -96,7 +96,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
 
         // If no valid moves, allow the tiles in the computer's hand to be
         // swapped out with random ones from the draw pile.
-        boolean[] swap = new boolean[QwirkleGameState.HAND_NUM];
+        boolean[] swap = new boolean[CONST.NUM_IN_HAND];
         for (int i=0; i<swap.length; i++) {
             swap[i] = false;
         }

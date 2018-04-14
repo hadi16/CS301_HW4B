@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import edu.up.cs301.qwirkle.CONST;
 import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 
@@ -20,12 +21,9 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 10, 2018
  */
 public class MainBoard extends View {
-    // Number of rows and columns for the board.
-    public static final int BOARD_WIDTH = 21;
-    public static final int BOARD_HEIGHT = 16;
     private Paint blackPaint;
 
-    //Instace of the game state
+    //Instance of the game state
     private QwirkleGameState gameState;
 
     /**
@@ -90,10 +88,10 @@ public class MainBoard extends View {
         canvas.drawColor(Color.WHITE);
 
         // Draws the board.
-        for (int i = 0; i< BOARD_WIDTH; i++){
-            for (int j = 0; j< BOARD_HEIGHT; j++){
-                canvas.drawRect(i*QwirkleTile.RECTDIM_MAIN+QwirkleTile.OFFSET_MAIN, j*QwirkleTile.RECTDIM_MAIN,
-                        (i+1)*QwirkleTile.RECTDIM_MAIN+QwirkleTile.OFFSET_MAIN, (j+1)*QwirkleTile.RECTDIM_MAIN, blackPaint);
+        for (int i = 0; i< CONST.BOARD_WIDTH; i++){
+            for (int j = 0; j< CONST.BOARD_HEIGHT; j++){
+                canvas.drawRect(i*CONST.RECTDIM_MAIN+CONST.OFFSET_MAIN, j*CONST.RECTDIM_MAIN,
+                        (i+1)*CONST.RECTDIM_MAIN+CONST.OFFSET_MAIN, (j+1)*CONST.RECTDIM_MAIN, blackPaint);
             }
         }
         //If there's nothing in the game state, ignore

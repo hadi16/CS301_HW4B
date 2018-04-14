@@ -7,7 +7,6 @@ import edu.up.cs301.qwirkle.action.PassAction;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
-import edu.up.cs301.qwirkle.ui.MainBoard;
 
 /**
  * The QwirkleLocalGame class for a Qwirkle game. Defines and enforces the game
@@ -16,7 +15,7 @@ import edu.up.cs301.qwirkle.ui.MainBoard;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 10, 2018
+ * @version April 14, 2018
  */
 public class QwirkleLocalGame extends LocalGame {
     // instance variables
@@ -199,8 +198,8 @@ public class QwirkleLocalGame extends LocalGame {
             QwirkleTile[] playerHand = gameState.getPlayerHands()[playerId];
             QwirkleTile[][] board = gameState.getBoard();
             for (QwirkleTile tileInHand : playerHand) {
-                for (int x = 0; x < MainBoard.BOARD_WIDTH; x++) {
-                    for (int y = 0; y < MainBoard.BOARD_HEIGHT; y++) {
+                for (int x = 0; x < CONST.BOARD_WIDTH; x++) {
+                    for (int y = 0; y < CONST.BOARD_HEIGHT; y++) {
                         if (rules.isValidMove(x ,y, tileInHand, board)) {
                             return true;
                         }
