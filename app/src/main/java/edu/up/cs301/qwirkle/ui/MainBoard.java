@@ -18,13 +18,17 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 10, 2018
+ * @author Stephanie Camacho
+ * @version April 14, 2018
  */
 public class MainBoard extends View {
     private Paint blackPaint;
 
-    //Instance of the game state
+    // Instance of the game state.
     private QwirkleGameState gameState;
+
+    // To draw the legal moves on the board.
+    private int[][] legalMoves;
 
     /**
      * Constructor: MainBoard
@@ -90,8 +94,10 @@ public class MainBoard extends View {
         // Draws the board.
         for (int i = 0; i< CONST.BOARD_WIDTH; i++){
             for (int j = 0; j< CONST.BOARD_HEIGHT; j++){
-                canvas.drawRect(i*CONST.RECTDIM_MAIN+CONST.OFFSET_MAIN, j*CONST.RECTDIM_MAIN,
-                        (i+1)*CONST.RECTDIM_MAIN+CONST.OFFSET_MAIN, (j+1)*CONST.RECTDIM_MAIN, blackPaint);
+                canvas.drawRect(i*CONST.RECTDIM_MAIN+CONST.OFFSET_MAIN,
+                        j*CONST.RECTDIM_MAIN,
+                        (i+1)*CONST.RECTDIM_MAIN+CONST.OFFSET_MAIN,
+                        (j+1)*CONST.RECTDIM_MAIN, blackPaint);
             }
         }
         //If there's nothing in the game state, ignore
@@ -115,5 +121,9 @@ public class MainBoard extends View {
      */
     public void setGameState(QwirkleGameState gameState) {
         this.gameState = gameState;
+    }
+
+    public void setLegalMoves(int[][] legalMoves) {
+        this.legalMoves = legalMoves;
     }
 }

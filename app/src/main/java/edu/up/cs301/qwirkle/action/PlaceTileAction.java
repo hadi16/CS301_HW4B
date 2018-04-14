@@ -10,7 +10,8 @@ import edu.up.cs301.game.actionMsg.GameAction;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 11, 2018
+ * @author Stephanie Camacho
+ * @version April 14, 2018
  */
 public class PlaceTileAction extends GameAction {
     // instance variables: tile position and player hands
@@ -37,21 +38,21 @@ public class PlaceTileAction extends GameAction {
     }
 
     /**
-     * Method: getxPos
+     * Method: getXPos
      * Gets the x-position.
      *
      * @return x-position on board
      */
-    public int getxPos() {
+    public int getXPos() {
         return xPos;
     }
     /**
-     * Method: getyPos
+     * Method: getYPos
      * Gets the y-position
      *
      * @return y-position on board
      */
-    public int getyPos() {
+    public int getYPos() {
         return yPos;
     }
     /**

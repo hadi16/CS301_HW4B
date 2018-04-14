@@ -16,6 +16,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
+ * @author Stephanie Camacho
  * @version April 14, 2018
  */
 public class QwirkleGameState extends GameState {
@@ -27,8 +28,7 @@ public class QwirkleGameState extends GameState {
     private ArrayList<QwirkleTile> drawPile = new ArrayList<>();
 
     // Array for the current state of the board
-    private QwirkleTile board[][] = new QwirkleTile[CONST.BOARD_WIDTH]
-            [CONST.BOARD_HEIGHT];
+    private QwirkleTile board[][];
 
     // Array for all player hands
     private QwirkleTile playerHands[][];
@@ -50,8 +50,7 @@ public class QwirkleGameState extends GameState {
         this.turn = 0;
         this.numPlayers = numPlayers;
         this.drawPile = new ArrayList<>();
-        this.board =
-                new QwirkleTile[CONST.BOARD_WIDTH][CONST.BOARD_HEIGHT];
+        this.board = new QwirkleTile[CONST.BOARD_WIDTH][CONST.BOARD_HEIGHT];
 
         // Initialize the draw pile, player hands, and player scores.
         initDrawPile();
@@ -68,14 +67,14 @@ public class QwirkleGameState extends GameState {
      */
     public QwirkleGameState(QwirkleGameState orig, int playerId) {
         // Copy the integers.
-        turn = orig.getTurn();
-        numPlayers = orig.getNumPlayers();
+        turn = orig.turn;
+        numPlayers = orig.numPlayers;
 
         // Hide the draw pile from the user.
         drawPile = null;
 
         // Copy the board to the new game state.
-        board = new QwirkleTile[CONST.BOARD_WIDTH][CONST.BOARD_HEIGHT];
+        board = new QwirkleTile[orig.board.length][orig.board[0].length];
         for (int i = 0; i<board.length; i++) {
             for (int j = 0; j<board[i].length; j++) {
                 if (orig.board[i][j] != null) {
@@ -85,14 +84,14 @@ public class QwirkleGameState extends GameState {
             }
         }
 
-        // Copy each player's hand
+        // Copy just the current player's hand.
         myPlayerHand = new QwirkleTile[CONST.NUM_IN_HAND];
-        for (int i = 0; i< CONST.NUM_IN_HAND; i++) {
-            myPlayerHand[i] = orig.getPlayerHands()[playerId][i];
+        for (int i=0; i<myPlayerHand.length; i++) {
+            myPlayerHand[i] = orig.playerHands[playerId][i];
         }
 
         // Copy the player scores.
-        playerScores = new int[orig.numPlayers];
+        playerScores = new int[orig.playerScores.length];
         for (int i = 0; i<playerScores.length; i++) {
             playerScores[i] = orig.playerScores[i];
         }
@@ -124,7 +123,7 @@ public class QwirkleGameState extends GameState {
         for (int i = 0; i < playerHands.length; i++) {
             for (int j = 0; j < playerHands[i].length; j++) {
                 playerHands[i][j] = getRandomTile();
-                playerHands[i][j].setyPos(j);
+                playerHands[i][j].setYPos(j);
                 playerHands[i][j].setMainBoard(false);
             }
         }
@@ -196,6 +195,7 @@ public class QwirkleGameState extends GameState {
     public boolean hasTilesInPile() {
         return drawPile.size() > 0;
     }
+
     /**
      * Method: getTurn
      * Gets the current turn.
@@ -204,15 +204,6 @@ public class QwirkleGameState extends GameState {
      */
     public int getTurn() {
         return turn;
-    }
-    /**
-     * Method: getNumPlayers
-     * Return the number of players in the game
-     *
-     * @return total number of players in game
-     */
-    public int getNumPlayers() {
-        return numPlayers;
     }
     /**
      * Method: getPlayerHands
@@ -250,6 +241,7 @@ public class QwirkleGameState extends GameState {
     public int getPlayerScore(int playerIdx) {
         return playerScores[playerIdx];
     }
+
     /**
      * Set the current board state
      *
@@ -261,11 +253,10 @@ public class QwirkleGameState extends GameState {
      *          tile currently in a spot on the board
      */
     public void setBoardAtIdx(int x, int y, QwirkleTile tile) {
-        // define the current state of the main board
         board[x][y] = tile;
         if (tile == null) return;
-        board[x][y].setxPos(x);
-        board[x][y].setyPos(y);
+        board[x][y].setXPos(x);
+        board[x][y].setYPos(y);
         board[x][y].setMainBoard(true);
     }
 
@@ -281,24 +272,10 @@ public class QwirkleGameState extends GameState {
      */
     public void setPlayerHandsAtIdx(int playerIdx, int handIdx,
                                     QwirkleTile tile) {
-        // define the current condition of the player's hand
         playerHands[playerIdx][handIdx] = tile;
         if (tile == null) return;
-        playerHands[playerIdx][handIdx].setyPos(handIdx);
+        playerHands[playerIdx][handIdx].setYPos(handIdx);
         playerHands[playerIdx][handIdx].setMainBoard(false);
-    }
-
-    /**
-     * Set the player's hand at a specific index
-     *
-     * @param idx
-     *          specific position in the player's hand
-     * @param isSelected
-     *          the selected position in the player's hand
-     */
-    public void setPlayerHandsIsSelectedAtIdx(int idx, boolean isSelected) {
-        // select an index in the player's hand
-        myPlayerHand[idx].setSelected(isSelected);
     }
 
     /**
@@ -319,6 +296,4 @@ public class QwirkleGameState extends GameState {
         // add a point to each player's score for every tile placed
         playerScores[playerIdx] +=1;
     }
-
-
 }

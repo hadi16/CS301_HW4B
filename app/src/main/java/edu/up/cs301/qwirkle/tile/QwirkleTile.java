@@ -17,6 +17,7 @@ import edu.up.cs301.qwirkle.CONST;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
+ * @author Stephanie Camacho
  * @version April 14, 2018
  */
 public class QwirkleTile {
@@ -250,20 +251,6 @@ public class QwirkleTile {
 
     // Getters
     /**
-     * Method: getxPos
-     * @return x position of bitmap
-     */
-    public int getxPos() {
-        return xPos;
-    }
-    /**
-     * Method: getyPos
-     * @return y position of bitmap
-     */
-    public int getyPos() {
-        return yPos;
-    }
-    /**
      * Method: getQwirkleAnimal
      * @return the QwirkleAnimal of bitmap
      */
@@ -277,22 +264,25 @@ public class QwirkleTile {
     public QwirkleColor getQwirkleColor() {
         return qwirkleColor;
     }
+    public boolean isSelected() {
+        return isSelected;
+    }
 
     // Setters
     /**
-     * Method: setxPos
+     * Method: setXPos
      * Set x position of bitmap
      * @param xPos x coordinate to set
      */
-    public void setxPos(int xPos) {
+    public void setXPos(int xPos) {
         this.xPos = xPos;
     }
     /**
-     * Method: setyPos
+     * Method: setYPos
      * Set y position of bitmap
      * @param yPos y coordinate to set
      */
-    public void setyPos(int yPos) {
+    public void setYPos(int yPos) {
         this.yPos = yPos;
     }
     /**

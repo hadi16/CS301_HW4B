@@ -13,9 +13,19 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
+ * @author Stephanie Camacho
  * @version April 14, 2018
  */
 public class QwirkleRules {
+    /*
+    External Citation
+    Date: 14 April 2018
+    Problem: Wanted to have x & y position in each enum element
+    Resource:
+    https://stackoverflow.com/questions/19600684/
+    java-enum-with-multiple-value-types
+    Solution: Used a constructor with x & y int values.
+    */
     private enum Direction {
         NORTH(0,-1),
         EAST(1,0),
@@ -33,7 +43,6 @@ public class QwirkleRules {
         public int getX() {
             return x;
         }
-
         public int getY() {
             return y;
         }
@@ -139,9 +148,11 @@ public class QwirkleRules {
 
         // Step 2: If entire board is empty, return true (any placement ok)
         boolean empty = true;
-        for (QwirkleTile[] tileArr : board) {
-            for (QwirkleTile t : tileArr) {
-                if (t != null) empty = false;
+        for (int i=0; i<board.length; i++) {
+            for (int j=0; j<board[i].length; j++) {
+                if (board[i][j] != null) {
+                    empty = false;
+                }
             }
         }
         if (empty) return true;

@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="My Name: Player 1"
+                android:text="My Name: "
                 android:textColor="@android:color/black"
                 android:textSize="24sp"/>
 
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:text="My Score: 32"
+                android:text="My Score: "
                 android:textColor="@android:color/black"
                 android:textSize="24sp"/>
 
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="Current Turn: Player 1"
+                android:text="Current Turn: "
                 android:textColor="@android:color/black"
                 android:textSize="24sp"/>
 
@@ -81,7 +81,7 @@
             android:id="@+id/textViewScoreboardLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/scoreboard"
+            android:text="Scoreboard: "
             android:textColor="@android:color/black"
             android:textSize="20sp"/>
 

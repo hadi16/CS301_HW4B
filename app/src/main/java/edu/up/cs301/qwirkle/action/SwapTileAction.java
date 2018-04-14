@@ -1,7 +1,10 @@
 package edu.up.cs301.qwirkle.action;
 
+import java.util.ArrayList;
+
 import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.actionMsg.GameAction;
+import edu.up.cs301.qwirkle.tile.QwirkleTile;
 
 /**
  * Class: SwapTileAction
@@ -10,36 +13,32 @@ import edu.up.cs301.game.actionMsg.GameAction;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 11, 2018
+ * @author Stephanie Camacho
+ * @version April 14, 2018
  */
 public class SwapTileAction extends GameAction {
-    // Array of boolean for tile indices to swap.
-    private boolean[] swapIdx;
+    private ArrayList<Integer> swapIdx;
 
-    /**
-     * Constructor: SwapTileAction
-     *
-     * @param player the player making the move
-     * @param swapIdx the array of indices for the tiles to swap
-     */
-    public SwapTileAction(GamePlayer player, boolean[] swapIdx) {
+    public SwapTileAction(GamePlayer player, QwirkleTile[] myPlayerHand) {
         // invoke superclass constructor to set the player
         super(player);
 
-        // initialize instance variables
-        this.swapIdx = new boolean[swapIdx.length];
-        for (int i=0; i<swapIdx.length; i++) {
-            this.swapIdx[i] = swapIdx[i];
+        // Initialize the swap indices
+        this.swapIdx = new ArrayList<>();
+        for (int i=0; i<myPlayerHand.length; i++) {
+            if (myPlayerHand[i].isSelected()) {
+                swapIdx.add(i);
+            }
         }
     }
 
     /**
      * Method: getSwapIdx
-     * Gets the boolean array of indices for the tiles to swap.
+     * Gets the array of indices for the tiles to swap.
      *
      * @return array that has indices to swap
      */
-    public boolean[] getSwapIdx() {
+    public ArrayList<Integer> getSwapIdx() {
         return swapIdx;
     }
 }

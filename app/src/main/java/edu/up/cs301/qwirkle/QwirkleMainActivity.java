@@ -18,7 +18,8 @@ import edu.up.cs301.qwirkle.player.QwirkleHumanPlayer;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 10, 2018
+ * @author Stephanie Camacho
+ * @version April 14, 2018
  */
 public class QwirkleMainActivity extends GameMainActivity {
     private static final int PORT_NUMBER = 2236;

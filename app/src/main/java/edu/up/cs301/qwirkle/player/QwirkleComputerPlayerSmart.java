@@ -14,7 +14,8 @@ import edu.up.cs301.game.infoMsg.GameInfo;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 11, 2018
+ * @author Stephanie Camacho
+ * @version April 14, 2018
  */
 public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
     /**

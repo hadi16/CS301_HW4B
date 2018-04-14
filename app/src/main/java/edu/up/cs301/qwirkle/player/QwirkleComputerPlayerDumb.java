@@ -6,7 +6,6 @@ import edu.up.cs301.game.GameComputerPlayer;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
-import edu.up.cs301.qwirkle.CONST;
 import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.QwirkleRules;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
@@ -20,16 +19,16 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
+ * @author Stephanie Camacho
  * @version April 14, 2018
  */
 public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
-    private QwirkleGameState gameState; // The game state sent to player.
     private QwirkleTile[] myPlayerHand; // The player's hand
     private QwirkleTile[][] board; // The board
     private QwirkleRules rules = new QwirkleRules(); // For valid moves
 
     // Constant for 1000-millisecond delay
-    private static final int TIME_TO_SLEEP = 0;
+    private static final int TIME_TO_SLEEP = 1000;
 
     /**
      * Constructor: QwirkleComputerPlayerDumb
@@ -58,7 +57,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
             return;
         }
 
-        this.gameState = (QwirkleGameState)info;
+        QwirkleGameState gameState = (QwirkleGameState)info;
         if (gameState.getTurn() != playerNum) {
             return;
         }
@@ -79,14 +78,17 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
         sleep(TIME_TO_SLEEP);
 
         //Iterate through each tile in the player's hand
-        for (int i = 0; i < CONST.NUM_IN_HAND; i++){
+        for (int tileIdx=0; tileIdx<myPlayerHand.length; tileIdx++) {
+            QwirkleTile tile = myPlayerHand[tileIdx];
+            if (tile == null) continue;
+
             //Iterate through all x positions
-            for (int x = 0; x < CONST.BOARD_WIDTH; x++){
+            for (int x=0; x<board.length; x++) {
                 //Iterate through all y positions
-                for (int y = 0; y < CONST.BOARD_HEIGHT; y++) {
-                    if (rules.isValidMove(x, y, myPlayerHand[i], board)) {
+                for (int y=0; y<board[x].length; y++) {
+                    if (rules.isValidMove(x, y, tile, board)) {
                         PlaceTileAction action = new PlaceTileAction(this,
-                                x, y, i);
+                                x, y, tileIdx);
                         game.sendAction(action);
                         return;
                     }
@@ -96,13 +98,14 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
 
         // If no valid moves, allow the tiles in the computer's hand to be
         // swapped out with random ones from the draw pile.
-        boolean[] swap = new boolean[CONST.NUM_IN_HAND];
-        for (int i=0; i<swap.length; i++) {
-            swap[i] = false;
+        Random rand = new Random();
+        int idx = rand.nextInt(myPlayerHand.length);
+        // To prevent a null position from being selected.
+        while (myPlayerHand[idx] == null) {
+            idx = rand.nextInt(myPlayerHand.length);
         }
-        int idx = new Random().nextInt(swap.length);
-        swap[idx] = true;
-        SwapTileAction sta = new SwapTileAction(this, swap);
+        myPlayerHand[idx].setSelected(true);
+        SwapTileAction sta = new SwapTileAction(this, myPlayerHand);
         game.sendAction(sta);
     }
 }

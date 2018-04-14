@@ -27,48 +27,33 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
+ * @author Stephanie Camacho
  * @version April 14, 2018
  */
 
 public class QwirkleHumanPlayer extends GameHumanPlayer
         implements View.OnTouchListener, View.OnClickListener {
-    // instance variables
-
-    // the current activity
-    private GameMainActivity activity;
-
-    // the current game state
-    private QwirkleGameState gameState;
+    private GameMainActivity activity; // The activity
+    private QwirkleGameState gameState; // The game state
 
     // Array of the current player's hand
     private QwirkleTile[] myPlayerHand;
 
-    // the main board
+    // Boards (View objects)
     private MainBoard mainBoard;
-
-    // the side board
     private SideBoard sideBoard;
 
-    // the Textview for the turns
+    // TextViews
     private TextView textViewTurnLabel;
-
-    // the Textview for the scores
     private TextView myScoreView;
-
-    // the Textview for the score board
     private TextView scoreBoardView;
 
-    // Array of the selected tiles from the player's hand
-    private boolean[] isSelectedBoolArr = new boolean[CONST.NUM_IN_HAND];
-
-    // boolean that tells whether swap was used
-    private boolean swap = false;
-
-    // button used to determine swapping
+    // Button for swapping.
     private Button buttonSwap;
 
-    private boolean init = false;
-
+    // Booleans
+    private boolean swap = false; // Tells whether in swap mode.
+    private boolean init = false; // Tells whether initialized constants.
 
     /**
      * Constructor for QwirkleHumanPlayer
@@ -88,29 +73,25 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      */
     @Override
     public void setAsGui(GameMainActivity activity) {
-        // remember the activity and initialize it
+        // Initialize passed activity object
         this.activity = activity;
 
-        // load the layout resource for the new configuration
+        // Set the GUI to the appropriate XML file.
         activity.setContentView(R.layout.qwirkle_human_player);
 
-        // set the Textview to display each pleyer's name on their turn.
+        // Set the player TextView to the user's name.
         TextView textViewPlayerLabel = (TextView)activity.findViewById(
                 R.id.textViewPlayerLabel);
         textViewPlayerLabel.setText("My Name: " + name);
 
-        // initialize the Textviews going on the interface.
+        // Initialize the TextViews by using findViewById.
         textViewTurnLabel = (TextView)activity.findViewById(
                 R.id.textViewTurnLabel);
-
-        // initialize the score to 0
         myScoreView = (TextView)activity.findViewById(R.id.textViewPlayerScore);
-
-        // initialize the scoreboard to 0
         scoreBoardView = (TextView)activity.findViewById(
                 R.id.textViewScoreboardLabel);
 
-        // initialize the swap button, main board, and side board.
+        // Initialize swap button, main board, and side board & set listeners.
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         buttonSwap.setOnClickListener(this);
         mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
@@ -143,9 +124,15 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private void updateDisplay() {
         textViewTurnLabel.setText("Current Turn: " + allPlayerNames[gameState.getTurn()]);
         myScoreView.setText("My Score: " + gameState.getPlayerScore(playerNum));
-        scoreBoardView.setText("Scoreboard:\n"+name + ": " +
-                gameState.getPlayerScore(playerNum) + "\n"+"Computer: " +
-                gameState.getPlayerScore(playerNum+1));
+
+        String scoreBoardText = "Scoreboard: ";
+        for (int i=0; i<allPlayerNames.length; i++) {
+            scoreBoardText += "\n";
+            scoreBoardText += allPlayerNames[i] + ": ";
+            scoreBoardText += gameState.getPlayerScore(i);
+        }
+        System.out.println(scoreBoardText);
+        scoreBoardView.setText(scoreBoardText);
     }
 
     private void setConstants() {
@@ -222,28 +209,23 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         int x = (int)event.getX();
         int y = (int)event.getY();
 
-        // access the main board in order to allow touch
-        // detection
+        // If the main board is selected.
         if (v.getId() == R.id.mainBoard) {
             // To prevent the user from selecting board before tile in hand
-            QwirkleTile handSelected = null;
             int handSelectedIdx = -1;
             for (int i=0; i<myPlayerHand.length; i++) {
                 QwirkleTile tile = myPlayerHand[i];
-                if (isSelectedBoolArr[i]) {
-                    handSelected = tile;
+                if (tile == null) continue;
+                if (tile.isSelected()) {
                     handSelectedIdx = i;
                     break;
                 }
             }
-            // if the hand a player selected in empty, do nothing
-            if (handSelected == null) return false;
+            if (handSelectedIdx == -1) return false;
 
             // Get where the board is selected
             int[] xyPos = getSelectedBoardIdx(x, y);
-            if (xyPos == null) {
-                return false;
-            }
+            if (xyPos == null) return false;
 
             // send the PlaceTileAction to allow for tiles to be placed on
             // the main board
@@ -251,7 +233,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                     handSelectedIdx);
             game.sendAction(pta);
 
-            // redraw after each iteration
+            // Redraw the boards.
             mainBoard.invalidate();
             sideBoard.invalidate();
 
@@ -260,45 +242,25 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         }
         // access the side board in order to allow touch detection
         else if (v.getId() == R.id.sideBoard) {
-            // if swap has been selected, allow the tile to be accessed in the
-            // player's hand. If there is nothing there, do nothing.
+            // Get the yPos of the tile & check to make sure it is valid.
             int yPos = getSelectedHandIdx(x, y);
             if (yPos == -1) return false;
+            if (myPlayerHand[yPos] == null) return false;
 
-            if (myPlayerHand[yPos] == null) {
-                return false;
-            }
-            if (swap) {
-                isSelectedBoolArr[yPos] = true;
-                myPlayerHand[yPos].setSelected(true);
-                if (isSelectedBoolArr[yPos]) {
-                    isSelectedBoolArr[yPos] = false;
-                    myPlayerHand[yPos].setSelected(false);
-                }
-                else {
-                    isSelectedBoolArr[yPos] = true;
-                    myPlayerHand[yPos].setSelected(true);
-                }
-            }
-            else {
-                for (int i = 0; i < isSelectedBoolArr.length; i++) {
+            // Revert the value of isSelected.
+            myPlayerHand[yPos].setSelected(!myPlayerHand[yPos].isSelected());
+
+            // To prevent multiple tiles from being selected when not in swap.
+            if (!swap) {
+                for (int i = 0; i < myPlayerHand.length; i++) {
                     if (yPos == i) continue;
-                    isSelectedBoolArr[i] = false;
                     if (myPlayerHand[i] != null) {
                         myPlayerHand[i].setSelected(false);
                     }
                 }
-
-                if (isSelectedBoolArr[yPos]) {
-                    isSelectedBoolArr[yPos] = false;
-                    myPlayerHand[yPos].setSelected(false);
-                }
-                else {
-                    isSelectedBoolArr[yPos] = true;
-                    myPlayerHand[yPos].setSelected(true);
-                }
             }
 
+            // Redraw the boards.
             mainBoard.invalidate();
             sideBoard.invalidate();
 
@@ -331,7 +293,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         // Y position
         xyPos[1] = y / CONST.RECTDIM_MAIN;
 
-        // return position on main board
+        // return position on main board as array of ints.
         return xyPos;
     }
 
@@ -366,25 +328,28 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     public void onClick(View v) {
         // if the swap button is not pressed, do nothing
         if (v.getId() != R.id.buttonSwap) return;
-        // if the swap button is pressed and there is nothing to swap,
-        // do nothing.
+
+        // If swap button is pressed and there is nothing to swap, do nothing.
         if (swap) {
             boolean somethingToSwap = false;
-            for (boolean selected: isSelectedBoolArr) {
-                if (selected) {
+            for (QwirkleTile tile : myPlayerHand) {
+                if (tile.isSelected()) {
                     somethingToSwap = true;
                 }
             }
-            if (!somethingToSwap) return;
 
-            // if there is something to swap, call the SwapTileAction class and
-            // send it to the game to replace the selected tile with a random
-            // one.
-            SwapTileAction sta = new SwapTileAction(this, isSelectedBoolArr);
-            game.sendAction(sta);
-            for (int i = 0; i< isSelectedBoolArr.length; i++) {
-                isSelectedBoolArr[i] = false;
-                myPlayerHand[i].setSelected(false);
+            if (somethingToSwap) {
+                // If there is something to swap, call the SwapTileAction and
+                // send to game to replace the selected tile with random one
+                SwapTileAction sta = new SwapTileAction(this, myPlayerHand);
+                game.sendAction(sta);
+
+                // Reset isSelected in myPlayerHand.
+                for (int i = 0; i < myPlayerHand.length; i++) {
+                    if (myPlayerHand[i] != null) {
+                        myPlayerHand[i].setSelected(false);
+                    }
+                }
             }
         }
 

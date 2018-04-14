@@ -7,6 +7,7 @@ package edu.up.cs301.qwirkle;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
+ * @author Stephanie Camacho
  * @version April 14, 2018
  */
 public class CONST {

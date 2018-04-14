@@ -1,5 +1,7 @@
 package edu.up.cs301.qwirkle;
 
+import java.util.ArrayList;
+
 import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.LocalGame;
 import edu.up.cs301.game.actionMsg.GameAction;
@@ -15,12 +17,11 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
+ * @author Stephanie Camacho
  * @version April 14, 2018
  */
 public class QwirkleLocalGame extends LocalGame {
-    // instance variables
-
-    // the game's state
+    // the game state
     private QwirkleGameState gameState;
 
     //the rules of the game
@@ -28,14 +29,6 @@ public class QwirkleLocalGame extends LocalGame {
 
     @Override
     public void start(GamePlayer[] players) {
-        super.start(players);
-        this.gameState = new QwirkleGameState(players.length);
-    }
-
-    /**
-     * Constructor for the QwirkleLocalGame
-     */
-    public QwirkleLocalGame() {
         /*
         External Citation
         Date: 11 April 2018
@@ -46,8 +39,10 @@ public class QwirkleLocalGame extends LocalGame {
         Solution: I used Professor Vegdahl's code as reference.
         */
 
-        // initializes a new game state
-        this.gameState = new QwirkleGameState(4);
+        // The game is initialized from here to allow for
+        // an arbitrary number of players.
+        super.start(players);
+        this.gameState = new QwirkleGameState(players.length);
     }
 
     /**
@@ -91,24 +86,22 @@ public class QwirkleLocalGame extends LocalGame {
         // no valid moves left to complete
         if (gameState.hasTilesInPile()) return null;
         if (validMovesExist()) return null;
-        if(gameState.hasTilesInPile()) return null;
-        if(!gameState.hasTilesInPile()) {
-             if (!validMovesExist()) {
-                int highestScore = gameState.getPlayerScore(0);
-                for (int playerId = 0; playerId < gameState.getNumPlayers(); playerId++) {
-                    if (gameState.getPlayerScore(playerId) > highestScore) {
-                        highestScore = gameState.getPlayerScore(playerId);
-                        }
-                    }
-                for (int playerId = 0; playerId < gameState.getNumPlayers(); playerId++) {
-                    if (highestScore == gameState.getPlayerScore(playerId)) {
-                        return playerNames[playerId];
-                        }
-                    }
-                }
-            }
 
-        return null;
+        int highestScore = gameState.getPlayerScore(0);
+        for (int playerId=0; playerId<players.length; playerId++) {
+            int score = gameState.getPlayerScore(playerId);
+            if (score > highestScore) {
+                highestScore = score;
+            }
+        }
+
+        String winners = null;
+        for (int playerId=0; playerId<players.length; playerId++) {
+            if (highestScore == gameState.getPlayerScore(playerId)) {
+                winners += playerNames[playerId] + " ";
+            }
+        }
+        return winners;
     }
 
     /**
@@ -124,8 +117,8 @@ public class QwirkleLocalGame extends LocalGame {
         // get the x- and y- position of a tile in the player's hand
         if (action instanceof PlaceTileAction) {
             PlaceTileAction pta = (PlaceTileAction) action;
-            int x = pta.getxPos();
-            int y = pta.getyPos();
+            int x = pta.getXPos();
+            int y = pta.getYPos();
             int handIdx = pta.getHandIdx();
 
             // place the tile from the player's hand to the board
@@ -143,7 +136,7 @@ public class QwirkleLocalGame extends LocalGame {
             gameState.setPlayerScores(playerIdx, false);
 
             // replace the tile in the player's hand with a random one from the
-            // drawpile, then change the turn
+            // draw pile, then change the turn
             gameState.setPlayerHandsAtIdx(playerIdx, handIdx,
                     gameState.getRandomTile());
             gameState.changeTurn();
@@ -155,17 +148,14 @@ public class QwirkleLocalGame extends LocalGame {
         // from the drawpile
         else if (action instanceof SwapTileAction) {
             SwapTileAction sta = (SwapTileAction) action;
-            boolean[] tilesToSwap = sta.getSwapIdx();
-            for (int i=0; i<tilesToSwap.length; i++) {
-                boolean swapThisTile = tilesToSwap[i];
-                if (swapThisTile) {
-                    int playerId = getPlayerIdx(sta.getPlayer());
-                    QwirkleTile tileToSwap =
-                            gameState.getPlayerHands()[playerId][i];
-                    gameState.addToDrawPile(tileToSwap);
-                    gameState.setPlayerHandsAtIdx(playerId, i,
-                            gameState.getRandomTile());
-                }
+
+            // Swap all of the tiles.
+            ArrayList<Integer> tilesToSwap = sta.getSwapIdx();
+            int playerId = getPlayerIdx(sta.getPlayer());
+            for (int i : tilesToSwap) {
+                QwirkleTile tileToSwap = gameState.getPlayerHands()[playerId][i];
+                gameState.addToDrawPile(tileToSwap);
+                gameState.setPlayerHandsAtIdx(playerId, i, gameState.getRandomTile());
             }
 
             // end the current player's turn
@@ -174,7 +164,6 @@ public class QwirkleLocalGame extends LocalGame {
             // return true if a swap has been made, and false otherwise.
             return true;
         }
-
         else if (action instanceof PassAction) {
             gameState.changeTurn();
             return true;
@@ -188,18 +177,17 @@ public class QwirkleLocalGame extends LocalGame {
      * Check to see whether there are valid moves on the board to place certain
      * Qwirkle tiles
      *
-     * @return
-     *          true if there are valid moves on the board for a QwirkleTime
+     * @return true if there are valid moves on the board
      */
     private boolean validMovesExist() {
         // check each position on the board and return the valid spots for a
         // selected Qwirkle tile.
-        for (int playerId=0; playerId<gameState.getNumPlayers(); ++playerId) {
+        for (int playerId=0; playerId<players.length; playerId++) {
             QwirkleTile[] playerHand = gameState.getPlayerHands()[playerId];
             QwirkleTile[][] board = gameState.getBoard();
             for (QwirkleTile tileInHand : playerHand) {
-                for (int x = 0; x < CONST.BOARD_WIDTH; x++) {
-                    for (int y = 0; y < CONST.BOARD_HEIGHT; y++) {
+                for (int x=0; x<board.length; x++) {
+                    for (int y=0; y<board[x].length; y++) {
                         if (rules.isValidMove(x ,y, tileInHand, board)) {
                             return true;
                         }

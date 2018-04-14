@@ -18,12 +18,13 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Alex Hadi
  * @author Michael Quach
  * @author Huy Nguyen
- * @version April 3, 2018
+ * @author Stephanie Camacho
+ * @version April 14, 2018
  */
 public class SideBoard extends View {
-    //Instance variables
     private Paint blackPaint;
 
+    // Instance of the game state.
     private QwirkleGameState gameState;
 
     /**
@@ -104,8 +105,6 @@ public class SideBoard extends View {
         for (QwirkleTile tile : myPlayerHand) {
             if (tile != null) tile.drawTile(canvas);
         }
-
-
     }
 
     /**

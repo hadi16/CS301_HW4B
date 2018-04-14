@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">Qwirkle</string>
-    <string name="scoreboard"><u>Scoreboard</u>\nPlayer 1: 32\nPlayer 2: 24\n
-        Player 3: 33\nPlayer 4: 20</string>
-
 	<string name="menu_settings">Settings</string>
     <string name="title_activity_game_main">Shall We Play A Game?</string>
     <string name="save_config">Save As Default Configuration</string>
