@@ -26,7 +26,9 @@ public class SwapTileAction extends GameAction {
         // Initialize the swap indices
         this.swapIdx = new ArrayList<>();
         for (int i=0; i<myPlayerHand.length; i++) {
-            if (myPlayerHand[i].isSelected()) {
+            QwirkleTile tile = myPlayerHand[i];
+            if (tile == null) continue;
+            if (tile.isSelected()) {
                 swapIdx.add(i);
             }
         }

@@ -333,6 +333,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         if (swap) {
             boolean somethingToSwap = false;
             for (QwirkleTile tile : myPlayerHand) {
+                if (tile == null) continue;
                 if (tile.isSelected()) {
                     somethingToSwap = true;
                 }

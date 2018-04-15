@@ -98,6 +98,7 @@ public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
             }
             SwapTileAction sta = new SwapTileAction(this, myPlayerHand);
             game.sendAction(sta);
+            return;
         }
 
         /*
