@@ -1,5 +1,7 @@
 package edu.up.cs301.qwirkle;
 
+import android.graphics.Point;
+
 import java.util.ArrayList;
 
 import edu.up.cs301.qwirkle.tile.QwirkleAnimal;
@@ -164,7 +166,10 @@ public class QwirkleRules {
                 }
             }
         }
-        if (empty) return true;
+        // Require that the first tile be placed in the center of the board.
+        if (empty) {
+            return x==board.length/2 && y==board[0].length/2;
+        }
 
         // Step 4: Find the tiles in line that tile is being added to.
         createLine(x, y, lineNS, Direction.NORTH, board);
@@ -214,5 +219,17 @@ public class QwirkleRules {
         if (lineEW.size() == 6) points += 6;
 
         return points;
+    }
+
+    public ArrayList<Point> getLegalMoves(QwirkleTile tile, QwirkleTile[][] board) {
+        ArrayList<Point> legalMoves = new ArrayList<>();
+        for (int x=0; x<board.length; x++) {
+            for (int y=0; y<board[x].length; y++) {
+                if (isValidMove(x, y, tile, board)) {
+                    legalMoves.add(new Point(x, y));
+                }
+            }
+        }
+        return legalMoves;
     }
 }

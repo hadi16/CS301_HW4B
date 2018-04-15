@@ -4,8 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.View;
+
+import java.util.ArrayList;
 
 import edu.up.cs301.qwirkle.CONST;
 import edu.up.cs301.qwirkle.QwirkleGameState;
@@ -22,13 +25,14 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 14, 2018
  */
 public class MainBoard extends View {
-    private Paint blackPaint;
+    private Paint blackPaint; // for drawing board
+    private Paint greenPaint; // for drawing legal moves
 
     // Instance of the game state.
     private QwirkleGameState gameState;
 
     // To draw the legal moves on the board.
-    private int[][] legalMoves;
+    private ArrayList<Point> legalMoves;
 
     /**
      * Constructor: MainBoard
@@ -79,6 +83,10 @@ public class MainBoard extends View {
         blackPaint.setColor(Color.BLACK);
         blackPaint.setStrokeWidth(3.0f);
         blackPaint.setStyle(Paint.Style.STROKE);
+
+        greenPaint = new Paint();
+        greenPaint.setColor(Color.GREEN);
+        greenPaint.setStyle(Paint.Style.FILL);
     }
 
     /**
@@ -112,6 +120,16 @@ public class MainBoard extends View {
                 if (tile != null) tile.drawTile(canvas);
             }
         }
+
+        if (legalMoves == null) return;
+        for (Point point : legalMoves) {
+            int x = point.x;
+            int y = point.y;
+            canvas.drawRect(x*CONST.RECTDIM_MAIN+CONST.OFFSET_MAIN,
+                    y*CONST.RECTDIM_MAIN,
+                    (x+1)*CONST.RECTDIM_MAIN+CONST.OFFSET_MAIN,
+                    (y+1)*CONST.RECTDIM_MAIN, greenPaint);
+        }
     }
 
     /**
@@ -123,7 +141,7 @@ public class MainBoard extends View {
         this.gameState = gameState;
     }
 
-    public void setLegalMoves(int[][] legalMoves) {
+    public void setLegalMoves(ArrayList<Point> legalMoves) {
         this.legalMoves = legalMoves;
     }
 }

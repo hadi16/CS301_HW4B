@@ -22,6 +22,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
 public class QwirkleGameState extends GameState {
     private int turn; // The current turn
     private int numPlayers; // The number of players
+    private int tilesLeft; // Number of tiles left in the draw pile.
 
     // ArrayList of QwirkleTiles that represents all tiles that
     // haven't been played or dealt to players.
@@ -70,8 +71,9 @@ public class QwirkleGameState extends GameState {
         turn = orig.turn;
         numPlayers = orig.numPlayers;
 
-        // Hide the draw pile from the user.
+        // Hide the draw pile from the user, but send number of tiles left.
         drawPile = null;
+        tilesLeft = orig.drawPile.size();
 
         // Copy the board to the new game state.
         board = new QwirkleTile[orig.board.length][orig.board[0].length];
@@ -106,7 +108,7 @@ public class QwirkleGameState extends GameState {
         // Adds the 36 unique Qwirkle tiles 3 times to the draw pile.
         for (QwirkleAnimal animal : QwirkleAnimal.values()) {
             for (QwirkleColor color : QwirkleColor.values()) {
-                for (int i = 0; i < 3; i++) {
+                for (int i=0; i<3; i++) {
                     drawPile.add(new QwirkleTile(animal, color));
                 }
             }
@@ -240,6 +242,10 @@ public class QwirkleGameState extends GameState {
      */
     public int getPlayerScore(int playerIdx) {
         return playerScores[playerIdx];
+    }
+
+    public int getTilesLeft() {
+        return tilesLeft;
     }
 
     /**

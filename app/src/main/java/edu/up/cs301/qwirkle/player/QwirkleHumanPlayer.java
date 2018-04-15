@@ -1,9 +1,16 @@
 package edu.up.cs301.qwirkle.player;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import edu.up.cs301.game.GameHumanPlayer;
@@ -14,6 +21,7 @@ import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
 import edu.up.cs301.qwirkle.CONST;
 import edu.up.cs301.qwirkle.QwirkleGameState;
+import edu.up.cs301.qwirkle.QwirkleRules;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
@@ -36,6 +44,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         implements View.OnTouchListener, View.OnClickListener {
     private GameMainActivity activity; // The activity
     private QwirkleGameState gameState; // The game state
+    private QwirkleRules rules = new QwirkleRules(); // Instance of rules
 
     // Array of the current player's hand
     private QwirkleTile[] myPlayerHand;
@@ -46,11 +55,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
     // TextViews
     private TextView textViewTurnLabel;
-    private TextView myScoreView;
-    private TextView scoreBoardView;
+    private TextView textViewMyScore;
+    private TextView textViewTilesLeft;
 
     // Button for swapping.
     private Button buttonSwap;
+    private Button buttonScores;
 
     private int handSelectedIdx = -1; // The currently selected tile in hand.
 
@@ -90,13 +100,14 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         // Initialize the TextViews by using findViewById.
         textViewTurnLabel = (TextView)activity.findViewById(
                 R.id.textViewTurnLabel);
-        myScoreView = (TextView)activity.findViewById(R.id.textViewPlayerScore);
-        scoreBoardView = (TextView)activity.findViewById(
-                R.id.textViewScoreboardLabel);
+        textViewMyScore = (TextView)activity.findViewById(R.id.textViewPlayerScore);
+        textViewTilesLeft = (TextView)activity.findViewById(R.id.textViewTilesLeft);
 
         // Initialize swap button, main board, and side board & set listeners.
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         buttonSwap.setOnClickListener(this);
+        buttonScores = (Button)activity.findViewById(R.id.buttonScores);
+        buttonScores.setOnClickListener(this);
         mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
         mainBoard.setOnTouchListener(this);
         sideBoard = (SideBoard)activity.findViewById(R.id.sideBoard);
@@ -125,16 +136,9 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      * Used Vegdahl's code as reference
      */
     private void updateDisplay() {
-        textViewTurnLabel.setText("Current Turn: " + allPlayerNames[gameState.getTurn()]);
-        myScoreView.setText("My Score: " + gameState.getPlayerScore(playerNum));
-
-        String scoreBoardText = "Scoreboard: ";
-        for (int i=0; i<allPlayerNames.length; i++) {
-            scoreBoardText += "\n";
-            scoreBoardText += allPlayerNames[i] + ": ";
-            scoreBoardText += gameState.getPlayerScore(i);
-        }
-        scoreBoardView.setText(scoreBoardText);
+        textViewTurnLabel.setText("Turn: " + allPlayerNames[gameState.getTurn()]);
+        textViewMyScore.setText("My Score: " + gameState.getPlayerScore(playerNum));
+        textViewTilesLeft.setText("Tiles Left: " + gameState.getTilesLeft());
     }
 
     private void setConstants() {
@@ -228,6 +232,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             // the main board
             PlaceTileAction pta = new PlaceTileAction(this, xyPos[0], xyPos[1],
                     handSelectedIdx);
+            mainBoard.setLegalMoves(null);
             game.sendAction(pta);
 
             // Redraw the boards.
@@ -242,14 +247,24 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             // Get the yPos of the tile & check to make sure it is valid.
             int yPos = getSelectedHandIdx(x, y);
             if (yPos == -1) return false;
-            if (myPlayerHand[yPos] == null) return false;
+
+            QwirkleTile tileSelected = myPlayerHand[yPos];
+            if (tileSelected == null) return false;
 
             // Revert the value of isSelected.
-            myPlayerHand[yPos].setSelected(!myPlayerHand[yPos].isSelected());
+            tileSelected.setSelected(!tileSelected.isSelected());
 
             // To prevent multiple tiles from being selected when not in swap.
             if (!swap) {
-                handSelectedIdx = myPlayerHand[yPos].isSelected() ? yPos : -1;
+                if (tileSelected.isSelected()) {
+                    handSelectedIdx = yPos;
+                    mainBoard.setLegalMoves(rules.getLegalMoves(tileSelected,
+                            gameState.getBoard()));
+                }
+                else {
+                    handSelectedIdx = -1;
+                    mainBoard.setLegalMoves(null);
+                }
                 for (int i = 0; i < myPlayerHand.length; i++) {
                     if (yPos == i) continue;
                     if (myPlayerHand[i] != null) {
@@ -316,6 +331,56 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         return y / CONST.RECTDIM_SIDE;
     }
 
+    private void showScoreBoard() {
+        /*
+        * External Citation
+        * Date: April 15 2018
+        * Problem: Wanted to create a custom view for the scoreboard.
+        * Source:
+        * https://stackoverflow.com/questions/40650215/
+        * how-to-add-table-layout-on-alertdialog
+        * Solution:
+        * Used a slightly modified version of that code.
+        */
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        Context dialogContext = builder.getContext();
+        LayoutInflater inflater = LayoutInflater.from(dialogContext);
+        View scoreView = inflater.inflate(R.layout.qwirkle_scoreboard, null);
+        builder.setView(scoreView);
+        TableLayout tableLayout = (TableLayout)scoreView.findViewById(R.id.tableLayout);
+
+        for (int i=0; i<allPlayerNames.length; i++) {
+            TableRow tableRow = new TableRow(dialogContext);
+            tableRow.setLayoutParams(new LinearLayout.LayoutParams
+                    (LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT));
+
+            TextView textViewPlayerName = new TextView(dialogContext);
+            textViewPlayerName.setTextColor(Color.BLACK);
+            textViewPlayerName.setText(allPlayerNames[i]);
+            textViewPlayerName.setTextSize(24f);
+            tableRow.addView(textViewPlayerName);
+
+            TextView textViewPlayerId = new TextView(dialogContext);
+            textViewPlayerId.setTextColor(Color.BLACK);
+            textViewPlayerId.setText(Integer.toString(i));
+            textViewPlayerId.setTextSize(24f);
+            tableRow.addView(textViewPlayerId);
+
+            TextView textViewPlayerScore = new TextView(dialogContext);
+            textViewPlayerScore.setTextColor(Color.BLACK);
+            textViewPlayerScore.setText(Integer.toString(gameState.getPlayerScore(i)));
+            textViewPlayerScore.setTextSize(24f);
+            tableRow.addView(textViewPlayerScore);
+
+            tableLayout.addView(tableRow);
+        }
+
+        builder.setCancelable(true);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
     /**
      * callback method when something is clicked on the screen
      *
@@ -324,8 +389,15 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      */
     @Override
     public void onClick(View v) {
-        // if the swap button is not pressed, do nothing
-        if (v.getId() != R.id.buttonSwap) return;
+        // if the swap or scores button is not pressed, do nothing
+        if (v.getId() != R.id.buttonSwap && v.getId() != R.id.buttonScores) {
+            return;
+        }
+
+        if (v.getId() == R.id.buttonScores) {
+            showScoreBoard();
+            return;
+        }
 
         // If swap button is pressed and there is nothing to swap, do nothing.
         if (swap) {
@@ -356,7 +428,13 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         swap = !swap;
 
         // If button clicked, make text "End" (otherwise keep it as "Swap")
-        buttonSwap.setText(swap ? "End" : "Swap");
+        if (swap) {
+            buttonSwap.setText("End");
+            mainBoard.setLegalMoves(null);
+        }
+        else {
+            buttonSwap.setText("Swap");
+        }
 
         // Redraw after performing the action
         mainBoard.invalidate();

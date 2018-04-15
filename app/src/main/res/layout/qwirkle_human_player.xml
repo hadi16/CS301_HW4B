@@ -24,7 +24,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left"
                 android:text="My Name: "
                 android:textColor="@android:color/black"
                 android:textSize="24sp"/>
@@ -34,7 +33,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center_horizontal"
                 android:text="My Score: "
                 android:textColor="@android:color/black"
                 android:textSize="24sp"/>
@@ -44,8 +42,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right"
-                android:text="Current Turn: "
+                android:text="Turn: "
+                android:textColor="@android:color/black"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:id="@+id/textViewTilesLeft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tiles Left: "
                 android:textColor="@android:color/black"
                 android:textSize="24sp"/>
 
@@ -77,12 +83,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="10"/>
 
-        <TextView
-            android:id="@+id/textViewScoreboardLabel"
+        <Button
+            android:id="@+id/buttonScores"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Scoreboard: "
-            android:textColor="@android:color/black"
+            android:text="Scores"
             android:textSize="20sp"/>
 
     </LinearLayout>
