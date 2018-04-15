@@ -31,6 +31,10 @@ public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
     private QwirkleTile[] myPlayerHand; // The player's hand
     private QwirkleTile[][] board; // The board
     private QwirkleRules rules = new QwirkleRules(); // For valid moves
+
+    // Constant for 1000-millisecond delay
+    private static final int TIME_TO_SLEEP = 1000;
+
     /**
      * Constructor: QwirkleComputerPlayerSmart
      * Initializes the smart computer player.
@@ -71,6 +75,9 @@ public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
     }
 
     private void playSmartMove() {
+        // Sleep for the computer player.
+        sleep(TIME_TO_SLEEP);
+
         //ArrayList that stores all scores and its corresponding PlaceTileAction.
         Hashtable<Integer, PlaceTileAction> allScores = new Hashtable<>();
         for (int handIdx=0; handIdx<myPlayerHand.length; handIdx++) {

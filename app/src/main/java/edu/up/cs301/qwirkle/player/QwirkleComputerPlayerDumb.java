@@ -74,7 +74,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
      * Have the dumb AI place a random tile on the board whenever valid.
      */
     private void playRandomMove() {
-        // Sleep for the human player.
+        // Sleep for the computer player.
         sleep(TIME_TO_SLEEP);
 
         //Iterate through each tile in the player's hand

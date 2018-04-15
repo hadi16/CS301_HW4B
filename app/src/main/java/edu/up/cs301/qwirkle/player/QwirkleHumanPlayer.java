@@ -52,6 +52,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     // Button for swapping.
     private Button buttonSwap;
 
+    private int handSelectedIdx = -1; // The currently selected tile in hand.
+
     // Booleans
     private boolean swap = false; // Tells whether in swap mode.
     private boolean init = false; // Tells whether initialized constants.
@@ -158,10 +160,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      */
     @Override
     public void receiveInfo(GameInfo info) {
-        if (!init) {
-            setConstants();
-        }
-
         // if the move was out of turn or otherwise illegal, flast the screen
         if (info instanceof IllegalMoveInfo||info instanceof NotYourTurnInfo) {
             flash(Color.RED, 50);
@@ -172,16 +170,21 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             return;
         }
 
-        // initializes the game state and redraws it accordingly
+        // initializes the game state and myPlayerHand
         this.gameState = (QwirkleGameState)info;
         this.myPlayerHand = gameState.getMyPlayerHand();
 
+        // Update the display.
+        updateDisplay();
+
         mainBoard.setGameState(gameState);
         sideBoard.setGameState(gameState);
-        updateDisplay();
 
         mainBoard.invalidate();
         sideBoard.invalidate();
+
+        // Initialize the constants if needed.
+        if (!init) setConstants();
     }
 
     /**
@@ -211,16 +214,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
         // If the main board is selected.
         if (v.getId() == R.id.mainBoard) {
+            // Do nothing if in swap mode.
+            if (swap) return false;
+
             // To prevent the user from selecting board before tile in hand
-            int handSelectedIdx = -1;
-            for (int i=0; i<myPlayerHand.length; i++) {
-                QwirkleTile tile = myPlayerHand[i];
-                if (tile == null) continue;
-                if (tile.isSelected()) {
-                    handSelectedIdx = i;
-                    break;
-                }
-            }
             if (handSelectedIdx == -1) return false;
 
             // Get where the board is selected
@@ -252,6 +249,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
             // To prevent multiple tiles from being selected when not in swap.
             if (!swap) {
+                handSelectedIdx = myPlayerHand[yPos].isSelected() ? yPos : -1;
                 for (int i = 0; i < myPlayerHand.length; i++) {
                     if (yPos == i) continue;
                     if (myPlayerHand[i] != null) {
