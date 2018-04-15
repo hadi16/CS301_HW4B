@@ -352,17 +352,13 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             }
         }
 
-        // if swap has not been clicked, keep the button as "Swap"
+        // Revert the swap boolean.
         swap = !swap;
-        if (!swap) {
-            buttonSwap.setText("Swap");
-        }
-        // if swap has been clicked, change the text of the button to "End"
-        else {
-            buttonSwap.setText("End");
-        }
 
-        // redraw after performing the action
+        // If button clicked, make text "End" (otherwise keep it as "Swap")
+        buttonSwap.setText(swap ? "End" : "Swap");
+
+        // Redraw after performing the action
         mainBoard.invalidate();
         sideBoard.invalidate();
     }
