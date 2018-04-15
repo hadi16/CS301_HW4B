@@ -2,8 +2,8 @@ package edu.up.cs301.qwirkle.player;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
@@ -22,6 +24,7 @@ import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
 import edu.up.cs301.qwirkle.CONST;
 import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.QwirkleRules;
+import edu.up.cs301.qwirkle.action.PassAction;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
@@ -60,13 +63,13 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
     // Button for swapping.
     private Button buttonSwap;
-    private Button buttonScores;
 
     private int handSelectedIdx = -1; // The currently selected tile in hand.
 
     // Booleans
     private boolean swap = false; // Tells whether in swap mode.
     private boolean init = false; // Tells whether initialized constants.
+    private boolean pass = false; // Tells whether in pass mode.
 
     /**
      * Constructor for QwirkleHumanPlayer
@@ -106,7 +109,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         // Initialize swap button, main board, and side board & set listeners.
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         buttonSwap.setOnClickListener(this);
-        buttonScores = (Button)activity.findViewById(R.id.buttonScores);
+        Button buttonScores = (Button)activity.findViewById(R.id.buttonScores);
         buttonScores.setOnClickListener(this);
         mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
         mainBoard.setOnTouchListener(this);
@@ -139,6 +142,22 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         textViewTurnLabel.setText("Turn: " + allPlayerNames[gameState.getTurn()]);
         textViewMyScore.setText("My Score: " + gameState.getPlayerScore(playerNum));
         textViewTilesLeft.setText("Tiles Left: " + gameState.getTilesLeft());
+
+        // Ensure swap button is initially enabled.
+        buttonSwap.setEnabled(true);
+
+        if (gameState.getTilesLeft() == 0) {
+            swap = false;
+            if (rules.validMovesExist(myPlayerHand, gameState.getBoard())) {
+                // Disable the swap button if no tiles in draw pile.
+                buttonSwap.setEnabled(false);
+                pass = false;
+            }
+            else {
+                buttonSwap.setText("Pass");
+                pass = true;
+            }
+        }
     }
 
     private void setConstants() {
@@ -349,28 +368,44 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         builder.setView(scoreView);
         TableLayout tableLayout = (TableLayout)scoreView.findViewById(R.id.tableLayout);
 
+        ArrayList currentWinners = gameState.getWinners();
         for (int i=0; i<allPlayerNames.length; i++) {
+            /*
+            * External Citation
+            * Date: April 15 2018
+            * Problem: Wanted to set bold font.
+            * Source:
+            * https://stackoverflow.com/questions/4792260/
+            * how-do-you-change-text-to-bold-in-android
+            * Solution:
+            * Used Typeface.BOLD
+            */
             TableRow tableRow = new TableRow(dialogContext);
             tableRow.setLayoutParams(new LinearLayout.LayoutParams
                     (LinearLayout.LayoutParams.WRAP_CONTENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT));
 
+            boolean winner = currentWinners.contains(i);
+
             TextView textViewPlayerName = new TextView(dialogContext);
             textViewPlayerName.setTextColor(Color.BLACK);
             textViewPlayerName.setText(allPlayerNames[i]);
             textViewPlayerName.setTextSize(24f);
+            if (winner) textViewPlayerName.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerName);
 
             TextView textViewPlayerId = new TextView(dialogContext);
             textViewPlayerId.setTextColor(Color.BLACK);
             textViewPlayerId.setText(Integer.toString(i));
             textViewPlayerId.setTextSize(24f);
+            if (winner) textViewPlayerId.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerId);
 
             TextView textViewPlayerScore = new TextView(dialogContext);
             textViewPlayerScore.setTextColor(Color.BLACK);
             textViewPlayerScore.setText(Integer.toString(gameState.getPlayerScore(i)));
             textViewPlayerScore.setTextSize(24f);
+            if (winner) textViewPlayerScore.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerScore);
 
             tableLayout.addView(tableRow);
@@ -396,6 +431,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
         if (v.getId() == R.id.buttonScores) {
             showScoreBoard();
+            return;
+        }
+
+        if (v.getId() == R.id.buttonSwap && pass) {
+            PassAction pa = new PassAction(this);
+            game.sendAction(pa);
             return;
         }
 

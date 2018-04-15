@@ -85,23 +85,41 @@ public class QwirkleLocalGame extends LocalGame {
         // Check to see whether the game has ended or not, or if there are
         // no valid moves left to complete
         if (gameState.hasTilesInPile()) return null;
-        if (validMovesExist()) return null;
 
-        int highestScore = gameState.getPlayerScore(0);
+        QwirkleTile[][] playerHands = gameState.getPlayerHands();
         for (int playerId=0; playerId<players.length; playerId++) {
-            int score = gameState.getPlayerScore(playerId);
-            if (score > highestScore) {
-                highestScore = score;
+            if (rules.validMovesExist(playerHands[playerId], gameState.getBoard())) {
+                return null;
             }
         }
 
-        String winners = null;
-        for (int playerId=0; playerId<players.length; playerId++) {
-            if (highestScore == gameState.getPlayerScore(playerId)) {
-                winners += playerNames[playerId] + " ";
-            }
+        ArrayList<Integer> winners = gameState.getWinners();
+
+        if (winners.size() == 0) return null;
+        else if (winners.size() == 1) {
+            return playerNames[winners.get(0)] + " won.";
         }
-        return winners;
+        else if (winners.size() == 2) {
+            return playerNames[winners.get(0)] + " and " +
+                    playerNames[winners.get(1)] + " won.";
+        }
+        else {
+            String message = "";
+            for (int i=0; i<winners.size(); i++) {
+                int playerId = winners.get(i);
+                // First iteration in the loop
+                if (i == 0) {
+                    message = playerNames[playerId];
+                }
+                if (i == winners.size()-1) {
+                    message += ", and " + playerNames[playerId] + " won.";
+                }
+                else {
+                    message += ", " + playerNames[playerId];
+                }
+            }
+            return message;
+        }
     }
 
     /**
@@ -155,9 +173,11 @@ public class QwirkleLocalGame extends LocalGame {
             ArrayList<Integer> tilesToSwap = sta.getSwapIdx();
             int playerId = getPlayerIdx(sta.getPlayer());
             for (int i : tilesToSwap) {
-                QwirkleTile tileToSwap = gameState.getPlayerHands()[playerId][i];
+                QwirkleTile tileToSwap =
+                        gameState.getPlayerHands()[playerId][i];
                 gameState.addToDrawPile(tileToSwap);
-                gameState.setPlayerHandsAtIdx(playerId, i, gameState.getRandomTile());
+                gameState.setPlayerHandsAtIdx(playerId, i,
+                        gameState.getRandomTile());
             }
 
             // end the current player's turn
@@ -174,34 +194,5 @@ public class QwirkleLocalGame extends LocalGame {
             return false;
         }
     }
-
-    /**
-     * Check to see whether there are valid moves on the board to place certain
-     * Qwirkle tiles
-     *
-     * @return true if there are valid moves on the board
-     */
-    private boolean validMovesExist() {
-        // check each position on the board and return the valid spots for a
-        // selected Qwirkle tile.
-        for (int playerId=0; playerId<players.length; playerId++) {
-            QwirkleTile[] playerHand = gameState.getPlayerHands()[playerId];
-            QwirkleTile[][] board = gameState.getBoard();
-            for (QwirkleTile tileInHand : playerHand) {
-                if (tileInHand == null) continue;
-                for (int x=0; x<board.length; x++) {
-                    for (int y=0; y<board[x].length; y++) {
-                        if (rules.isValidMove(x ,y, tileInHand, board)) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        // return false if there are no more valid moves.
-        return false;
-    }
-
 }
 

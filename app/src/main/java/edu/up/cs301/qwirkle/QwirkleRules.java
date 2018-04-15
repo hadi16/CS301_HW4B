@@ -232,4 +232,27 @@ public class QwirkleRules {
         }
         return legalMoves;
     }
+
+    /**
+     * Check to see whether there are valid moves on the board for a given player.
+     * @param playerHand The player hand to check.
+     * @param board The board.
+     *
+     * @return true if there are valid moves on the board for the player.
+     */
+    public boolean validMovesExist(QwirkleTile[] playerHand, QwirkleTile[][] board) {
+        for (QwirkleTile tileInHand : playerHand) {
+            if (tileInHand == null) continue;
+            for (int x=0; x<board.length; x++) {
+                for (int y=0; y<board[x].length; y++) {
+                    if (isValidMove(x ,y, tileInHand, board)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        // return false if there are no more valid moves.
+        return false;
+    }
 }

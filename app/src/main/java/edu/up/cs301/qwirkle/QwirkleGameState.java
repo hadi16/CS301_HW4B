@@ -1,6 +1,7 @@
 package edu.up.cs301.qwirkle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import edu.up.cs301.game.infoMsg.GameState;
@@ -246,6 +247,25 @@ public class QwirkleGameState extends GameState {
 
     public int getTilesLeft() {
         return tilesLeft;
+    }
+
+    /**
+     * Returns the winners with their player IDs.
+     */
+    public ArrayList<Integer> getWinners() {
+        ArrayList<Integer> winners = new ArrayList<>();
+
+        int maxScore = 0;
+        for (int score : playerScores) {
+            if (score > maxScore) maxScore = score;
+        }
+
+        for (int playerId=0; playerId<playerScores.length; playerId++) {
+            int score = playerScores[playerId];
+            if (score == maxScore) winners.add(playerId);
+        }
+
+        return winners;
     }
 
     /**

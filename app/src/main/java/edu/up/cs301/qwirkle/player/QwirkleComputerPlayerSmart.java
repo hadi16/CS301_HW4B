@@ -9,6 +9,7 @@ import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
 import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.QwirkleRules;
+import edu.up.cs301.qwirkle.action.PassAction;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
@@ -30,6 +31,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
 public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
     private QwirkleTile[] myPlayerHand; // The player's hand
     private QwirkleTile[][] board; // The board
+    private QwirkleGameState gameState;
     private QwirkleRules rules = new QwirkleRules(); // For valid moves
 
     // Constant for 1000-millisecond delay
@@ -62,7 +64,7 @@ public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
             return;
         }
 
-        QwirkleGameState gameState = (QwirkleGameState)info;
+        gameState = (QwirkleGameState)info;
         if (gameState.getTurn() != playerNum) {
             return;
         }
@@ -94,33 +96,41 @@ public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
             }
         }
 
-        if (allScores.size() == 0) {
-            // If no valid moves, allow all tiles in the computer's hand to be
-            // swapped out with random ones from the draw pile.
-            for (int i=0; i<myPlayerHand.length; i++) {
-                QwirkleTile tile = myPlayerHand[i];
-                if (tile != null) {
-                    tile.setSelected(true);
-                }
-            }
-            SwapTileAction sta = new SwapTileAction(this, myPlayerHand);
-            game.sendAction(sta);
+        // If the size of allScores isn't 0, valid moves exist.
+        if (allScores.size() != 0) {
+            /*
+            * External Citation
+            * Date: April 14 2018
+            * Problem: Want to find the max key in the Hashtable.
+            * Source:
+            * https://stackoverflow.com/questions/24200973/
+            * how-to-find-highest-key-value-from-hashmap
+            * Solution:
+            * Used Collections.max with allScores.keySet().
+            */
+            // Gets the max score in the Hashtable.
+            int maxScore = Collections.max(allScores.keySet());
+            PlaceTileAction placeTileAction = allScores.get(maxScore);
+            game.sendAction(placeTileAction);
+        }
+
+        // If no tiles to swap, just pass.
+        if (gameState.getTilesLeft() == 0) {
+            PassAction pa = new PassAction(this);
+            game.sendAction(pa);
             return;
         }
 
-        /*
-        * External Citation
-        * Date: April 14 2018
-        * Problem: Want to find the max key in the Hashtable.
-        * Source:
-        * https://stackoverflow.com/questions/24200973/
-        * how-to-find-highest-key-value-from-hashmap
-        * Solution:
-        * Used Collections.max with allScores.keySet().
-        */
-        // Gets the max score in the Hashtable.
-        int maxScore = Collections.max(allScores.keySet());
-        PlaceTileAction placeTileAction = allScores.get(maxScore);
-        game.sendAction(placeTileAction);
+        // Either swap or pass if there are no valid moves.
+        // If tiles are in draw pile, allow all tiles in the computer's hand to be
+        // swapped out with random ones from the draw pile.
+        for (int i=0; i<myPlayerHand.length; i++) {
+            QwirkleTile tile = myPlayerHand[i];
+            if (tile != null) {
+                tile.setSelected(true);
+            }
+        }
+        SwapTileAction sta = new SwapTileAction(this, myPlayerHand);
+        game.sendAction(sta);
     }
 }

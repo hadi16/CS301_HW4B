@@ -8,6 +8,7 @@ import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
 import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.QwirkleRules;
+import edu.up.cs301.qwirkle.action.PassAction;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
@@ -25,6 +26,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
 public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     private QwirkleTile[] myPlayerHand; // The player's hand
     private QwirkleTile[][] board; // The board
+    private QwirkleGameState gameState;
     private QwirkleRules rules = new QwirkleRules(); // For valid moves
 
     // Constant for 1000-millisecond delay
@@ -57,7 +59,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
             return;
         }
 
-        QwirkleGameState gameState = (QwirkleGameState)info;
+        gameState = (QwirkleGameState)info;
         if (gameState.getTurn() != playerNum) {
             return;
         }
@@ -96,8 +98,15 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
             }
         }
 
-        // If no valid moves, allow the tiles in the computer's hand to be
-        // swapped out with random ones from the draw pile.
+        // If there are no tiles to swap, just pass.
+        if (gameState.getTilesLeft() == 0) {
+            PassAction pa = new PassAction(this);
+            game.sendAction(pa);
+            return;
+        }
+
+        // If there are tiles left, allow one tile in the computer's hand to be
+        // swapped out with a random one from the draw pile.
         Random rand = new Random();
         int idx = rand.nextInt(myPlayerHand.length);
         // To prevent a null position from being selected.
