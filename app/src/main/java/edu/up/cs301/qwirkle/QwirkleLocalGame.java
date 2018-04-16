@@ -111,7 +111,7 @@ public class QwirkleLocalGame extends LocalGame {
                 if (i == 0) {
                     message = playerNames[playerId];
                 }
-                if (i == winners.size()-1) {
+                else if (i == winners.size()-1) {
                     message += ", and " + playerNames[playerId] + " won.";
                 }
                 else {

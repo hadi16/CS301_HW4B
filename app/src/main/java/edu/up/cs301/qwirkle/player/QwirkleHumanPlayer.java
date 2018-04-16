@@ -224,7 +224,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        // ignore if not an "down" event
+        // Ignore if it isn't your turn.
+        if (gameState.getTurn() != playerNum) {
+            return false;
+        }
+        
+        // ignore if not a "down" event
         if (event.getAction() != MotionEvent.ACTION_DOWN) {
             return false;
         }
@@ -429,6 +434,11 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      */
     @Override
     public void onClick(View v) {
+        // Only allow the scoreboard to be accessed when not your turn.
+        if (v.getId() != R.id.buttonScores && gameState.getTurn() != playerNum) {
+            return;
+        }
+
         // if the swap or scores button is not pressed, do nothing
         if (v.getId() != R.id.buttonSwap && v.getId() != R.id.buttonScores) {
             return;
