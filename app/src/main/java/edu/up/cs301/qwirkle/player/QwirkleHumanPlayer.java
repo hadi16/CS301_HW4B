@@ -3,6 +3,7 @@ package edu.up.cs301.qwirkle.player;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -249,12 +250,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             if (handSelectedIdx == -1) return false;
 
             // Get where the board is selected
-            int[] xyPos = getSelectedBoardIdx(x, y);
-            if (xyPos == null) return false;
+            Point coordinates = getSelectedBoardIdx(x, y);
+            if (coordinates == null) return false;
 
             // Create the PlaceTileAction object.
-            PlaceTileAction pta = new PlaceTileAction(this, xyPos[0], xyPos[1],
-                    handSelectedIdx);
+            PlaceTileAction pta = new PlaceTileAction(this, coordinates.x,
+                    coordinates.y, handSelectedIdx);
 
             // Reset selected tile.
             myPlayerHand[handSelectedIdx].setSelected(false);
@@ -322,21 +323,18 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      * @return
      *          position of main board
      */
-    private int[] getSelectedBoardIdx(int x, int y) {
+    private Point getSelectedBoardIdx(int x, int y) {
         // if the position selected is outside the main board, do nothing
         if (x < CONST.OFFSET_MAIN || x > CONST.RECTDIM_MAIN *
                 CONST.BOARD_WIDTH + CONST.OFFSET_MAIN) {
             return null;
         }
 
-        int[] xyPos = new int[2];
-        // X position
-        xyPos[0] = (x - CONST.OFFSET_MAIN) / CONST.RECTDIM_MAIN;
-        // Y position
-        xyPos[1] = y / CONST.RECTDIM_MAIN;
-
-        // return position on main board as array of ints.
-        return xyPos;
+        // Return position on main board as an instance of Point.
+        Point boardCoordinates = new Point();
+        boardCoordinates.x = (x - CONST.OFFSET_MAIN) / CONST.RECTDIM_MAIN;
+        boardCoordinates.y = y / CONST.RECTDIM_MAIN;
+        return boardCoordinates;
     }
 
     /**
