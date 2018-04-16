@@ -1,5 +1,7 @@
 package edu.up.cs301.qwirkle.tile;
 
+import java.io.Serializable;
+
 /**
  * Enum: QwirkleAnimal
  * The possible animals in the Qwirkle game.
@@ -10,6 +12,10 @@ package edu.up.cs301.qwirkle.tile;
  * @author Stephanie Camacho
  * @version April 14, 2018
  */
-public enum QwirkleAnimal {
-    bat, dog, fox, owl, parrot, snake
+public enum QwirkleAnimal implements Serializable {
+    bat, dog, fox, owl, parrot, snake;
+
+    private static final long serialVersionUID = 4718419248410841248L;
+
 }
+

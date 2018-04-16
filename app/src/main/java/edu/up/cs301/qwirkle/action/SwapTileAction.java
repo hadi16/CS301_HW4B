@@ -18,6 +18,8 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 16, 2018
  */
 public class SwapTileAction extends GameAction implements Serializable {
+    private static final long serialVersionUID = 5738184719485729852L;
+
     private ArrayList<Integer> swapIdx;
 
     public SwapTileAction(GamePlayer player, QwirkleTile[] myPlayerHand) {

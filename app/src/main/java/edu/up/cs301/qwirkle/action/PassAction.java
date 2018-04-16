@@ -16,6 +16,7 @@ import edu.up.cs301.game.actionMsg.GameAction;
  * @version April 16, 2018
  */
 public class PassAction extends GameAction implements Serializable {
+    private static final long serialVersionUID = 2819384729183940183L;
     public PassAction(GamePlayer player) {
         super(player);
     }

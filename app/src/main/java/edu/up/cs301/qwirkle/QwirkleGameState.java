@@ -21,6 +21,9 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 16, 2018
  */
 public class QwirkleGameState extends GameState implements Serializable {
+    //Serialize ID
+    private static final long serialVersionUID = 4162018421892647281L;
+
     private int turn; // The current turn
     private int numPlayers; // The number of players
     private int tilesLeft; // Number of tiles left in the draw pile.

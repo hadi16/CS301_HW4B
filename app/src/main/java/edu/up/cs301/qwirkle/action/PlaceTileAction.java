@@ -16,6 +16,7 @@ import edu.up.cs301.game.actionMsg.GameAction;
  * @version April 16, 2018
  */
 public class PlaceTileAction extends GameAction implements Serializable {
+    private static final long serialVersionUID = 3810381038472819384L;
     // instance variables: tile position and player hands
     private int xPos;
     private int yPos;

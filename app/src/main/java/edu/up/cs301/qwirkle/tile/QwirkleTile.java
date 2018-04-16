@@ -21,6 +21,8 @@ import edu.up.cs301.qwirkle.CONST;
  * @version April 16, 2018
  */
 public class QwirkleTile implements Serializable {
+
+    private static final long serialVersionUID = 3781304818481394857L;
     // Hashtable for all Bitmaps
     private static Hashtable<String, Bitmap> mainBoardBitmaps = null;
     private static Hashtable<String, Bitmap> sideBoardBitmaps = null;
