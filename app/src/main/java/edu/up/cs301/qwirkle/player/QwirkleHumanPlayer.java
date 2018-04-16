@@ -247,11 +247,16 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             int[] xyPos = getSelectedBoardIdx(x, y);
             if (xyPos == null) return false;
 
-            // send the PlaceTileAction to allow for tiles to be placed on
-            // the main board
+            // Create the PlaceTileAction object.
             PlaceTileAction pta = new PlaceTileAction(this, xyPos[0], xyPos[1],
                     handSelectedIdx);
+
+            // Reset selected tile.
+            myPlayerHand[handSelectedIdx].setSelected(false);
+            handSelectedIdx = -1;
             mainBoard.setLegalMoves(null);
+
+            // Send the action to the game.
             game.sendAction(pta);
 
             // Redraw the boards.
