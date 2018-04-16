@@ -1,5 +1,6 @@
 package edu.up.cs301.qwirkle.action;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import edu.up.cs301.game.GamePlayer;
@@ -14,9 +15,9 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 16, 2018
  */
-public class SwapTileAction extends GameAction {
+public class SwapTileAction extends GameAction implements Serializable {
     private ArrayList<Integer> swapIdx;
 
     public SwapTileAction(GamePlayer player, QwirkleTile[] myPlayerHand) {

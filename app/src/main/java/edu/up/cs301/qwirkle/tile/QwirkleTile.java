@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
+import java.io.Serializable;
 import java.util.Hashtable;
 
 import edu.up.cs301.qwirkle.CONST;
@@ -17,9 +18,9 @@ import edu.up.cs301.qwirkle.CONST;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 16, 2018
  */
-public class QwirkleTile {
+public class QwirkleTile implements Serializable {
     // Hashtable for all Bitmaps
     private static Hashtable<String, Bitmap> mainBoardBitmaps = null;
     private static Hashtable<String, Bitmap> sideBoardBitmaps = null;

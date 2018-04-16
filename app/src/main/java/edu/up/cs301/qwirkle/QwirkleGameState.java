@@ -1,5 +1,6 @@
 package edu.up.cs301.qwirkle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -19,7 +20,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Stephanie Camacho
  * @version April 16, 2018
  */
-public class QwirkleGameState extends GameState {
+public class QwirkleGameState extends GameState implements Serializable {
     private int turn; // The current turn
     private int numPlayers; // The number of players
     private int tilesLeft; // Number of tiles left in the draw pile.
