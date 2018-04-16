@@ -8,6 +8,9 @@ import edu.up.cs301.game.actionMsg.GameAction;
 import edu.up.cs301.qwirkle.action.PassAction;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
+import edu.up.cs301.qwirkle.player.QwirkleComputerPlayerDumb;
+import edu.up.cs301.qwirkle.player.QwirkleComputerPlayerSmart;
+import edu.up.cs301.qwirkle.player.QwirkleHumanPlayer;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 
 /**
@@ -18,7 +21,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 16, 2018
  */
 public class QwirkleLocalGame extends LocalGame {
     // the game state
@@ -42,7 +45,22 @@ public class QwirkleLocalGame extends LocalGame {
         // The game is initialized from here to allow for
         // an arbitrary number of players.
         super.start(players);
-        this.gameState = new QwirkleGameState(players.length);
+
+        // To allow for scoreboard types functionality.
+        String[] playerTypes = new String[players.length];
+        for (int i=0; i<players.length; i++) {
+            GamePlayer player = players[i];
+            if (player instanceof QwirkleHumanPlayer) {
+                playerTypes[i] = "Human";
+            } else if (player instanceof QwirkleComputerPlayerDumb) {
+                playerTypes[i] = "Dumb AI";
+            } else if (player instanceof QwirkleComputerPlayerSmart) {
+                playerTypes[i] = "Smart AI";
+            } else {
+                playerTypes[i] = "";
+            }
+        }
+        this.gameState = new QwirkleGameState(players.length, playerTypes);
     }
 
     /**

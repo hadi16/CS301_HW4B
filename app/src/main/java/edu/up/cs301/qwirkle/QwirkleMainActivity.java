@@ -19,7 +19,7 @@ import edu.up.cs301.qwirkle.player.QwirkleHumanPlayer;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 16, 2018
  */
 public class QwirkleMainActivity extends GameMainActivity {
     private static final int PORT_NUMBER = 2236;
@@ -36,13 +36,13 @@ public class QwirkleMainActivity extends GameMainActivity {
             }});
 
         // a dumb computer player type (player type 1)
-        playerTypes.add(new GamePlayerType("Computer Player (Dumb)") {
+        playerTypes.add(new GamePlayerType("Dumb AI") {
             public GamePlayer createPlayer(String name) {
                 return new QwirkleComputerPlayerDumb(name);
             }});
 
         // a smart computer player type (player type 2)
-        playerTypes.add(new GamePlayerType("Computer Player (Smart)") {
+        playerTypes.add(new GamePlayerType("Smart AI") {
             public GamePlayer createPlayer(String name) {
                 return new QwirkleComputerPlayerSmart(name);
             }});

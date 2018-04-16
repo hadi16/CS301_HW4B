@@ -40,7 +40,7 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 16, 2018
  */
 
 public class QwirkleHumanPlayer extends GameHumanPlayer
@@ -397,6 +397,13 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
             boolean winner = currentWinners.contains(i);
 
+            TextView textViewPlayerId = new TextView(dialogContext);
+            textViewPlayerId.setTextColor(Color.BLACK);
+            textViewPlayerId.setText(Integer.toString(i));
+            textViewPlayerId.setTextSize(24f);
+            if (winner) textViewPlayerId.setTypeface(null, Typeface.BOLD);
+            tableRow.addView(textViewPlayerId);
+
             TextView textViewPlayerName = new TextView(dialogContext);
             textViewPlayerName.setTextColor(Color.BLACK);
             textViewPlayerName.setText(allPlayerNames[i]);
@@ -404,12 +411,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             if (winner) textViewPlayerName.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerName);
 
-            TextView textViewPlayerId = new TextView(dialogContext);
-            textViewPlayerId.setTextColor(Color.BLACK);
-            textViewPlayerId.setText(Integer.toString(i));
-            textViewPlayerId.setTextSize(24f);
-            if (winner) textViewPlayerId.setTypeface(null, Typeface.BOLD);
-            tableRow.addView(textViewPlayerId);
+            TextView textViewPlayerType = new TextView(dialogContext);
+            textViewPlayerType.setTextColor(Color.BLACK);
+            textViewPlayerType.setText(gameState.getPlayerTypeAtIdx(i));
+            textViewPlayerType.setTextSize(24f);
+            if (winner) textViewPlayerType.setTypeface(null, Typeface.BOLD);
+            tableRow.addView(textViewPlayerType);
 
             TextView textViewPlayerScore = new TextView(dialogContext);
             textViewPlayerScore.setTextColor(Color.BLACK);

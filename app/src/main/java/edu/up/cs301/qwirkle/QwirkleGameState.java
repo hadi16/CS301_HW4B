@@ -17,7 +17,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 16, 2018
  */
 public class QwirkleGameState extends GameState {
     private int turn; // The current turn
@@ -37,6 +37,8 @@ public class QwirkleGameState extends GameState {
     // Array to store all player scores (index corresponds to playerId)
     private int[] playerScores;
 
+    private String[] playerTypes;
+
     // Array for each tile in the current player's hand
     private QwirkleTile[] myPlayerHand;
 
@@ -46,12 +48,18 @@ public class QwirkleGameState extends GameState {
      *
      * @param numPlayers the number of players.
      */
-    public QwirkleGameState(int numPlayers) {
+    public QwirkleGameState(int numPlayers, String[] playerTypes) {
         // initialize the state to be a brand new game
         this.turn = 0;
         this.numPlayers = numPlayers;
         this.drawPile = new ArrayList<>();
         this.board = new QwirkleTile[CONST.BOARD_WIDTH][CONST.BOARD_HEIGHT];
+
+        // For type scoreboard functionality.
+        this.playerTypes = new String[playerTypes.length];
+        for (int i=0; i<this.playerTypes.length; i++) {
+            this.playerTypes[i] = playerTypes[i];
+        }
 
         // Initialize the draw pile, player hands, and player scores.
         initDrawPile();
@@ -68,34 +76,39 @@ public class QwirkleGameState extends GameState {
      */
     public QwirkleGameState(QwirkleGameState orig, int playerId) {
         // Copy the integers.
-        turn = orig.turn;
-        numPlayers = orig.numPlayers;
+        this.turn = orig.turn;
+        this.numPlayers = orig.numPlayers;
 
         // Hide the draw pile from the user, but send number of tiles left.
-        drawPile = null;
-        tilesLeft = orig.drawPile.size();
+        this.drawPile = null;
+        this.tilesLeft = orig.drawPile.size();
+
+        this.playerTypes = new String[orig.playerTypes.length];
+        for (int i=0; i<this.playerTypes.length; i++) {
+            this.playerTypes[i] = orig.playerTypes[i];
+        }
 
         // Copy the board to the new game state.
-        board = new QwirkleTile[orig.board.length][orig.board[0].length];
-        for (int i = 0; i<board.length; i++) {
-            for (int j = 0; j<board[i].length; j++) {
+        this.board = new QwirkleTile[orig.board.length][orig.board[0].length];
+        for (int i = 0; i<this.board.length; i++) {
+            for (int j = 0; j<this.board[i].length; j++) {
                 if (orig.board[i][j] != null) {
                     // Use QwirkleTile's copy constructor.
-                    board[i][j] = new QwirkleTile(orig.board[i][j]);
+                    this.board[i][j] = new QwirkleTile(orig.board[i][j]);
                 }
             }
         }
 
         // Copy just the current player's hand.
-        myPlayerHand = new QwirkleTile[CONST.NUM_IN_HAND];
-        for (int i=0; i<myPlayerHand.length; i++) {
-            myPlayerHand[i] = orig.playerHands[playerId][i];
+        this.myPlayerHand = new QwirkleTile[CONST.NUM_IN_HAND];
+        for (int i=0; i<this.myPlayerHand.length; i++) {
+            this.myPlayerHand[i] = orig.playerHands[playerId][i];
         }
 
         // Copy the player scores.
-        playerScores = new int[orig.playerScores.length];
-        for (int i = 0; i<playerScores.length; i++) {
-            playerScores[i] = orig.playerScores[i];
+        this.playerScores = new int[orig.playerScores.length];
+        for (int i = 0; i<this.playerScores.length; i++) {
+            this.playerScores[i] = orig.playerScores[i];
         }
     }
 
@@ -246,6 +259,10 @@ public class QwirkleGameState extends GameState {
 
     public int getTilesLeft() {
         return tilesLeft;
+    }
+
+    public String getPlayerTypeAtIdx(int idx) {
+        return playerTypes[idx];
     }
 
     /**
