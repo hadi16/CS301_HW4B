@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 
 import java.util.Hashtable;
 
@@ -22,8 +21,9 @@ import edu.up.cs301.qwirkle.CONST;
  */
 public class QwirkleTile {
     // Hashtable for all Bitmaps
-    private static Hashtable<String, Bitmap> tileImages = null;
-    private static Hashtable<String, Bitmap> selectedTileImages = null;
+    private static Hashtable<String, Bitmap> mainBoardBitmaps = null;
+    private static Hashtable<String, Bitmap> sideBoardBitmaps = null;
+    private static Hashtable<String, Bitmap> selectedSideBoardBitmaps = null;
 
     // Instance variables for bitmaps
     private Bitmap bitmapMain;
@@ -46,11 +46,6 @@ public class QwirkleTile {
      * @param orig The original QwirkleTile object instance.
      */
     public QwirkleTile(QwirkleTile orig) {
-        // Set bitmaps
-        this.bitmapMain = orig.bitmapMain;
-        this.bitmapSide = orig.bitmapSide;
-        this.bitmapSideSelected = orig.bitmapSideSelected;
-
         // Set position and tile animal/color of bitmaps
         this.xPos = orig.xPos;
         this.yPos = orig.yPos;
@@ -61,7 +56,7 @@ public class QwirkleTile {
         this.mainBoard = orig.mainBoard;
         this.isSelected = orig.isSelected;
 
-        // Initialize the bitmaps (if needed)
+        // Initialize the Bitmaps.
         initBitmapInstance();
     }
 
@@ -76,7 +71,7 @@ public class QwirkleTile {
         this.qwirkleAnimal = animal;
         this.qwirkleColor = color;
 
-        //Initialize all bitmaps (if needed)
+        //Initialize the Bitmaps.
         initBitmapInstance();
     }
 
@@ -92,39 +87,16 @@ public class QwirkleTile {
         return qwirkleAnimal.toString()+"_"+qwirkleColor.toString();
     }
 
-    /*
-    External Citation
-    Date: 27 February 2018
-    Problem: Not sure how to check for object equality.
-    Resource:
-    https://stackoverflow.com/questions/16069106/how-to-compare-two-java-objects
-    Solution: Overrode the equals() method.
-    */
-    /**
-     * Method: equals
-     * Checks two QwirkleTile objects are equivalent. Needed for HashTable.
-     * @param o Object to be checked.
-     * @return true if objects are equivalent, otherwise false.
-     */
-    @Override
-    public boolean equals(Object o) {
-        // Check to make sure it is a QwirkleTile.
-        if (o instanceof QwirkleTile) {
-            // Cast object as QwirkleTile
-            QwirkleTile tile = (QwirkleTile)o;
-            return this.qwirkleAnimal.equals(tile.qwirkleAnimal) &&
-                    this.qwirkleColor.equals(tile.qwirkleColor);
-        }
-        return false;
-    }
-
     /**
      * Method: initBitmapInstance
      * Initialize all bitmaps (returns if all set).
      */
     private void initBitmapInstance() {
-        // If the HashTable is null, ignore
-        if (tileImages == null) return;
+        // Check to make sure all hash tables are set.
+        if (mainBoardBitmaps == null || sideBoardBitmaps == null ||
+                selectedSideBoardBitmaps == null) {
+            return;
+        }
 
         // If all the bitmaps are set, ignore.
         if (bitmapMain != null && bitmapSide != null &&
@@ -132,37 +104,36 @@ public class QwirkleTile {
             return;
         }
 
-        // Get and set the main bitmaps.
-        Bitmap bitmap = tileImages.get(this.toString());
-
-        bitmapMain = Bitmap.createScaledBitmap(bitmap, CONST.RECTDIM_MAIN,
-                CONST.RECTDIM_MAIN, false);
-        bitmapSide = Bitmap.createScaledBitmap(bitmap, CONST.RECTDIM_SIDE,
-                CONST.RECTDIM_SIDE, false);
-
-        // Get and set the selected bitmap.
-        Bitmap selectedBitmap = selectedTileImages.get(this.toString());
-        bitmapSideSelected = Bitmap.createScaledBitmap(selectedBitmap,
-                CONST.RECTDIM_SIDE, CONST.RECTDIM_SIDE, false);
+        // Get and set the bitmaps.
+        bitmapMain = mainBoardBitmaps.get(this.toString());
+        bitmapSide = sideBoardBitmaps.get(this.toString());
+        bitmapSideSelected = selectedSideBoardBitmaps.get(this.toString());
     }
 
     /**
      * Method: initBitmaps
-     * Puts all bitmaps in the tileImages Hashtable.
+     * Puts all bitmaps in the mainBoardBitmaps Hashtable.
      * Called from QwirkleMainActivity.
      *
      * @param activity activity to get the resources
      */
     public static void initBitmaps(Activity activity) {
         // Return if the hash tables are set
-        if (tileImages != null && selectedTileImages != null) return;
+        if (mainBoardBitmaps != null && sideBoardBitmaps != null
+                && selectedSideBoardBitmaps != null) {
+            return;
+        }
 
-        tileImages = new Hashtable<>();
-        selectedTileImages = new Hashtable<>();
+        // Instantiate the Hashtables.
+        mainBoardBitmaps = new Hashtable<>();
+        sideBoardBitmaps = new Hashtable<>();
+        selectedSideBoardBitmaps = new Hashtable<>();
+
         // Iterate over all QwirkleAnimals and QwirkleColors.
         for (QwirkleAnimal animal: QwirkleAnimal.values()) {
             for (QwirkleColor color: QwirkleColor.values()) {
-                String idName = animal.toString()+"_"+color.toString();
+                String regularName = animal.toString()+"_"+color.toString();
+                String pressedName = regularName + "_pressed";
                 /*
                 External Citation
                 Date: 17 February 2018
@@ -176,23 +147,6 @@ public class QwirkleTile {
                 Solution:
                 Used the getIdentifier method with the getPackage method.
                  */
-                int id = activity.getResources().getIdentifier(idName,
-                        "drawable", activity.getPackageName());
-                Bitmap bitmap = BitmapFactory.decodeResource(
-                        activity.getResources(), id);
-                // Add id and bitmap to hash table.
-                if (bitmap != null) tileImages.put(idName, bitmap);
-
-                /*
-                External Citation
-                Date: 10 April 2018
-                Problem: Could not replace color in a bitmap.
-                Resource:
-                https://stackoverflow.com/questions/7237915/replace-black-
-                color-in-bitmap-with-red
-                Solution:
-                Used a slightly modified version of the StackOverflow code.
-                */
                 /*
                 External Citation
                 Date: 9 April 2018
@@ -203,19 +157,32 @@ public class QwirkleTile {
                 Solution:
                 Used the copy method on the Bitmap.
                 */
-                Bitmap bitmapCopy = bitmap.copy(bitmap.getConfig(), true);
-                int[] allpixels = new int [bitmapCopy.getHeight()*
-                        bitmapCopy.getWidth()];
-                bitmapCopy.getPixels(allpixels, 0, bitmapCopy.getWidth(), 0, 0,
-                        bitmapCopy.getWidth(), bitmapCopy.getHeight());
-                for(int i = 0; i < allpixels.length; i++) {
-                    if (allpixels[i] == Color.BLACK) {
-                        allpixels[i] = Color.GRAY;
-                    }
-                }
-                bitmapCopy.setPixels(allpixels, 0, bitmapCopy.getWidth(), 0, 0,
-                        bitmapCopy.getWidth(), bitmapCopy.getHeight());
-                selectedTileImages.put(idName, bitmapCopy);
+
+                // Get the regular Bitmaps.
+                int regularId = activity.getResources().getIdentifier(regularName,
+                        "drawable", activity.getPackageName());
+                Bitmap regularBitmap = BitmapFactory.decodeResource(
+                        activity.getResources(), regularId);
+                Bitmap regularBitmapMainBoard = Bitmap.createScaledBitmap(
+                        regularBitmap, CONST.RECTDIM_MAIN, CONST.RECTDIM_MAIN,
+                        false);
+                Bitmap regularBitmapSideBoard = Bitmap.createScaledBitmap(
+                        regularBitmap, CONST.RECTDIM_SIDE, CONST.RECTDIM_SIDE,
+                        false);
+
+                // Get the selected Bitmaps.
+                int pressedId = activity.getResources().getIdentifier(pressedName,
+                        "drawable", activity.getPackageName());
+                Bitmap selectedBitmap = BitmapFactory.decodeResource(
+                        activity.getResources(), pressedId);
+                Bitmap selectedBitmapSideBoard = Bitmap.createScaledBitmap(
+                        selectedBitmap, CONST.RECTDIM_SIDE, CONST.RECTDIM_SIDE,
+                        false);
+
+                // Add id and bitmaps to hash tables.
+                mainBoardBitmaps.put(regularName, regularBitmapMainBoard);
+                sideBoardBitmaps.put(regularName, regularBitmapSideBoard);
+                selectedSideBoardBitmaps.put(regularName, selectedBitmapSideBoard);
             }
         }
     }
@@ -232,9 +199,6 @@ public class QwirkleTile {
             initBitmapInstance();
         }
 
-        // To prevent out of memory error.
-        if (bitmapSideSelected == null && isSelected) initBitmapInstance();
-
         // No paint needed to draw the bitmap.
         if (this.mainBoard) {
             canvas.drawBitmap(bitmapMain, xPos*CONST.RECTDIM_MAIN+CONST.OFFSET_MAIN,
@@ -243,9 +207,14 @@ public class QwirkleTile {
         else {
             // SideBoard bitmaps can be selected or not.
             Bitmap bitmap;
-            if (isSelected) bitmap = bitmapSideSelected;
-            else bitmap = bitmapSide;
-            canvas.drawBitmap(bitmap, CONST.OFFSET_SIDE, yPos*CONST.RECTDIM_SIDE, null);
+            if (isSelected) {
+                bitmap = bitmapSideSelected;
+            }
+            else {
+                bitmap = bitmapSide;
+            }
+            canvas.drawBitmap(bitmap, CONST.OFFSET_SIDE, yPos*CONST.RECTDIM_SIDE,
+                    null);
         }
     }
 

@@ -228,7 +228,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         if (gameState.getTurn() != playerNum) {
             return false;
         }
-        
+
         // ignore if not a "down" event
         if (event.getAction() != MotionEvent.ACTION_DOWN) {
             return false;

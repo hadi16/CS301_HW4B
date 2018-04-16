@@ -11,5 +11,5 @@ package edu.up.cs301.qwirkle.tile;
  * @version April 14, 2018
  */
 public enum QwirkleColor {
-    blue, green, orange, purple, red, yellow;
+    blue, green, orange, purple, red, yellow
 }

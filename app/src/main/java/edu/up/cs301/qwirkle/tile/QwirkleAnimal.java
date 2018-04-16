@@ -11,5 +11,5 @@ package edu.up.cs301.qwirkle.tile;
  * @version April 14, 2018
  */
 public enum QwirkleAnimal {
-    bat, dog, fox, owl, parrot, snake;
+    bat, dog, fox, owl, parrot, snake
 }
