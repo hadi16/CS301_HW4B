@@ -52,19 +52,18 @@ public class QwirkleGameState extends GameState implements Serializable {
      *
      * @param numPlayers the number of players.
      */
-    public QwirkleGameState(int numPlayers) {
+    public QwirkleGameState(int numPlayers, String[] playerTypes) {
         // initialize the state to be a brand new game
         this.turn = 0;
         this.numPlayers = numPlayers;
         this.drawPile = new ArrayList<>();
         this.board = new QwirkleTile[CONST.BOARD_WIDTH][CONST.BOARD_HEIGHT];
 
-        /*
         // For type scoreboard functionality.
         this.playerTypes = new String[playerTypes.length];
         for (int i=0; i<this.playerTypes.length; i++) {
             this.playerTypes[i] = playerTypes[i];
-        }*/
+        }
 
         // Initialize the draw pile, player hands, and player scores.
         initDrawPile();
@@ -88,11 +87,10 @@ public class QwirkleGameState extends GameState implements Serializable {
         this.drawPile = null;
         this.tilesLeft = orig.drawPile.size();
 
-        /*
         this.playerTypes = new String[orig.playerTypes.length];
         for (int i=0; i<this.playerTypes.length; i++) {
             this.playerTypes[i] = orig.playerTypes[i];
-        }*/
+        }
 
         // Copy the board to the new game state.
         this.board = new QwirkleTile[orig.board.length][orig.board[0].length];
