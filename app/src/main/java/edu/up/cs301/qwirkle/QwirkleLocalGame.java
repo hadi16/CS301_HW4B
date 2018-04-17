@@ -30,40 +30,44 @@ public class QwirkleLocalGame extends LocalGame {
     //the rules of the game
     private QwirkleRules rules = new QwirkleRules();
 
-    @Override
-    public void start(GamePlayer[] players) {
-        /*
-        External Citation
-        Date: 11 April 2018
-        Problem: Needed some guidance regarding the local game
-        Resource:
-        https://github.com/srvegdahl/HeartsApplication/
-        blob/master/app/src/main/java/edu/up/cs301/slapjack/SJLocalGame.java
-        Solution: I used Professor Vegdahl's code as reference.
-        */
-
-        // The game is initialized from here to allow for
-        // an arbitrary number of players.
-        super.start(players);
-
-        /*
-        // To allow for scoreboard types functionality.
-        String[] playerTypes = new String[players.length];
-        for (int i=0; i<players.length; i++) {
-            GamePlayer player = players[i];
-            if (player instanceof QwirkleHumanPlayer) {
-                playerTypes[i] = "Human";
-            } else if (player instanceof QwirkleComputerPlayerDumb) {
-                playerTypes[i] = "Dumb AI";
-            } else if (player instanceof QwirkleComputerPlayerSmart) {
-                playerTypes[i] = "Smart AI";
-            } else {
-                playerTypes[i] = "Network Player";
-            }
-        }*/
-
-        this.gameState = new QwirkleGameState(players.length);
+    public QwirkleLocalGame() {
+        this.gameState = new QwirkleGameState(2);
     }
+
+//    @Override
+//    public void start(GamePlayer[] players) {
+//        /*
+//        External Citation
+//        Date: 11 April 2018
+//        Problem: Needed some guidance regarding the local game
+//        Resource:
+//        https://github.com/srvegdahl/HeartsApplication/
+//        blob/master/app/src/main/java/edu/up/cs301/slapjack/SJLocalGame.java
+//        Solution: I used Professor Vegdahl's code as reference.
+//        */
+//
+//        // The game is initialized from here to allow for
+//        // an arbitrary number of players.
+//        super.start(players);
+//
+//        /*
+//        // To allow for scoreboard types functionality.
+//        String[] playerTypes = new String[players.length];
+//        for (int i=0; i<players.length; i++) {
+//            GamePlayer player = players[i];
+//            if (player instanceof QwirkleHumanPlayer) {
+//                playerTypes[i] = "Human";
+//            } else if (player instanceof QwirkleComputerPlayerDumb) {
+//                playerTypes[i] = "Dumb AI";
+//            } else if (player instanceof QwirkleComputerPlayerSmart) {
+//                playerTypes[i] = "Smart AI";
+//            } else {
+//                playerTypes[i] = "Network Player";
+//            }
+//        }*/
+//
+//        this.gameState = new QwirkleGameState(players.length);
+//    }
 
     /**
      * Notify the given player that its state has changed. This should involve
