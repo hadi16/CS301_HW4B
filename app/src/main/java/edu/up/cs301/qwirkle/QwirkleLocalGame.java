@@ -46,6 +46,7 @@ public class QwirkleLocalGame extends LocalGame {
         // an arbitrary number of players.
         super.start(players);
 
+        /*
         // To allow for scoreboard types functionality.
         String[] playerTypes = new String[players.length];
         for (int i=0; i<players.length; i++) {
@@ -57,10 +58,11 @@ public class QwirkleLocalGame extends LocalGame {
             } else if (player instanceof QwirkleComputerPlayerSmart) {
                 playerTypes[i] = "Smart AI";
             } else {
-                playerTypes[i] = "";
+                playerTypes[i] = "Network Player";
             }
-        }
-        this.gameState = new QwirkleGameState(players.length, playerTypes);
+        }*/
+
+        this.gameState = new QwirkleGameState(players.length);
     }
 
     /**

@@ -411,7 +411,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
             TextView textViewPlayerType = new TextView(dialogContext);
             textViewPlayerType.setTextColor(Color.BLACK);
-            textViewPlayerType.setText(gameState.getPlayerTypeAtIdx(i));
+            textViewPlayerType.setText("");//gameState.getPlayerTypeAtIdx(i));
             textViewPlayerType.setTextSize(24f);
             if (winner) textViewPlayerType.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerType);
