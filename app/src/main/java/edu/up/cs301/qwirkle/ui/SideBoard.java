@@ -3,6 +3,7 @@ package edu.up.cs301.qwirkle.ui;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
@@ -20,11 +21,8 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 14, 2018
  */
 public class SideBoard extends QwirkleBitmaps {
-public class SideBoard extends View {
     private Paint gridPaint; //for drawing sideboard
 
-    // Instance of the game state.
-    private QwirkleGameState gameState;
 
     private boolean nightMode;
 
@@ -34,8 +32,7 @@ public class SideBoard extends View {
      */
     public SideBoard(Context context){
         super(context);
-        initMode();
-        initPaint();
+        init();
     }
 
     /**
@@ -45,8 +42,7 @@ public class SideBoard extends View {
      */
     public SideBoard(Context context, @Nullable AttributeSet attrs){
         super(context, attrs);
-        initMode();
-        initPaint();
+        init();
     }
 
     /**
@@ -57,8 +53,7 @@ public class SideBoard extends View {
     public SideBoard(Context context, @Nullable AttributeSet attrs,
                      int defStyleAttr){
         super(context, attrs, defStyleAttr);
-        initMode();
-        initPaint();
+        init();
     }
 
     /**
@@ -69,28 +64,9 @@ public class SideBoard extends View {
     public SideBoard(Context context, @Nullable AttributeSet attrs,
                      int defStyleAttr, int defStyleRes){
         super(context, attrs, defStyleAttr, defStyleRes);
-        initMode();
-        initPaint();
+        init();
     }
 
-    /**
-     * Method: initMode
-     * initializes nightMode boolean to false
-     */
-    private void initMode() {
-        nightMode = false;
-    }
-
-    /**
-     * Method: initPaint
-     * the color and stroke with of the paint
-     */
-    private void initPaint() {
-        gridPaint = new Paint();
-        gridPaint.setColor(Color.BLACK);
-        gridPaint.setStrokeWidth(3.0f);
-        gridPaint.setStyle(Paint.Style.STROKE);
-    }
 
     public void setMode(boolean nightMode){
         this.nightMode = nightMode;
@@ -132,5 +108,19 @@ public class SideBoard extends View {
                 drawTile(canvas, tile);
             }
         }
+    }
+
+    /**
+     * Method: init
+     * Set the color and stroke width of the paint
+     * and set the night mode boolean to false
+     */
+    private void init() {
+        gridPaint = new Paint();
+        gridPaint.setColor(Color.BLACK);
+        gridPaint.setStrokeWidth(3.0f);
+        gridPaint.setStyle(Paint.Style.STROKE);
+
+        nightMode = false;
     }
 }

@@ -24,15 +24,10 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 14, 2018
  */
 public class MainBoard extends QwirkleBitmaps {
-    // For drawing legal moves
-    private Paint greenPaint;
-public class MainBoard extends View {
     private Paint gridPaint; // for drawing board
     private Paint greenPaint; // for drawing legal moves
 
 
-    // Instance of the game state.
-    private QwirkleGameState gameState;
 
     // To draw the legal moves on the board.
     private ArrayList<Point> legalMoves;
@@ -46,8 +41,6 @@ public class MainBoard extends View {
     public MainBoard(Context context){
         super(context);
         init();
-        initMode();
-        initPaint();
     }
 
     /**
@@ -57,9 +50,6 @@ public class MainBoard extends View {
      */
     public MainBoard(Context context, @Nullable AttributeSet attrs){
         super(context, attrs);
-
-        initMode();
-        initPaint();
         init();
     }
 
@@ -71,9 +61,6 @@ public class MainBoard extends View {
     public MainBoard(Context context, @Nullable AttributeSet attrs,
                      int defStyleAttr){
         super(context, attrs, defStyleAttr);
-
-        initMode();
-        initPaint();
         init();
     }
 
@@ -85,33 +72,9 @@ public class MainBoard extends View {
     public MainBoard(Context context, @Nullable AttributeSet attrs,
                      int defStyleAttr, int defStyleRes){
         super(context, attrs, defStyleAttr, defStyleRes);
-        initMode();
-        initPaint();
-    }
-
-    /**
-     * Method: initMode
-     * Set the nightMode boolean to false initially
-     */
-    private void initMode() {
-        nightMode = false;
-    }
-
-    /**
-     * Method: initPaint
-     * Set the color and stroke width of the paint
-     */
-    private void initPaint() {
-        gridPaint = new Paint();
-        gridPaint.setColor(Color.BLACK);
-        gridPaint.setStrokeWidth(3.0f);
-        gridPaint.setStyle(Paint.Style.STROKE);
-
-        greenPaint = new Paint();
-        greenPaint.setColor(Color.GREEN);
-        greenPaint.setStyle(Paint.Style.FILL);
         init();
     }
+
 
     public void setMode(boolean nightMode){
         this.nightMode = nightMode;
@@ -173,10 +136,21 @@ public class MainBoard extends View {
         }
     }
 
+    /**
+     * Method: init
+     * Set the color and stroke width of the paint
+     * and set the night mode boolean to false
+     */
     private void init() {
+        gridPaint = new Paint();
+        gridPaint.setColor(Color.BLACK);
+        gridPaint.setStrokeWidth(3.0f);
+        gridPaint.setStyle(Paint.Style.STROKE);
+
         greenPaint = new Paint();
         greenPaint.setColor(Color.GREEN);
         greenPaint.setStyle(Paint.Style.FILL);
+        nightMode = false;
     }
 
     public void setLegalMoves(ArrayList<Point> legalMoves) {

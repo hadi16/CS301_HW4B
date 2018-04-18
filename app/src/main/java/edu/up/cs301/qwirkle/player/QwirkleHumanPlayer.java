@@ -109,8 +109,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         textViewPlayerLabel.setText("My Name: " +name);
 
 
-
-
         // Initialize the TextViews by using findViewById.
         textViewTurnLabel = (TextView)activity.findViewById(
                 R.id.textViewTurnLabel);
