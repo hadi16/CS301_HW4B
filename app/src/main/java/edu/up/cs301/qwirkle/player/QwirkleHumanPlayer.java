@@ -144,6 +144,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                     textViewTilesLeft.setTextColor(Color.WHITE);
                     buttonSwitch.setText("Night Mode: ON");
                     buttonSwitch.setTextColor(Color.WHITE);
+                    textViewAction.setTextColor(Color.WHITE);
                 }
                 else {
                     mainBoard.setMode(false);
@@ -157,6 +158,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                     textViewTilesLeft.setTextColor(Color.BLACK);
                     buttonSwitch.setText("Night Mode:OFF");
                     buttonSwitch.setTextColor(Color.BLACK);
+                    textViewAction.setTextColor(Color.BLACK);
                 }
             }
         });
