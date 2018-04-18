@@ -26,7 +26,7 @@
                 android:layout_weight="1"
                 android:text="My Name: "
                 android:textColor="@android:color/black"
-                android:textSize="24sp"/>
+                android:textSize="@dimen/labels_default_font_size"/>
 
             <TextView
                 android:id="@+id/textViewPlayerScore"
@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:text="My Score: "
                 android:textColor="@android:color/black"
-                android:textSize="24sp"/>
+                android:textSize="@dimen/labels_default_font_size"/>
 
             <TextView
                 android:id="@+id/textViewTurnLabel"
@@ -44,7 +44,7 @@
                 android:layout_weight="1"
                 android:text="Turn: "
                 android:textColor="@android:color/black"
-                android:textSize="24sp"/>
+                android:textSize="@dimen/labels_default_font_size"/>
 
             <TextView
                 android:id="@+id/textViewTilesLeft"
@@ -53,7 +53,16 @@
                 android:layout_weight="1"
                 android:text="Tiles Left: "
                 android:textColor="@android:color/black"
-                android:textSize="24sp"/>
+                android:textSize="@dimen/labels_default_font_size"/>
+
+            <Switch
+                android:id="@+id/switchNightMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/night_mode_default"
+                android:textSize="@dimen/labels_default_font_size"/>
+
 
         </LinearLayout>
 
@@ -62,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
+
     </LinearLayout>
 
     <LinearLayout
@@ -72,9 +82,11 @@
 
         <Button
             android:id="@+id/buttonSwap"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Swap"
+            android:textColor="@android:color/white"
             android:textSize="20sp"/>
 
         <edu.up.cs301.qwirkle.ui.SideBoard
@@ -85,6 +97,7 @@
 
         <Button
             android:id="@+id/buttonScores"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Scores"

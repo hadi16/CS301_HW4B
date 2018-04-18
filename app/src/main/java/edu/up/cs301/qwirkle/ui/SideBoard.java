@@ -22,10 +22,12 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 14, 2018
  */
 public class SideBoard extends View {
-    private Paint blackPaint;
+    private Paint gridPaint; //for drawing sideboard
 
     // Instance of the game state.
     private QwirkleGameState gameState;
+
+    private boolean nightMode;
 
     /**
      * Constructor: SideBoard
@@ -33,6 +35,7 @@ public class SideBoard extends View {
      */
     public SideBoard(Context context){
         super(context);
+        initMode();
         initPaint();
     }
 
@@ -43,6 +46,7 @@ public class SideBoard extends View {
      */
     public SideBoard(Context context, AttributeSet attrs){
         super(context, attrs);
+        initMode();
         initPaint();
     }
 
@@ -53,6 +57,7 @@ public class SideBoard extends View {
      */
     public SideBoard(Context context, AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);
+        initMode();
         initPaint();
     }
 
@@ -64,7 +69,16 @@ public class SideBoard extends View {
     public SideBoard(Context context, AttributeSet attrs, int defStyleAttr,
                      int defStyleRes){
         super(context, attrs, defStyleAttr, defStyleRes);
+        initMode();
         initPaint();
+    }
+
+    /**
+     * Method: initMode
+     * initializes nightMode boolean to false
+     */
+    private void initMode() {
+        nightMode = false;
     }
 
     /**
@@ -72,10 +86,14 @@ public class SideBoard extends View {
      * the color and stroke with of the paint
      */
     private void initPaint() {
-        blackPaint = new Paint();
-        blackPaint.setColor(Color.BLACK);
-        blackPaint.setStrokeWidth(3.0f);
-        blackPaint.setStyle(Paint.Style.STROKE);
+        gridPaint = new Paint();
+        gridPaint.setColor(Color.BLACK);
+        gridPaint.setStrokeWidth(3.0f);
+        gridPaint.setStyle(Paint.Style.STROKE);
+    }
+
+    public void setMode(boolean nightMode){
+        this.nightMode = nightMode;
     }
 
     /**
@@ -85,14 +103,21 @@ public class SideBoard extends View {
      */
     @Override
     public void onDraw(Canvas canvas) {
-        // Sets background color to white.
-        canvas.drawColor(Color.WHITE);
+        // Sets background color to white or dark grey
+        if (nightMode) {
+            canvas.drawColor(Color.DKGRAY);
+            gridPaint.setColor(Color.WHITE);
+        }
+        else {
+            canvas.drawColor(Color.WHITE);
+            gridPaint.setColor(Color.BLACK);
+        }
 
         // Draws the SideBoard.
         for (int i = 0; i< CONST.NUM_IN_HAND; i++){
             canvas.drawRect(CONST.OFFSET_SIDE, i*CONST.RECTDIM_SIDE,
                     CONST.OFFSET_SIDE+CONST.RECTDIM_SIDE,
-                    (i+1)*CONST.RECTDIM_SIDE, blackPaint);
+                    (i+1)*CONST.RECTDIM_SIDE, gridPaint);
         }
 
         //If there's nothing in the game state, ignore

@@ -219,6 +219,7 @@ public class QwirkleTile implements Serializable {
             canvas.drawBitmap(bitmap, CONST.OFFSET_SIDE, yPos*CONST.RECTDIM_SIDE,
                     null);
         }
+
     }
 
     // Getters

@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -50,6 +52,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private QwirkleGameState gameState; // The game state
     private QwirkleRules rules = new QwirkleRules(); // Instance of rules
 
+
     // Array of the current player's hand
     private QwirkleTile[] myPlayerHand;
 
@@ -61,6 +64,9 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private TextView textViewTurnLabel;
     private TextView textViewMyScore;
     private TextView textViewTilesLeft;
+
+    // Switch for night mode
+    private Switch buttonSwitch;
 
     // Button for swapping.
     private Button buttonSwap;
@@ -89,7 +95,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      *          an action that can be performed by the human
      */
     @Override
-    public void setAsGui(GameMainActivity activity) {
+    public void setAsGui(final GameMainActivity activity) {
         // Initialize passed activity object
         this.activity = activity;
 
@@ -97,9 +103,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         activity.setContentView(R.layout.qwirkle_human_player);
 
         // Set the player TextView to the user's name.
-        TextView textViewPlayerLabel = (TextView)activity.findViewById(
+        final TextView textViewPlayerLabel = (TextView)activity.findViewById(
                 R.id.textViewPlayerLabel);
-        textViewPlayerLabel.setText("My Name: " + name);
+        textViewPlayerLabel.setText("My Name: " +name);
+
+
+
 
         // Initialize the TextViews by using findViewById.
         textViewTurnLabel = (TextView)activity.findViewById(
@@ -107,16 +116,55 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         textViewMyScore = (TextView)activity.findViewById(R.id.textViewPlayerScore);
         textViewTilesLeft = (TextView)activity.findViewById(R.id.textViewTilesLeft);
 
+
         // Initialize swap button, main board, and side board & set listeners.
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         buttonSwap.setOnClickListener(this);
-        Button buttonScores = (Button)activity.findViewById(R.id.buttonScores);
+        final Button buttonScores = (Button)activity.findViewById(R.id.buttonScores);
         buttonScores.setOnClickListener(this);
         mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
         mainBoard.setOnTouchListener(this);
         sideBoard = (SideBoard)activity.findViewById(R.id.sideBoard);
         sideBoard.setOnTouchListener(this);
+
+        //initialize switch button & set listener
+        buttonSwitch = (Switch) activity.findViewById(R.id.switchNightMode);
+        buttonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    mainBoard.setMode(true);
+                    mainBoard.invalidate();
+                    sideBoard.setMode(true);
+                    sideBoard.invalidate();
+                    activity.findViewById(android.R.id.content).setBackgroundColor(Color.DKGRAY);
+                    textViewPlayerLabel.setTextColor(Color.WHITE);
+                    textViewMyScore.setTextColor(Color.WHITE);
+                    textViewTurnLabel.setTextColor(Color.WHITE);
+                    textViewTilesLeft.setTextColor(Color.WHITE);
+                    buttonSwitch.setText("Night Mode: ON");
+                    buttonSwitch.setTextColor(Color.WHITE);
+                }
+                else {
+                    mainBoard.setMode(false);
+                    mainBoard.invalidate();
+                    sideBoard.setMode(false);
+                    sideBoard.invalidate();
+                    activity.findViewById(android.R.id.content).setBackgroundColor(Color.WHITE);
+                    textViewPlayerLabel.setTextColor(Color.BLACK);
+                    textViewMyScore.setTextColor(Color.BLACK);
+                    textViewTurnLabel.setTextColor(Color.BLACK);
+                    textViewTilesLeft.setTextColor(Color.BLACK);
+                    buttonSwitch.setText("Night Mode:OFF");
+                    buttonSwitch.setTextColor(Color.BLACK);
+                }
+            }
+        });
     }
+
+
+
+
 
     /**
      * The top view of the current state
@@ -269,6 +317,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             mainBoard.invalidate();
             sideBoard.invalidate();
 
+
+
             // return true if touch has been registered
             return true;
         }
@@ -306,6 +356,9 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             // Redraw the boards.
             mainBoard.invalidate();
             sideBoard.invalidate();
+
+            //points popup
+
 
             return true;
         }

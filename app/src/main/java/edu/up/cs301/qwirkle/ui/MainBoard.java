@@ -25,8 +25,9 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 14, 2018
  */
 public class MainBoard extends View {
-    private Paint blackPaint; // for drawing board
+    private Paint gridPaint; // for drawing board
     private Paint greenPaint; // for drawing legal moves
+
 
     // Instance of the game state.
     private QwirkleGameState gameState;
@@ -34,12 +35,15 @@ public class MainBoard extends View {
     // To draw the legal moves on the board.
     private ArrayList<Point> legalMoves;
 
+    private boolean nightMode;
+
     /**
      * Constructor: MainBoard
      * @param context Object holds the current context of the view.
      */
     public MainBoard(Context context){
         super(context);
+        initMode();
         initPaint();
     }
 
@@ -50,6 +54,8 @@ public class MainBoard extends View {
      */
     public MainBoard(Context context, AttributeSet attrs){
         super(context, attrs);
+
+        initMode();
         initPaint();
     }
 
@@ -60,6 +66,8 @@ public class MainBoard extends View {
      */
     public MainBoard(Context context, AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);
+
+        initMode();
         initPaint();
     }
 
@@ -71,7 +79,16 @@ public class MainBoard extends View {
     public MainBoard(Context context, AttributeSet attrs, int defStyleAttr,
                      int defStyleRes){
         super(context, attrs, defStyleAttr, defStyleRes);
+        initMode();
         initPaint();
+    }
+
+    /**
+     * Method: initMode
+     * Set the nightMode boolean to false initially
+     */
+    private void initMode() {
+        nightMode = false;
     }
 
     /**
@@ -79,15 +96,21 @@ public class MainBoard extends View {
      * Set the color and stroke width of the paint
      */
     private void initPaint() {
-        blackPaint = new Paint();
-        blackPaint.setColor(Color.BLACK);
-        blackPaint.setStrokeWidth(3.0f);
-        blackPaint.setStyle(Paint.Style.STROKE);
+        gridPaint = new Paint();
+        gridPaint.setColor(Color.BLACK);
+        gridPaint.setStrokeWidth(3.0f);
+        gridPaint.setStyle(Paint.Style.STROKE);
 
         greenPaint = new Paint();
         greenPaint.setColor(Color.GREEN);
         greenPaint.setStyle(Paint.Style.FILL);
     }
+
+    public void setMode(boolean nightMode){
+        this.nightMode = nightMode;
+    }
+
+
 
     /**
      * Method: onDraw
@@ -96,8 +119,16 @@ public class MainBoard extends View {
      */
     @Override
     public void onDraw(Canvas canvas){
-        // Sets background color to white.
-        canvas.drawColor(Color.WHITE);
+        // Sets background color to white or dark grey
+        if (nightMode) {
+            canvas.drawColor(Color.DKGRAY);
+            gridPaint.setColor(Color.WHITE);
+        }
+        else {
+            canvas.drawColor(Color.WHITE);
+            gridPaint.setColor(Color.BLACK);
+        }
+
 
         // Draws the board.
         for (int i = 0; i< CONST.BOARD_WIDTH; i++){
@@ -105,7 +136,7 @@ public class MainBoard extends View {
                 canvas.drawRect(i*CONST.RECTDIM_MAIN+CONST.OFFSET_MAIN,
                         j*CONST.RECTDIM_MAIN,
                         (i+1)*CONST.RECTDIM_MAIN+CONST.OFFSET_MAIN,
-                        (j+1)*CONST.RECTDIM_MAIN, blackPaint);
+                        (j+1)*CONST.RECTDIM_MAIN, gridPaint);
             }
         }
         //If there's nothing in the game state, ignore
