@@ -175,8 +175,10 @@ public class QwirkleLocalGame extends LocalGame {
 
             // replace the tile in the player's hand with a random one from the
             // draw pile, then change the turn
+            //Set the recent action
             gameState.setPlayerHandsAtIdx(playerIdx, handIdx,
                     gameState.getRandomTile());
+            gameState.setActionString("placed a tile");
             gameState.changeTurn();
 
             // return true if a move has been made
@@ -197,7 +199,8 @@ public class QwirkleLocalGame extends LocalGame {
                 gameState.setPlayerHandsAtIdx(playerId, i,
                         gameState.getRandomTile());
             }
-
+            //Set the recent action
+            gameState.setActionString("swapped");
             // end the current player's turn
             gameState.changeTurn();
 
@@ -205,6 +208,9 @@ public class QwirkleLocalGame extends LocalGame {
             return true;
         }
         else if (action instanceof PassAction) {
+            //Set the recent action
+            gameState.setActionString("passed");
+            //Change the turn
             gameState.changeTurn();
             return true;
         }

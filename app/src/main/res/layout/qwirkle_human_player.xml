@@ -57,11 +57,27 @@
 
         </LinearLayout>
 
-        <edu.up.cs301.qwirkle.ui.MainBoard
-            android:id="@+id/mainBoard"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <edu.up.cs301.qwirkle.ui.MainBoard
+                android:id="@+id/mainBoard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="7" />
+
+            <TextView
+                android:id="@+id/textViewAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Human: "
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
