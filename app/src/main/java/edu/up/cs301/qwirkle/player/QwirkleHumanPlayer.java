@@ -296,11 +296,11 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         mainBoard.setGameState(gameState);
         sideBoard.setGameState(gameState);
 
-        mainBoard.invalidate();
-        sideBoard.invalidate();
-
         // Initialize the constants if needed.
         if (!init) setConstants();
+
+        mainBoard.invalidate();
+        sideBoard.invalidate();
     }
 
     /**
