@@ -32,6 +32,7 @@ import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
+import edu.up.cs301.qwirkle.ui.QwirkleBitmaps;
 import edu.up.cs301.qwirkle.ui.SideBoard;
 
 /**
@@ -45,7 +46,6 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  * @author Stephanie Camacho
  * @version April 16, 2018
  */
-
 public class QwirkleHumanPlayer extends GameHumanPlayer
         implements View.OnTouchListener, View.OnClickListener {
     private GameMainActivity activity; // The activity
@@ -64,6 +64,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private TextView textViewTurnLabel;
     private TextView textViewMyScore;
     private TextView textViewTilesLeft;
+    private TextView textViewAction;
 
     // Switch for night mode
     private Switch buttonSwitch;
@@ -115,6 +116,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 R.id.textViewTurnLabel);
         textViewMyScore = (TextView)activity.findViewById(R.id.textViewPlayerScore);
         textViewTilesLeft = (TextView)activity.findViewById(R.id.textViewTilesLeft);
+        textViewAction = (TextView)activity.findViewById(R.id.textViewAction);
 
 
         // Initialize swap button, main board, and side board & set listeners.
@@ -177,21 +179,36 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         return activity.findViewById(R.id.top_gui_layout);
     }
 
-    /*
-     * External Citation
-     * Date: April 11 2018
-     * Problem: Couldn't update the GUI correctly
-     * Source:
-     * https://github.com/srvegdahl/CounterGame/blob/master/app/src/main/java/
-     * edu/up/cs301/counter/CounterHumanPlayer.java
-     * Solution:
-     * Used Vegdahl's code as reference
+    /**
+     * Method: updateDisplay
+     * Update display of the turn, score, tiles, and previous action
      */
     private void updateDisplay() {
+        /*
+            * External Citation
+            * Date: April 11 2018
+            * Problem: Couldn't update the GUI correctly
+            * Source:
+            * https://github.com/srvegdahl/CounterGame/blob/master/app/src/main/java/
+            * edu/up/cs301/counter/CounterHumanPlayer.java
+            * Solution:
+            * Used Vegdahl's code as reference
+        */
+        //Update display of turn
         textViewTurnLabel.setText("Turn: " + allPlayerNames[gameState.getTurn()]);
+        //Update display of my score
         textViewMyScore.setText("My Score: " + gameState.getPlayerScore(playerNum));
+        //Update the amount of tiles left
         textViewTilesLeft.setText("Tiles Left: " + gameState.getTilesLeft());
-
+        //Show what the previous player did
+        String actionString;
+        actionString = gameState.getActionString();
+        if(gameState.getTurn() == playerNum) {
+            textViewAction.setText(allPlayerNames[allPlayerNames.length-1] + " " + actionString);
+        }
+        else {
+            textViewAction.setText(allPlayerNames[gameState.getTurn()-1]+" " + actionString);
+        }
         // Ensure swap button is initially enabled.
         buttonSwap.setEnabled(true);
 
@@ -219,7 +236,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         CONST.OFFSET_SIDE = (sideBoard.getWidth() - CONST.RECTDIM_SIDE) / 2;
 
         // Initialize the bitmaps.
-        QwirkleTile.initBitmaps(activity);
+        QwirkleBitmaps.initBitmaps(activity);
 
         init = true;
     }

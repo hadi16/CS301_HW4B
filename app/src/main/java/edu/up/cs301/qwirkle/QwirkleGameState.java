@@ -24,6 +24,7 @@ public class QwirkleGameState extends GameState implements Serializable {
     //Serialize ID
     private static final long serialVersionUID = 4162018421892647281L;
 
+    private String actionString; //String of most recent action
     private int turn; // The current turn
     private int numPlayers; // The number of players
     private int tilesLeft; // Number of tiles left in the draw pile.
@@ -54,6 +55,7 @@ public class QwirkleGameState extends GameState implements Serializable {
      */
     public QwirkleGameState(int numPlayers, String[] playerTypes) {
         // initialize the state to be a brand new game
+        this.actionString = ":D";
         this.turn = 0;
         this.numPlayers = numPlayers;
         this.drawPile = new ArrayList<>();
@@ -114,6 +116,9 @@ public class QwirkleGameState extends GameState implements Serializable {
         for (int i = 0; i<this.playerScores.length; i++) {
             this.playerScores[i] = orig.playerScores[i];
         }
+
+        //Copy the most recent action
+        this.actionString = orig.actionString;
     }
 
     /**
@@ -333,4 +338,14 @@ public class QwirkleGameState extends GameState implements Serializable {
     public void setPlayerScore(int playerIdx, int score) {
         this.playerScores[playerIdx] = score;
     }
+
+    public String getActionString() {
+        return actionString;
+    }
+
+    public void setActionString(String action) {
+        actionString = action;
+    }
+
+
 }

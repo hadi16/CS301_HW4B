@@ -3,12 +3,10 @@ package edu.up.cs301.qwirkle.ui;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.View;
 
 import edu.up.cs301.qwirkle.CONST;
-import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 
 /**
@@ -21,6 +19,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Stephanie Camacho
  * @version April 14, 2018
  */
+public class SideBoard extends QwirkleBitmaps {
 public class SideBoard extends View {
     private Paint gridPaint; //for drawing sideboard
 
@@ -44,7 +43,7 @@ public class SideBoard extends View {
      * @param context Object holds the current context of the view.
      * @param attrs Object holds the attributes for the view.
      */
-    public SideBoard(Context context, AttributeSet attrs){
+    public SideBoard(Context context, @Nullable AttributeSet attrs){
         super(context, attrs);
         initMode();
         initPaint();
@@ -55,7 +54,8 @@ public class SideBoard extends View {
      * @param context Object holds the current context of the view.
      * @param attrs Object holds the attributes for the view.
      */
-    public SideBoard(Context context, AttributeSet attrs, int defStyleAttr){
+    public SideBoard(Context context, @Nullable AttributeSet attrs,
+                     int defStyleAttr){
         super(context, attrs, defStyleAttr);
         initMode();
         initPaint();
@@ -66,8 +66,8 @@ public class SideBoard extends View {
      * @param context Object holds the current context of the view.
      * @param attrs Object holds the attributes for the view.
      */
-    public SideBoard(Context context, AttributeSet attrs, int defStyleAttr,
-                     int defStyleRes){
+    public SideBoard(Context context, @Nullable AttributeSet attrs,
+                     int defStyleAttr, int defStyleRes){
         super(context, attrs, defStyleAttr, defStyleRes);
         initMode();
         initPaint();
@@ -128,16 +128,9 @@ public class SideBoard extends View {
         // Tiles are drawn.
         QwirkleTile[] myPlayerHand = gameState.getMyPlayerHand();
         for (QwirkleTile tile : myPlayerHand) {
-            if (tile != null) tile.drawTile(canvas);
+            if (tile != null) {
+                drawTile(canvas, tile);
+            }
         }
-    }
-
-    /**
-     * Method: setGameState
-     * set the game state the the current game state
-     * @param gameState current game state
-     */
-    public void setGameState(QwirkleGameState gameState) {
-        this.gameState = gameState;
     }
 }
