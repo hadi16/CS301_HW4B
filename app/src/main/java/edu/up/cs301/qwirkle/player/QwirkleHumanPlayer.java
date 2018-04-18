@@ -30,6 +30,7 @@ import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
+import edu.up.cs301.qwirkle.ui.QwirkleBitmaps;
 import edu.up.cs301.qwirkle.ui.SideBoard;
 
 /**
@@ -43,7 +44,6 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  * @author Stephanie Camacho
  * @version April 16, 2018
  */
-
 public class QwirkleHumanPlayer extends GameHumanPlayer
         implements View.OnTouchListener, View.OnClickListener {
     private GameMainActivity activity; // The activity
@@ -171,7 +171,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         CONST.OFFSET_SIDE = (sideBoard.getWidth() - CONST.RECTDIM_SIDE) / 2;
 
         // Initialize the bitmaps.
-        QwirkleTile.initBitmaps(activity);
+        QwirkleBitmaps.initBitmaps(activity);
 
         init = true;
     }

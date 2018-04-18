@@ -74,6 +74,15 @@ public class QwirkleLocalGame extends LocalGame {
      */
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
+        // Added by Nux to prevent race condition with null game state.
+        while (gameState == null) {
+            try {
+                Thread.sleep(1);
+            } catch(InterruptedException ie) {
+                // Don't do anything.
+            }
+        }
+
         //make a copy of the state, and send it to the player
         p.sendInfo(new QwirkleGameState(gameState, getPlayerIdx(p)));
     }
