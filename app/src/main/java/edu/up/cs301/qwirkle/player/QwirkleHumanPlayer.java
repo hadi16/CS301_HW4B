@@ -229,7 +229,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         //Show what the previous player did
         String actionString;
         actionString = gameState.getActionString();
-        if(gameState.getTurn() == playerNum) {
+        if(gameState.getTurn() == 0) {
             textViewAction.setText(allPlayerNames[allPlayerNames.length-1] + " " + actionString);
         }
         else {
