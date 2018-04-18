@@ -16,6 +16,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import edu.up.cs301.game.GameHumanPlayer;
@@ -248,6 +250,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 pass = true;
             }
         }
+
     }
 
     private void setConstants() {
@@ -354,6 +357,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             // Send the action to the game.
             game.sendAction(pta);
 
+
+
             // Redraw the boards.
             mainBoard.invalidate();
             sideBoard.invalidate();
@@ -393,13 +398,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                     }
                 }
             }
-
-            // Redraw the boards.
-            mainBoard.invalidate();
-            sideBoard.invalidate();
-
-            //points popup
-
 
             return true;
         }

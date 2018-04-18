@@ -27,6 +27,8 @@ public class MainBoard extends QwirkleBitmaps {
     private Paint gridPaint; // for drawing board
     private Paint greenPaint; // for drawing legal moves
 
+    private int points;
+
 
 
     // To draw the legal moves on the board.

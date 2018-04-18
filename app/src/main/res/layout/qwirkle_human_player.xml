@@ -85,13 +85,7 @@
                 android:text="Human: "
                 android:textColor="@color/black"
                 android:textSize="24sp" />
-        </LinearLayout>
 
-        <edu.up.cs301.qwirkle.ui.MainBoard
-            android:id="@+id/mainBoard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
 
     </LinearLayout>
 
