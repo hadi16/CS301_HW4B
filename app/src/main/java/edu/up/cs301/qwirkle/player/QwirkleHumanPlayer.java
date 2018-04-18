@@ -127,7 +127,20 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         sideBoard = (SideBoard)activity.findViewById(R.id.sideBoard);
         sideBoard.setOnTouchListener(this);
 
-        //initialize switch button & set listener
+        /*
+            * External Citation
+            * Date: April 17 2018
+            * Problem: didn't know what kind of listener switch button used
+            * for switch button
+            * Source:
+            * https://android--code.blogspot.com/2015/08/
+            * android-switch-button-listener.html
+            * Solution:
+            * Used setOnCheckedChangeListener
+        */
+
+
+        //initialize switch button & set listener to listen for changes
         buttonSwitch = (Switch) activity.findViewById(R.id.switchNightMode);
         buttonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -137,6 +150,17 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                     mainBoard.invalidate();
                     sideBoard.setMode(true);
                     sideBoard.invalidate();
+                    /*
+                        * External Citation
+                        * Date: April 17 2018
+                        * Problem: didn't know how to get activity's
+                        * content view to change background color
+                        * Source:
+                        * https://stackoverflow.com/questions/5273436/
+                        * how-to-get-activitys-content-view
+                        * Solution:
+                        * used sample line of code
+                    */
                     activity.findViewById(android.R.id.content).setBackgroundColor(Color.DKGRAY);
                     textViewPlayerLabel.setTextColor(Color.WHITE);
                     textViewMyScore.setTextColor(Color.WHITE);
