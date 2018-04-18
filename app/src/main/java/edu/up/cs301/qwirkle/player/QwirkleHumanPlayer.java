@@ -398,7 +398,9 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                     }
                 }
             }
-
+            //Redraw the board
+            mainBoard.invalidate();
+            sideBoard.invalidate();
             return true;
         }
 
