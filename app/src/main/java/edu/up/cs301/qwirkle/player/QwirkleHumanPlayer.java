@@ -547,10 +547,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     /**
+     * Method: onClick
      * callback method when something is clicked on the screen
      *
-     * @param v
-     *          the surface view
+     * @param v the surface view
      */
     @Override
     public void onClick(View v) {
@@ -564,11 +564,14 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             return;
         }
 
+        //if scores button is pressed, call showScoreBoard
         if (v.getId() == R.id.buttonScores) {
             showScoreBoard();
             return;
         }
 
+        //if swap button is pass button and it is pressed,
+        // create new PassAction and send it to the game
         if (v.getId() == R.id.buttonSwap && pass) {
             PassAction pa = new PassAction(this);
             game.sendAction(pa);
