@@ -24,6 +24,7 @@ public class QwirkleGameState extends GameState implements Serializable {
     // For serialization (network play).
     private static final long serialVersionUID = 4162018421892647281L;
 
+    // Instance variables
     private String messageBoardString; // String for the message board.
     private int turn; // The current turn
     private int numPlayers; // The number of players
@@ -42,6 +43,7 @@ public class QwirkleGameState extends GameState implements Serializable {
     // Array to store all player scores (index corresponds to playerId)
     private int[] playerScores;
 
+    // Array to store the types of all players (index corresponds to playerId)
     private String[] playerTypes;
 
     // Array for each tile in the current player's hand
@@ -272,7 +274,7 @@ public class QwirkleGameState extends GameState implements Serializable {
 
     /**
      * Method: getTilesLeft
-     * @return Returns the amount of tiles left in the draw pile.
+     * @return the amount of tiles left in the drawpile.
      */
     public int getTilesLeft() {
         return tilesLeft;
@@ -280,6 +282,7 @@ public class QwirkleGameState extends GameState implements Serializable {
 
     /**
      * Method: getPlayerTypeAtIdx
+     * Get the player index and type from the player array
      * @param idx The player ID
      * @return The type of the player as a String.
      */

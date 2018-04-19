@@ -35,6 +35,8 @@ public class QwirkleView extends View {
     private static Hashtable<String, Bitmap> sideBoardBitmaps = null;
     private static Hashtable<String, Bitmap> selectedSideBoardBitmaps = null;
 
+    // Instance variables
+
     protected QwirkleGameState gameState; // Instance of the game state.
     protected Paint gridPaint; // for drawing board
     protected boolean nightMode; // for night mode
@@ -88,11 +90,13 @@ public class QwirkleView extends View {
      * The gridPaint is initialized and the night mode is initially false.
      */
     private void init() {
+        // draw the grid lines
         gridPaint = new Paint();
         gridPaint.setColor(Color.BLACK);
         gridPaint.setStrokeWidth(3.0f);
         gridPaint.setStyle(Paint.Style.STROKE);
 
+        // turn night mode off as default
         nightMode = false;
     }
 
@@ -103,6 +107,7 @@ public class QwirkleView extends View {
      * @param tile The tile to draw.
      */
     protected void drawTile(Canvas canvas, QwirkleTile tile) {
+        // position the tiles when placed on the board
         Bitmap bitmap;
         int rectDim, offset;
         if (tile.isMainBoard()) {

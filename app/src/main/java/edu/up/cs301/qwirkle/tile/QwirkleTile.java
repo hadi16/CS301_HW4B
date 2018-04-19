@@ -112,6 +112,11 @@ public class QwirkleTile implements Serializable {
      * Method: isMainBoard
      * @return if the tile is on the main board (true), otherwise false.
      */
+
+    /**
+     * Method: isMainBoard
+     * @return the mainboard
+     */
     public boolean isMainBoard() {
         return mainBoard;
     }
