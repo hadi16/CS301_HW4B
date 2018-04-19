@@ -25,9 +25,11 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 19, 2018
  */
 public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
+    // instance variables
+
     private QwirkleTile[] myPlayerHand; // The player's hand
     private QwirkleTile[][] board; // The board
-    private QwirkleGameState gameState; // The game state.
+    private QwirkleGameState gameState; // The game state
     private QwirkleRules rules = new QwirkleRules(); // For valid moves
 
     /**

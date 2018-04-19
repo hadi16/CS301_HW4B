@@ -49,6 +49,9 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
 public class QwirkleHumanPlayer extends GameHumanPlayer
         implements View.OnTouchListener, View.OnClickListener,
         CompoundButton.OnCheckedChangeListener{
+
+    // instance variables
+
     private GameMainActivity activity; // The activity.
     private QwirkleGameState gameState; // The game state.
     private QwirkleRules rules = new QwirkleRules(); // For valid moves.
@@ -141,6 +144,13 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         switchDarkMode.setOnCheckedChangeListener(this);
     }
 
+    /**
+     * Method: onCheckedChanged
+     * Determines whether Night Mode has been activated
+     *
+     * @param buttonView button to switch between Night Mode and regular mode
+     * @param isChecked checks to see if button has been touched
+     */
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         /*
@@ -419,6 +429,11 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         return y / CONST.RECTDIM_SIDE;
     }
 
+    /**
+     * Method: showScoreBoard
+     * Displays the scoreboard with each player's currrent amount in the form
+     * of a table
+     */
     private void showScoreBoard() {
         /*
         * External Citation
@@ -510,6 +525,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             tableLayout.addView(tableRow);
         }
 
+        // Show the scoreboard as a popup that can be closed
         builder.setCancelable(true);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();

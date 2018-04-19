@@ -16,6 +16,8 @@ public class QwirkleTile implements Serializable {
     // For serialization.
     private static final long serialVersionUID = 3781304818481394857L;
 
+    // Insyance variables
+
     private int xPos; // x position of tile
     private int yPos; // y position of tile
     private QwirkleAnimal qwirkleAnimal; // Animal of tile
@@ -88,6 +90,11 @@ public class QwirkleTile implements Serializable {
     public QwirkleColor getQwirkleColor() {
         return qwirkleColor;
     }
+
+    /**
+     * Method:
+     * @return
+     */
     public boolean isSelected() {
         return isSelected;
     }

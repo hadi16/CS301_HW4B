@@ -30,9 +30,11 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 19, 2018
  */
 public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
+    // instance variables
+
     private QwirkleTile[] myPlayerHand; // The player's hand
     private QwirkleTile[][] board; // The board
-    private QwirkleGameState gameState;
+    private QwirkleGameState gameState; // The game state
     private QwirkleRules rules = new QwirkleRules(); // For valid moves
 
     /**
@@ -74,11 +76,15 @@ public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
         playSmartMove();
     }
 
+    /**
+     * Method: playSmartMove
+     * Action method to determine the next move the smart AI will perform that
+     */
     private void playSmartMove() {
         // Sleep for the computer player.
         sleep(CONST.COMPUTER_PLAYER_TIME_TO_SLEEP);
 
-        //ArrayList that stores all scores and its corresponding PlaceTileAction.
+        //ArrayList that stores all scores and its corresponding PlaceTileAction
         Hashtable<Integer, PlaceTileAction> allScores = new Hashtable<>();
         for (int handIdx=0; handIdx<myPlayerHand.length; handIdx++) {
             QwirkleTile tile = myPlayerHand[handIdx];
