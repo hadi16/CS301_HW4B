@@ -19,40 +19,68 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @version April 19, 2018
  */
 public class QwirkleRules {
-    private ArrayList<QwirkleTile> lineNS;
-    private ArrayList<QwirkleTile> lineEW;
+    private ArrayList<QwirkleTile> lineNS; // the line north and south.
+    private ArrayList<QwirkleTile> lineEW; // the line east and west.
 
-    /*
-    External Citation
-    Date: 14 April 2018
-    Problem: Wanted to have x & y position in each enum element
-    Resource:
-    https://stackoverflow.com/questions/19600684/
-    java-enum-with-multiple-value-types
-    Solution: Used a constructor with x & y int values.
-    */
+    /**
+     * Enum: Direction
+     * Represents North, South, East, or West direction.
+     */
     private enum Direction {
+        /*
+        External Citation
+        Date: 14 April 2018
+        Problem: Wanted to have x & y position in each enum element
+        Resource:
+        https://stackoverflow.com/questions/19600684/
+        java-enum-with-multiple-value-types
+        Solution: Used a constructor with x & y int values.
+        */
         NORTH(0,-1),
         EAST(1,0),
         SOUTH(0, 1),
         WEST(-1,0);
 
-        private int x;
-        private int y;
+        private int x; // The x position in the direction
+        private int y; // The y position in the direction.
 
+        /**
+         * Constructor: Direction
+         * Initializes the direction.
+         * @param x The x value to move by (-1, 0, or 1).
+         * @param y The y value to move by (-1, 0, or 1).
+         */
         Direction(int x, int y) {
             this.x = x;
             this.y = y;
         }
 
+        /**
+         * Method: getX
+         * @return The x value to move by (-1, 0, or 1).
+         */
         public int getX() {
             return x;
         }
+
+        /**
+         * Method: getY
+         * @return The y value to move by (-1, 0, or 1).
+         */
         public int getY() {
             return y;
         }
     }
 
+    /**
+     * Method: createLine
+     * Create the line of tiles.
+     * @param x The x position to start at.
+     * @param y The y position to start at.
+     * @param line The line to create (ArrayList of tiles).
+     * @param dir The direction to go (enum).
+     * @param board The board of tiles.
+     */
     private void createLine(int x, int y, ArrayList<QwirkleTile> line,
                             Direction dir, QwirkleTile[][] board) {
         // Increment x & y by direction first.
@@ -79,6 +107,12 @@ public class QwirkleRules {
         }
     }
 
+    /**
+     * Method: isSameAnimal
+     * Determines if the tiles in the line should have the same animal or not.
+     * @param line The ArrayList of tiles in the line.
+     * @return True (should be same animal), otherwise false.
+     */
     private boolean isSameAnimal(ArrayList<QwirkleTile> line) {
         // This function assumes that there are at least two tiles in the line
         // (otherwise must not be called, as it will throw exception)
@@ -88,6 +122,14 @@ public class QwirkleRules {
         return tile1.getQwirkleAnimal().equals(tile2.getQwirkleAnimal());
     }
 
+    /**
+     * Method: isValidLine
+     * Determines if a given line of tiles is valid
+     *
+     * @param line The ArrayList of tiles that represents the line.
+     * @param isSameAnimal Whether they should all have the same animal.
+     * @return True (line is valid), otherwise false.
+     */
     private boolean isValidLine(ArrayList<QwirkleTile> line,
                                 boolean isSameAnimal) {
         /*
@@ -202,6 +244,7 @@ public class QwirkleRules {
      * Method: getPoints
      * Gets how many points are being earned by placing a tile.
      * Assumes that isValidMove is run first.
+     * @return The amount of points as an integer.
      */
     public int getPoints() {
         // Starts off with 0 points
@@ -221,6 +264,13 @@ public class QwirkleRules {
         return points;
     }
 
+    /**
+     * Method: getLegalMoves
+     * Returns the legal moves for a given tile as an ArrayList of Points.
+     * @param tile The tile for the move.
+     * @param board The Qwirkle board.
+     * @return The ArrayList of all the possible legal moves.
+     */
     public ArrayList<Point> getLegalMoves(QwirkleTile tile,
                                           QwirkleTile[][] board) {
         ArrayList<Point> legalMoves = new ArrayList<>();
@@ -235,6 +285,7 @@ public class QwirkleRules {
     }
 
     /**
+     * Method: validMovesExist
      * Check to see whether there are valid moves on the board for given player.
      * @param playerHand The player hand to check.
      * @param board The board.
@@ -258,6 +309,10 @@ public class QwirkleRules {
         return false;
     }
 
+    /**
+     * Method: getNumQwirkles
+     * @return the amount of Qwirkles as an integer.
+     */
     public int getNumQwirkles() {
         if (this.lineNS.size() == 6 && this.lineEW.size() == 6) return 2;
         if (this.lineNS.size() == 6) return 1;
