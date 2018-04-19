@@ -163,7 +163,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
          * Solution: used sample line of code
          */
 
-        // Update background color.
+        // Update background color based on if night mode switch is on
         View contentView = activity.findViewById(android.R.id.content);
         contentView.setBackgroundColor(isChecked ? Color.DKGRAY : Color.WHITE);
 
@@ -193,8 +193,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     /**
      * The top view of the current state
      *
-     * @return
-     *         the top view of the project
+     * @return the top view of the project
      */
     @Override
     public View getTopView() {
@@ -243,6 +242,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         }
     }
 
+    /**
+     * Method: setConstants
+     * Sets class constants related to board size and initializes bitmaps
+     */
     private void setConstants() {
         // Constants for main board.
         CONST.RECTDIM_MAIN = mainBoard.getHeight() / CONST.BOARD_HEIGHT;
@@ -260,14 +263,14 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     /**
+     * Method: receiveInfo
      * Callback method, called when player gets a message
      *
-     * @param info
-     *           the message;
+     * @param info the message;
      */
     @Override
     public void receiveInfo(GameInfo info) {
-        // if the move was out of turn or otherwise illegal, flast the screen
+        // if the move was out of turn or otherwise illegal, flash the screen
         if (info instanceof IllegalMoveInfo||info instanceof NotYourTurnInfo) {
             flash(Color.RED, 50);
             return;
@@ -284,6 +287,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         // Update the display.
         updateDisplay();
 
+        //update gameState for main and side board
         mainBoard.setGameState(gameState);
         sideBoard.setGameState(gameState);
 
@@ -295,16 +299,14 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     /**
-     * callback method when the screen is touched. We're looking for a screen
+     * Method: onTouch
+     * Callback method when the screen is touched. We're looking for a screen
      * touch (which we'll detect on the "down" movement onto a Qwirkle board
      * spot)
      *
-     * @param v
-     *          the surface view
-     * @param event
-     *          the motion event that was detected
-     * @return
-     *          true if the touch was registered
+     * @param v the surface view
+     * @param event the motion event that was detected
+     * @return true if the touch was registered
      */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -312,7 +314,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         if (gameState.getTurn() != playerNum) return false;
         if (event.getAction() != MotionEvent.ACTION_DOWN) return false;
 
-        // get the x and y coordinates of the touch-location;
+        // get the x and y coordinates of the touch-location
         // convert them to square coordinates (where both values are in the
         // range 0..2)
         int x = (int)event.getX();
@@ -353,6 +355,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             int yPos = getSelectedHandIdx(x, y);
             if (yPos == -1) return false;
 
+            //if there is no tile where the user touches, return false
             QwirkleTile tileSelected = myPlayerHand[yPos];
             if (tileSelected == null) return false;
 
@@ -387,14 +390,11 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     /**
-     * return a position in main board while taking into account of the offset
+     * return a Point in main board while taking into account of the offset
      *
-     * @param x
-     *          x-position of spot on board
-     * @param y
-     *          y-position of spot on board
-     * @return
-     *          position of main board
+     * @param x x-position of spot on board
+     * @param y y-position of spot on board
+     * @return position of main board
      */
     private Point getSelectedBoardIdx(int x, int y) {
         // if the position selected is outside the main board, do nothing
@@ -433,7 +433,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
     /**
      * Method: showScoreBoard
-     * Displays the scoreboard with each player's currrent amount in the form
+     * Displays the scoreboard with each player's current score in the form
      * of a table
      */
     private void showScoreBoard() {
@@ -447,6 +447,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         * Solution:
         * Used a slightly modified version of that code.
         */
+
+        //set up/build scoreboard in the layout of a table
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         Context dialogContext = builder.getContext();
         LayoutInflater inflater = LayoutInflater.from(dialogContext);
@@ -497,6 +499,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             // See if they are the current winner.
             boolean winner = currentWinners.contains(i);
 
+            //sets up player Id, checks if player is winning
+            //bolds id if they are winning
             TextView textViewPlayerId = new TextView(dialogContext);
             textViewPlayerId.setTextColor(textColor);
             textViewPlayerId.setText(Integer.toString(i));
@@ -504,6 +508,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             if (winner) textViewPlayerId.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerId);
 
+            //sets up player name, checks if player is winning
+            //bolds id if they are winning
             TextView textViewPlayerName = new TextView(dialogContext);
             textViewPlayerName.setTextColor(textColor);
             textViewPlayerName.setText(allPlayerNames[i]);
@@ -511,6 +517,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             if (winner) textViewPlayerName.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerName);
 
+            //sets up player type, checks if player is winning
+            //bolds type if they are winning
             TextView textViewPlayerType = new TextView(dialogContext);
             textViewPlayerType.setTextColor(textColor);
             textViewPlayerType.setText(gameState.getPlayerTypeAtIdx(i));
@@ -518,6 +526,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             if (winner) textViewPlayerType.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerType);
 
+            //sets up player score, checks if player is winning
+            //bolds score if they are winning
             TextView textViewPlayerScore = new TextView(dialogContext);
             textViewPlayerScore.setTextColor(textColor);
             textViewPlayerScore.setText
@@ -526,6 +536,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             if (winner) textViewPlayerScore.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerScore);
 
+            //add row in table for each player
             tableLayout.addView(tableRow);
         }
 
