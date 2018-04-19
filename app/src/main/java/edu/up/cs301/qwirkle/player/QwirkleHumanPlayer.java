@@ -59,6 +59,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private SideBoard sideBoard;
 
     // TextViews
+    private TextView textViewPlayerLabel;
     private TextView textViewTurnLabel;
     private TextView textViewMyScore;
     private TextView textViewTilesLeft;
@@ -77,8 +78,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private boolean swap = false; // Tells whether in swap mode.
     private boolean init = false; // Tells whether initialized constants.
     private boolean pass = false; // Tells whether in pass mode.
-
-    private ArrayList<TextView> allTextViews;
 
     /**
      * Constructor: QwirkleHumanPlayer
@@ -103,9 +102,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         activity.setContentView(R.layout.qwirkle_human_player);
 
         // Set the player TextView to the user's name.
-        TextView textViewPlayerLabel =
+        textViewPlayerLabel =
                 (TextView)activity.findViewById(R.id.textViewPlayerLabel);
         textViewPlayerLabel.setText("My Name: " + name);
+
         // Initialize the TextViews by using findViewById.
         textViewTurnLabel =
                 (TextView)activity.findViewById(R.id.textViewTurnLabel);
@@ -115,14 +115,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 (TextView)activity.findViewById(R.id.textViewTilesLeft);
         textViewMessageBoard =
                 (TextView)activity.findViewById(R.id.textViewMessageBoard);
-
-        // Add all the Views to an ArrayList for dark mode listener.
-        allTextViews = new ArrayList<>();
-        allTextViews.add(textViewPlayerLabel);
-        allTextViews.add(textViewTurnLabel);
-        allTextViews.add(textViewMyScore);
-        allTextViews.add(textViewTilesLeft);
-        allTextViews.add(textViewMessageBoard);
 
         // Initialize swap button, main board, and side board & set listeners.
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
@@ -172,9 +164,13 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
         // Update TextView color and switch color.
         int viewColor = isChecked ? Color.WHITE : Color.BLACK;
-        for (TextView textView : allTextViews) {
-            textView.setTextColor(viewColor);
-        }
+
+        // Set the color of all the TextViews.
+        textViewPlayerLabel.setTextColor(viewColor);
+        textViewTurnLabel.setTextColor(viewColor);
+        textViewMyScore.setTextColor(viewColor);
+        textViewTilesLeft.setTextColor(viewColor);
+        textViewMessageBoard.setTextColor(viewColor);
 
         // Set the switch text and color.
         switchDarkMode.setTextColor(viewColor);
