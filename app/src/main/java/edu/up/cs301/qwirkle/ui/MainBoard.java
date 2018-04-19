@@ -21,20 +21,12 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 18, 2018
  */
-public class MainBoard extends QwirkleBitmaps {
-    private Paint gridPaint; // for drawing board
-    private Paint greenPaint; // for drawing legal moves
-
-    private int points;
-
-
-
-    // To draw the legal moves on the board.
+public class MainBoard extends QwirkleView {
+    // For legal moves
+    private Paint greenPaint;
     private ArrayList<Point> legalMoves;
-
-    private boolean nightMode;
 
     /**
      * Constructor: MainBoard
@@ -77,13 +69,6 @@ public class MainBoard extends QwirkleBitmaps {
         init();
     }
 
-
-    public void setMode(boolean nightMode){
-        this.nightMode = nightMode;
-    }
-
-
-
     /**
      * Method: onDraw
      * Draws the board and tiles in the array onto the view.
@@ -91,16 +76,8 @@ public class MainBoard extends QwirkleBitmaps {
      */
     @Override
     public void onDraw(Canvas canvas){
-        // Sets background color to white or dark grey
-        if (nightMode) {
-            canvas.drawColor(Color.DKGRAY);
-            gridPaint.setColor(Color.WHITE);
-        }
-        else {
-            canvas.drawColor(Color.WHITE);
-            gridPaint.setColor(Color.BLACK);
-        }
-
+        // Sets background color to white or dark gray
+        canvas.drawColor(nightMode ? Color.DKGRAY : Color.WHITE);
 
         // Draws the board.
         for (int i = 0; i< CONST.BOARD_WIDTH; i++){
@@ -111,22 +88,18 @@ public class MainBoard extends QwirkleBitmaps {
                         (j+1)*CONST.RECTDIM_MAIN, gridPaint);
             }
         }
-        //If there's nothing in the game state, ignore
-        if (gameState == null) {
-            return;
-        }
 
-        // Draws the tiles.
+        // Draw the tiles if game state isn't null.
+        if (gameState == null) return;
         QwirkleTile[][] board = gameState.getBoard();
         for (int x=0; x<board.length; x++) {
             for (int y=0; y<board[x].length; y++) {
                 QwirkleTile tile = board[x][y];
-                if (tile != null) {
-                    drawTile(canvas, tile);
-                }
+                if (tile != null) drawTile(canvas, tile);
             }
         }
 
+        // Draw the legal moves (if they exist).
         if (legalMoves == null) return;
         for (Point point : legalMoves) {
             int x = point.x;
@@ -141,18 +114,11 @@ public class MainBoard extends QwirkleBitmaps {
     /**
      * Method: init
      * Set the color and stroke width of the paint
-     * and set the night mode boolean to false
      */
     private void init() {
-        gridPaint = new Paint();
-        gridPaint.setColor(Color.BLACK);
-        gridPaint.setStrokeWidth(3.0f);
-        gridPaint.setStyle(Paint.Style.STROKE);
-
         greenPaint = new Paint();
         greenPaint.setColor(Color.GREEN);
         greenPaint.setStyle(Paint.Style.FILL);
-        nightMode = false;
     }
 
     public void setLegalMoves(ArrayList<Point> legalMoves) {

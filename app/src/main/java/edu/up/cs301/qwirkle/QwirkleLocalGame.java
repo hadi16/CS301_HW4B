@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.LocalGame;
+import edu.up.cs301.game.ProxyPlayer;
 import edu.up.cs301.game.actionMsg.GameAction;
 import edu.up.cs301.qwirkle.action.PassAction;
 import edu.up.cs301.qwirkle.action.PlaceTileAction;
@@ -21,14 +22,11 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 16, 2018
+ * @version April 18, 2018
  */
 public class QwirkleLocalGame extends LocalGame {
-    // the game state
-    private QwirkleGameState gameState;
-
-    //the rules of the game
-    private QwirkleRules rules = new QwirkleRules();
+    private QwirkleGameState gameState; // the game state.
+    private QwirkleRules rules = new QwirkleRules(); // for legal moves.
 
     @Override
     public void start(GamePlayer[] players) {
@@ -55,8 +53,10 @@ public class QwirkleLocalGame extends LocalGame {
                 playerTypes[i] = "Dumb AI";
             } else if (player instanceof QwirkleComputerPlayerSmart) {
                 playerTypes[i] = "Smart AI";
-            } else {
+            } else if (player instanceof ProxyPlayer){
                 playerTypes[i] = "Network Player";
+            } else {
+                playerTypes[i] = "";
             }
         }
 
@@ -69,8 +69,7 @@ public class QwirkleLocalGame extends LocalGame {
      * information game, this method should remove any information from the game
      * that the player is not allowed to know.
      *
-     * @param p
-     *        the player to notify
+     * @param p the player to notify
      */
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
@@ -121,7 +120,6 @@ public class QwirkleLocalGame extends LocalGame {
         }
 
         ArrayList<Integer> winners = gameState.getWinners();
-
         if (winners.size() == 0) return null;
         else if (winners.size() == 1) {
             return playerNames[winners.get(0)] + " won.";
@@ -159,6 +157,9 @@ public class QwirkleLocalGame extends LocalGame {
      */
     @Override
     protected boolean makeMove(GameAction action) {
+        // Get the current player (for message board string).
+        String playerName = playerNames[getPlayerIdx(action.getPlayer())];
+
         // get the x- and y- position of a tile in the player's hand
         if (action instanceof PlaceTileAction) {
             PlaceTileAction pta = (PlaceTileAction) action;
@@ -187,14 +188,14 @@ public class QwirkleLocalGame extends LocalGame {
             //Set the recent action
             gameState.setPlayerHandsAtIdx(playerIdx, handIdx,
                     gameState.getRandomTile());
-            gameState.setActionString("placed a tile");
-            gameState.changeTurn();
 
-            // return true if a move has been made
+            // Set the message board string & change the turn.
+            gameState.setMessageBoardString(playerName + " placed a tile");
+            gameState.changeTurn();
             return true;
         }
         // swap the tiles selected in the player's hand with random ones
-        // from the drawpile
+        // from the draw pile
         else if (action instanceof SwapTileAction) {
             SwapTileAction sta = (SwapTileAction) action;
 
@@ -208,18 +209,14 @@ public class QwirkleLocalGame extends LocalGame {
                 gameState.setPlayerHandsAtIdx(playerId, i,
                         gameState.getRandomTile());
             }
-            //Set the recent action
-            gameState.setActionString("swapped");
-            // end the current player's turn
+            // Set the message board string & change the turn.
+            gameState.setMessageBoardString(playerName + " swapped");
             gameState.changeTurn();
-
-            // return true if a swap has been made, and false otherwise.
             return true;
         }
         else if (action instanceof PassAction) {
-            //Set the recent action
-            gameState.setActionString("passed");
-            //Change the turn
+            // Set the message board string & change the turn.
+            gameState.setMessageBoardString(playerName + " passed");
             gameState.changeTurn();
             return true;
         }

@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textViewPlayerId"
+            android:id="@+id/scoreBoardPlayerIdLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ID"
@@ -19,7 +19,7 @@
             android:textSize="24sp"/>
 
         <TextView
-            android:id="@+id/textViewPlayerName"
+            android:id="@+id/scoreBoardPlayerNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name"
@@ -27,7 +27,7 @@
             android:textSize="24sp"/>
 
         <TextView
-            android:id="@+id/textViewPlayerType"
+            android:id="@+id/scoreBoardPlayerTypeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Type"
@@ -35,12 +35,11 @@
             android:textSize="24sp"/>
 
         <TextView
-            android:id="@+id/textViewPlayerScore"
+            android:id="@+id/scoreBoardPlayerScoreLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Score"
             android:textColor="@android:color/black"
             android:textSize="24sp"/>
     </TableRow>
-
 </TableLayout>

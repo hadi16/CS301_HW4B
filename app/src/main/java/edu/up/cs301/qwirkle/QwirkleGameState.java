@@ -18,13 +18,13 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 16, 2018
+ * @version April 18, 2018
  */
 public class QwirkleGameState extends GameState implements Serializable {
-    //Serialize ID
+    // For serialization (network play).
     private static final long serialVersionUID = 4162018421892647281L;
 
-    private String actionString; //String of most recent action
+    private String messageBoardString; // String for the message board.
     private int turn; // The current turn
     private int numPlayers; // The number of players
     private int tilesLeft; // Number of tiles left in the draw pile.
@@ -55,7 +55,7 @@ public class QwirkleGameState extends GameState implements Serializable {
      */
     public QwirkleGameState(int numPlayers, String[] playerTypes) {
         // initialize the state to be a brand new game
-        this.actionString = ":D";
+        this.messageBoardString = "";
         this.turn = 0;
         this.numPlayers = numPlayers;
         this.drawPile = new ArrayList<>();
@@ -117,8 +117,8 @@ public class QwirkleGameState extends GameState implements Serializable {
             this.playerScores[i] = orig.playerScores[i];
         }
 
-        //Copy the most recent action
-        this.actionString = orig.actionString;
+        // Copy the message board string.
+        this.messageBoardString = orig.messageBoardString;
     }
 
     /**
@@ -339,13 +339,11 @@ public class QwirkleGameState extends GameState implements Serializable {
         this.playerScores[playerIdx] = score;
     }
 
-    public String getActionString() {
-        return actionString;
+    public String getMessageBoardString() {
+        return messageBoardString;
     }
 
-    public void setActionString(String action) {
-        actionString = action;
+    public void setMessageBoardString(String messageBoardString) {
+        this.messageBoardString = messageBoardString;
     }
-
-
 }

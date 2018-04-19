@@ -1,7 +1,5 @@
 package edu.up.cs301.qwirkle.tile;
 
-import android.view.View;
-
 import java.io.Serializable;
 
 /**
@@ -12,7 +10,7 @@ import java.io.Serializable;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 16, 2018
+ * @version April 18, 2018
  */
 public class QwirkleTile implements Serializable {
     // For serialization.

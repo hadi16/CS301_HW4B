@@ -15,15 +15,22 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 16, 2018
+ * @version April 18, 2018
  */
 public class SwapTileAction extends GameAction implements Serializable {
+    // For serialization.
     private static final long serialVersionUID = 5738184719485729852L;
 
+    // Indices to swap.
     private ArrayList<Integer> swapIdx;
 
+    /**
+     * Constructor: SwapTileAction
+     * @param player The player.
+     * @param myPlayerHand The player hand.
+     */
     public SwapTileAction(GamePlayer player, QwirkleTile[] myPlayerHand) {
-        // invoke superclass constructor to set the player
+        // Invoke superclass constructor to set the player
         super(player);
 
         // Initialize the swap indices

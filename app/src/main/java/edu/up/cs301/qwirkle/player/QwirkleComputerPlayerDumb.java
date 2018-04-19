@@ -6,6 +6,7 @@ import edu.up.cs301.game.GameComputerPlayer;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
+import edu.up.cs301.qwirkle.CONST;
 import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.QwirkleRules;
 import edu.up.cs301.qwirkle.action.PassAction;
@@ -21,16 +22,13 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 18, 2018
  */
 public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     private QwirkleTile[] myPlayerHand; // The player's hand
     private QwirkleTile[][] board; // The board
-    private QwirkleGameState gameState;
+    private QwirkleGameState gameState; // The game state.
     private QwirkleRules rules = new QwirkleRules(); // For valid moves
-
-    // Constant for 1000-millisecond delay
-    private static final int TIME_TO_SLEEP = 1000;
 
     /**
      * Constructor: QwirkleComputerPlayerDumb
@@ -59,8 +57,8 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
             return;
         }
 
-        gameState = (QwirkleGameState)info;
-        if (gameState.getTurn() != playerNum) {
+        this.gameState = (QwirkleGameState)info;
+        if (this.gameState.getTurn() != this.playerNum) {
             return;
         }
 
@@ -77,7 +75,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
      */
     private void playRandomMove() {
         // Sleep for the computer player.
-        sleep(TIME_TO_SLEEP);
+        sleep(CONST.COMP_PLAYER_TIME_TO_SLEEP);
 
         //Iterate through each tile in the player's hand
         for (int tileIdx=0; tileIdx<myPlayerHand.length; tileIdx++) {
@@ -107,12 +105,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
 
         // If there are tiles left, allow one tile in the computer's hand to be
         // swapped out with a random one from the draw pile.
-        Random rand = new Random();
-        int idx = rand.nextInt(myPlayerHand.length);
-        // To prevent a null position from being selected.
-        while (myPlayerHand[idx] == null) {
-            idx = rand.nextInt(myPlayerHand.length);
-        }
+        int idx = new Random().nextInt(myPlayerHand.length);
         myPlayerHand[idx].setSelected(true);
         SwapTileAction sta = new SwapTileAction(this, myPlayerHand);
         game.sendAction(sta);

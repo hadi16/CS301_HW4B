@@ -10,12 +10,12 @@ import java.io.Serializable;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 18, 2018
  */
 public enum QwirkleAnimal implements Serializable {
     bat, dog, fox, owl, parrot, snake;
 
+    // For serialization (network play)
     private static final long serialVersionUID = 4718419248410841248L;
-
 }
 

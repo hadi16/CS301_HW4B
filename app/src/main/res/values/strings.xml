@@ -17,5 +17,4 @@
     <string name="dialog_quit_question">Do you really want to quit?</string>
     <string name="local_tab">Local Game</string>
     <string name="remote_tab">Remote Game</string>
-    <string name="night_mode_default">Night Mode:OFF</string>
 </resources>

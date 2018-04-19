@@ -26,7 +26,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 18, 2018
  */
 public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
     private QwirkleTile[] myPlayerHand; // The player's hand
@@ -89,7 +89,8 @@ public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
                 for (int y=0; y<board[x].length; y++) {
                     if (rules.isValidMove(x, y , tile, board)) {
                         int points = rules.getPoints();
-                        PlaceTileAction pta = new PlaceTileAction(this, x, y, handIdx);
+                        PlaceTileAction pta = new PlaceTileAction(this, x, y,
+                                handIdx);
                         allScores.put(points, pta);
                     }
                 }
@@ -121,14 +122,17 @@ public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
             return;
         }
 
-        // Either swap or pass if there are no valid moves.
-        // If tiles are in draw pile, allow all tiles in the computer's hand to be
+        // If tiles are in draw pile, allow tiles in the computer's hand to be
         // swapped out with random ones from the draw pile.
-        for (int i=0; i<myPlayerHand.length; i++) {
-            QwirkleTile tile = myPlayerHand[i];
-            if (tile != null) {
-                tile.setSelected(true);
-            }
+        int numToSwap;
+        if (gameState.getTilesLeft() > myPlayerHand.length) {
+            numToSwap = myPlayerHand.length;
+        }
+        else {
+            numToSwap = gameState.getTilesLeft();
+        }
+        for (int i=0; i<numToSwap; i++) {
+            myPlayerHand[i].setSelected(true);
         }
         SwapTileAction sta = new SwapTileAction(this, myPlayerHand);
         game.sendAction(sta);

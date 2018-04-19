@@ -19,43 +19,55 @@ import edu.up.cs301.qwirkle.tile.QwirkleAnimal;
 import edu.up.cs301.qwirkle.tile.QwirkleColor;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 
-public class QwirkleBitmaps extends View {
-    protected QwirkleGameState gameState; // Instance of the game state.
-
-    // Hashtables for all Bitmaps
+/**
+ * Class: QwirkleView
+ * Superclass of both boards. Inherits from View. Stores the Bitmaps.
+ *
+ * @author Alex Hadi
+ * @author Michael Quach
+ * @author Huy Nguyen
+ * @author Stephanie Camacho
+ * @version April 18, 2018
+ */
+public class QwirkleView extends View {
+    // Hashtables for all Bitmaps (static)
     private static Hashtable<String, Bitmap> mainBoardBitmaps = null;
     private static Hashtable<String, Bitmap> sideBoardBitmaps = null;
     private static Hashtable<String, Bitmap> selectedSideBoardBitmaps = null;
 
-    protected Paint blackPaint; // for drawing board
+    protected QwirkleGameState gameState; // Instance of the game state.
+    protected Paint gridPaint; // for drawing board
+    protected boolean nightMode; // for night mode
 
-    public QwirkleBitmaps(Context context) {
+    public QwirkleView(Context context) {
         super(context);
         init();
     }
 
-    public QwirkleBitmaps(Context context, @Nullable AttributeSet attrs) {
+    public QwirkleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public QwirkleBitmaps(Context context, @Nullable AttributeSet attrs,
-                          int defStyleAttr) {
+    public QwirkleView(Context context, @Nullable AttributeSet attrs,
+                       int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
-    public QwirkleBitmaps(Context context, @Nullable AttributeSet attrs,
-                          int defStyleAttr, int defStyleRes) {
+    public QwirkleView(Context context, @Nullable AttributeSet attrs,
+                       int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
     private void init() {
-        blackPaint = new Paint();
-        blackPaint.setColor(Color.BLACK);
-        blackPaint.setStrokeWidth(3.0f);
-        blackPaint.setStyle(Paint.Style.STROKE);
+        gridPaint = new Paint();
+        gridPaint.setColor(Color.BLACK);
+        gridPaint.setStrokeWidth(3.0f);
+        gridPaint.setStyle(Paint.Style.STROKE);
+
+        nightMode = false;
     }
 
     /**
@@ -163,6 +175,11 @@ public class QwirkleBitmaps extends View {
                         selectedBitmapSideBoard);
             }
         }
+    }
+
+    public void setNightModeAndUpdateColor(boolean nightMode) {
+        this.nightMode = nightMode;
+        gridPaint.setColor(nightMode ? Color.WHITE : Color.BLACK);
     }
 
     /**

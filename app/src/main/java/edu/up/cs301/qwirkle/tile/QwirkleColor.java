@@ -10,10 +10,11 @@ import java.io.Serializable;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 18, 2018
  */
 public enum QwirkleColor implements Serializable {
     blue, green, orange, purple, red, yellow;
 
+    // For serialization (network play)
     private static final long serialVersionUID = 3824829472471329419L;
 }

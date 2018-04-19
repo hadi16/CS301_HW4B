@@ -3,7 +3,6 @@ package edu.up.cs301.qwirkle.ui;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
@@ -18,21 +17,15 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 18, 2018
  */
-public class SideBoard extends QwirkleBitmaps {
-    private Paint gridPaint; //for drawing sideboard
-
-
-    private boolean nightMode;
-
+public class SideBoard extends QwirkleView {
     /**
      * Constructor: SideBoard
      * @param context Object holds the current context of the view.
      */
     public SideBoard(Context context){
         super(context);
-        init();
     }
 
     /**
@@ -42,7 +35,6 @@ public class SideBoard extends QwirkleBitmaps {
      */
     public SideBoard(Context context, @Nullable AttributeSet attrs){
         super(context, attrs);
-        init();
     }
 
     /**
@@ -53,7 +45,6 @@ public class SideBoard extends QwirkleBitmaps {
     public SideBoard(Context context, @Nullable AttributeSet attrs,
                      int defStyleAttr){
         super(context, attrs, defStyleAttr);
-        init();
     }
 
     /**
@@ -64,12 +55,6 @@ public class SideBoard extends QwirkleBitmaps {
     public SideBoard(Context context, @Nullable AttributeSet attrs,
                      int defStyleAttr, int defStyleRes){
         super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
-
-    public void setMode(boolean nightMode){
-        this.nightMode = nightMode;
     }
 
     /**
@@ -79,48 +64,21 @@ public class SideBoard extends QwirkleBitmaps {
      */
     @Override
     public void onDraw(Canvas canvas) {
-        // Sets background color to white or dark grey
-        if (nightMode) {
-            canvas.drawColor(Color.DKGRAY);
-            gridPaint.setColor(Color.WHITE);
-        }
-        else {
-            canvas.drawColor(Color.WHITE);
-            gridPaint.setColor(Color.BLACK);
-        }
+        // Sets background color to white or dark gray
+        canvas.drawColor(nightMode ? Color.DKGRAY : Color.WHITE);
 
         // Draws the SideBoard.
-        for (int i = 0; i< CONST.NUM_IN_HAND; i++){
+        for (int i=0; i< CONST.NUM_IN_HAND; i++){
             canvas.drawRect(CONST.OFFSET_SIDE, i*CONST.RECTDIM_SIDE,
                     CONST.OFFSET_SIDE+CONST.RECTDIM_SIDE,
                     (i+1)*CONST.RECTDIM_SIDE, gridPaint);
         }
 
-        //If there's nothing in the game state, ignore
-        if (gameState == null) {
-            return;
-        }
-
-        // Tiles are drawn.
+        // Tiles are drawn if game state isn't null.
+        if (gameState == null) return;
         QwirkleTile[] myPlayerHand = gameState.getMyPlayerHand();
         for (QwirkleTile tile : myPlayerHand) {
-            if (tile != null) {
-                drawTile(canvas, tile);
-            }
+            if (tile != null) drawTile(canvas, tile);
         }
-    }
-
-    /**
-     * Method: init
-     * Set the color and stroke width of the paint
-     * and set the night mode boolean to false
-     */
-    private void init() {
-        gridPaint = new Paint();
-        gridPaint.setColor(Color.BLACK);
-        gridPaint.setStrokeWidth(3.0f);
-        gridPaint.setStyle(Paint.Style.STROKE);
-
-        nightMode = false;
     }
 }

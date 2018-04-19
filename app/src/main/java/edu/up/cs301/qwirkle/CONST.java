@@ -8,9 +8,12 @@ package edu.up.cs301.qwirkle;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 18, 2018
  */
 public class CONST {
+    // Constant for delay in milliseconds for the computer players
+    public static final int COMP_PLAYER_TIME_TO_SLEEP = 1000;
+
     // Number of rows and columns for the board.
     public static final int BOARD_WIDTH = 21;
     public static final int BOARD_HEIGHT = 16;

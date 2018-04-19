@@ -13,11 +13,13 @@ import edu.up.cs301.game.actionMsg.GameAction;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 16, 2018
+ * @version April 18, 2018
  */
 public class PlaceTileAction extends GameAction implements Serializable {
+    // For serialization.
     private static final long serialVersionUID = 3810381038472819384L;
-    // instance variables: tile position and player hands
+
+    // Instance variables: tile position and player hands
     private int xPos;
     private int yPos;
     private int handIdx;
@@ -49,6 +51,7 @@ public class PlaceTileAction extends GameAction implements Serializable {
     public int getXPos() {
         return xPos;
     }
+
     /**
      * Method: getYPos
      * Gets the y-position
@@ -58,6 +61,7 @@ public class PlaceTileAction extends GameAction implements Serializable {
     public int getYPos() {
         return yPos;
     }
+
     /**
      * Method: getHandIdx
      * Gets the index of tile in hand

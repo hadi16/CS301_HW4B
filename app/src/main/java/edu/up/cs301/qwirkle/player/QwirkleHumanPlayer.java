@@ -16,8 +16,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import edu.up.cs301.game.GameHumanPlayer;
@@ -34,7 +32,7 @@ import edu.up.cs301.qwirkle.action.PlaceTileAction;
 import edu.up.cs301.qwirkle.action.SwapTileAction;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
 import edu.up.cs301.qwirkle.ui.MainBoard;
-import edu.up.cs301.qwirkle.ui.QwirkleBitmaps;
+import edu.up.cs301.qwirkle.ui.QwirkleView;
 import edu.up.cs301.qwirkle.ui.SideBoard;
 
 /**
@@ -46,17 +44,15 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 16, 2018
+ * @version April 18, 2018
  */
 public class QwirkleHumanPlayer extends GameHumanPlayer
-        implements View.OnTouchListener, View.OnClickListener {
-    private GameMainActivity activity; // The activity
-    private QwirkleGameState gameState; // The game state
-    private QwirkleRules rules = new QwirkleRules(); // Instance of rules
-
-
-    // Array of the current player's hand
-    private QwirkleTile[] myPlayerHand;
+        implements View.OnTouchListener, View.OnClickListener,
+        CompoundButton.OnCheckedChangeListener{
+    private GameMainActivity activity; // The activity.
+    private QwirkleGameState gameState; // The game state.
+    private QwirkleRules rules = new QwirkleRules(); // For valid moves.
+    private QwirkleTile[] myPlayerHand; // Current player's hand.
 
     // Boards (View objects)
     private MainBoard mainBoard;
@@ -66,63 +62,72 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private TextView textViewTurnLabel;
     private TextView textViewMyScore;
     private TextView textViewTilesLeft;
-    private TextView textViewAction;
+    private TextView textViewMessageBoard;
 
     // Switch for night mode
-    private Switch buttonSwitch;
+    private Switch switchDarkMode;
 
     // Button for swapping.
     private Button buttonSwap;
 
-    private int handSelectedIdx = -1; // The currently selected tile in hand.
+    // The currently selected tile in hand.
+    private int handSelectedIdx = -1;
 
     // Booleans
     private boolean swap = false; // Tells whether in swap mode.
     private boolean init = false; // Tells whether initialized constants.
     private boolean pass = false; // Tells whether in pass mode.
 
+    private ArrayList<TextView> allTextViews;
+
     /**
-     * Constructor for QwirkleHumanPlayer
-     *
-     * @param name
-     *          The player's name.
+     * Constructor: QwirkleHumanPlayer
+     * @param name The player's name.
      */
     public QwirkleHumanPlayer(String name) {
         super(name);
     }
 
     /**
+     * Method: setAsGui
      * sets the current player as the activity's GUI
      *
-     * @param activity
-     *          an action that can be performed by the human
+     * @param activity The current activity object.
      */
     @Override
     public void setAsGui(final GameMainActivity activity) {
         // Initialize passed activity object
         this.activity = activity;
 
-        // Set the GUI to the appropriate XML file.
+        // Set the GUI XML file.
         activity.setContentView(R.layout.qwirkle_human_player);
 
         // Set the player TextView to the user's name.
-        final TextView textViewPlayerLabel = (TextView)activity.findViewById(
-                R.id.textViewPlayerLabel);
-        textViewPlayerLabel.setText("My Name: " +name);
-
-
+        TextView textViewPlayerLabel =
+                (TextView)activity.findViewById(R.id.textViewPlayerLabel);
+        textViewPlayerLabel.setText("My Name: " + name);
         // Initialize the TextViews by using findViewById.
-        textViewTurnLabel = (TextView)activity.findViewById(
-                R.id.textViewTurnLabel);
-        textViewMyScore = (TextView)activity.findViewById(R.id.textViewPlayerScore);
-        textViewTilesLeft = (TextView)activity.findViewById(R.id.textViewTilesLeft);
-        textViewAction = (TextView)activity.findViewById(R.id.textViewAction);
+        textViewTurnLabel =
+                (TextView)activity.findViewById(R.id.textViewTurnLabel);
+        textViewMyScore =
+                (TextView)activity.findViewById(R.id.textViewPlayerScore);
+        textViewTilesLeft =
+                (TextView)activity.findViewById(R.id.textViewTilesLeft);
+        textViewMessageBoard =
+                (TextView)activity.findViewById(R.id.textViewMessageBoard);
 
+        // Add all the Views to an ArrayList for dark mode listener.
+        allTextViews = new ArrayList<>();
+        allTextViews.add(textViewPlayerLabel);
+        allTextViews.add(textViewTurnLabel);
+        allTextViews.add(textViewMyScore);
+        allTextViews.add(textViewTilesLeft);
+        allTextViews.add(textViewMessageBoard);
 
         // Initialize swap button, main board, and side board & set listeners.
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         buttonSwap.setOnClickListener(this);
-        final Button buttonScores = (Button)activity.findViewById(R.id.buttonScores);
+        Button buttonScores = (Button)activity.findViewById(R.id.buttonScores);
         buttonScores.setOnClickListener(this);
         mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
         mainBoard.setOnTouchListener(this);
@@ -130,69 +135,55 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         sideBoard.setOnTouchListener(this);
 
         /*
-            * External Citation
-            * Date: April 17 2018
-            * Problem: didn't know what kind of listener switch button used
-            * for switch button
-            * Source:
-            * https://android--code.blogspot.com/2015/08/
-            * android-switch-button-listener.html
-            * Solution:
-            * Used setOnCheckedChangeListener
+         * External Citation
+         * Date: April 17 2018
+         * Problem: didn't know what kind of listener switch button used
+         * for switch button
+         * Source:
+         * https://android--code.blogspot.com/2015/08/
+         * android-switch-button-listener.html
+         * Solution: Used setOnCheckedChangeListener
         */
-
-
-        //initialize switch button & set listener to listen for changes
-        buttonSwitch = (Switch) activity.findViewById(R.id.switchNightMode);
-        buttonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    mainBoard.setMode(true);
-                    mainBoard.invalidate();
-                    sideBoard.setMode(true);
-                    sideBoard.invalidate();
-                    /*
-                        * External Citation
-                        * Date: April 17 2018
-                        * Problem: didn't know how to get activity's
-                        * content view to change background color
-                        * Source:
-                        * https://stackoverflow.com/questions/5273436/
-                        * how-to-get-activitys-content-view
-                        * Solution:
-                        * used sample line of code
-                    */
-                    activity.findViewById(android.R.id.content).setBackgroundColor(Color.DKGRAY);
-                    textViewPlayerLabel.setTextColor(Color.WHITE);
-                    textViewMyScore.setTextColor(Color.WHITE);
-                    textViewTurnLabel.setTextColor(Color.WHITE);
-                    textViewTilesLeft.setTextColor(Color.WHITE);
-                    buttonSwitch.setText("Night Mode: ON");
-                    buttonSwitch.setTextColor(Color.WHITE);
-                    textViewAction.setTextColor(Color.WHITE);
-                }
-                else {
-                    mainBoard.setMode(false);
-                    mainBoard.invalidate();
-                    sideBoard.setMode(false);
-                    sideBoard.invalidate();
-                    activity.findViewById(android.R.id.content).setBackgroundColor(Color.WHITE);
-                    textViewPlayerLabel.setTextColor(Color.BLACK);
-                    textViewMyScore.setTextColor(Color.BLACK);
-                    textViewTurnLabel.setTextColor(Color.BLACK);
-                    textViewTilesLeft.setTextColor(Color.BLACK);
-                    buttonSwitch.setText("Night Mode:OFF");
-                    buttonSwitch.setTextColor(Color.BLACK);
-                    textViewAction.setTextColor(Color.BLACK);
-                }
-            }
-        });
+        // initialize switch button & set listener to listen for changes
+        switchDarkMode = (Switch) activity.findViewById(R.id.switchNightMode);
+        switchDarkMode.setOnCheckedChangeListener(this);
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        /*
+         * External Citation
+         * Date: April 17 2018
+         * Problem: didn't know how to get activity's
+         * content view to change background color
+         * Source:
+         * https://stackoverflow.com/questions/5273436/
+         * how-to-get-activitys-content-view
+         * Solution: used sample line of code
+         */
 
+        // Update background color.
+        View contentView = activity.findViewById(android.R.id.content);
+        contentView.setBackgroundColor(isChecked ? Color.DKGRAY : Color.WHITE);
 
+        // Set the night mode boolean.
+        mainBoard.setNightModeAndUpdateColor(isChecked);
+        sideBoard.setNightModeAndUpdateColor(isChecked);
 
+        // Update TextView color and switch color.
+        int viewColor = isChecked ? Color.WHITE : Color.BLACK;
+        for (TextView textView : allTextViews) {
+            textView.setTextColor(viewColor);
+        }
+
+        // Set the switch text and color.
+        switchDarkMode.setTextColor(viewColor);
+        switchDarkMode.setText("Night Mode: " + (isChecked ? "ON" : "OFF"));
+
+        // Invalidate both boards.
+        mainBoard.invalidate();
+        sideBoard.invalidate();
+    }
 
     /**
      * The top view of the current state
@@ -220,24 +211,17 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             * Solution:
             * Used Vegdahl's code as reference
         */
-        //Update display of turn
+        // Update turn
         textViewTurnLabel.setText("Turn: " + allPlayerNames[gameState.getTurn()]);
-        //Update display of my score
+        // Update my score
         textViewMyScore.setText("My Score: " + gameState.getPlayerScore(playerNum));
-        //Update the amount of tiles left
+        // Update number of tiles left.
         textViewTilesLeft.setText("Tiles Left: " + gameState.getTilesLeft());
-        //Show what the previous player did
-        String actionString;
-        actionString = gameState.getActionString();
-        if(gameState.getTurn() == 0) {
-            textViewAction.setText(allPlayerNames[allPlayerNames.length-1] + " " + actionString);
-        }
-        else {
-            textViewAction.setText(allPlayerNames[gameState.getTurn()-1]+" " + actionString);
-        }
-        // Ensure swap button is initially enabled.
-        buttonSwap.setEnabled(true);
+        // Update message board.
+        textViewMessageBoard.setText(gameState.getMessageBoardString());
 
+        // Ensure swap button is initially enabled. Then update if needed.
+        buttonSwap.setEnabled(true);
         if (gameState.getTilesLeft() == 0) {
             swap = false;
             if (rules.validMovesExist(myPlayerHand, gameState.getBoard())) {
@@ -250,7 +234,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 pass = true;
             }
         }
-
     }
 
     private void setConstants() {
@@ -263,7 +246,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         CONST.OFFSET_SIDE = (sideBoard.getWidth() - CONST.RECTDIM_SIDE) / 2;
 
         // Initialize the bitmaps.
-        QwirkleBitmaps.initBitmaps(activity);
+        QwirkleView.initBitmaps(activity);
 
         init = true;
     }
@@ -317,15 +300,9 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        // Ignore if it isn't your turn.
-        if (gameState.getTurn() != playerNum) {
-            return false;
-        }
-
-        // ignore if not a "down" event
-        if (event.getAction() != MotionEvent.ACTION_DOWN) {
-            return false;
-        }
+        // Ignore if it isn't your turn or it is not "ACTION_DOWN"
+        if (gameState.getTurn() != playerNum) return false;
+        if (event.getAction() != MotionEvent.ACTION_DOWN) return false;
 
         // get the x and y coordinates of the touch-location;
         // convert them to square coordinates (where both values are in the
@@ -354,16 +331,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             handSelectedIdx = -1;
             mainBoard.setLegalMoves(null);
 
-            // Send the action to the game.
+            // Send the action to the game & invalidate boards.
             game.sendAction(pta);
-
-
-
-            // Redraw the boards.
             mainBoard.invalidate();
             sideBoard.invalidate();
-
-
 
             // return true if touch has been registered
             return true;
@@ -398,7 +369,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                     }
                 }
             }
-            //Redraw the board
+            //Redraw the boards
             mainBoard.invalidate();
             sideBoard.invalidate();
             return true;
@@ -470,6 +441,28 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         builder.setView(scoreView);
         TableLayout tableLayout = (TableLayout)scoreView.findViewById(R.id.tableLayout);
 
+        // Set the background color of the score board.
+        tableLayout.setBackgroundColor(
+                switchDarkMode.isChecked() ? Color.DKGRAY : Color.WHITE);
+
+        // To change the color of the text with dark mode.
+        int textColor = switchDarkMode.isChecked() ? Color.WHITE : Color.BLACK;
+
+        // Set the textColor value to the label TextViews.
+        TextView scoreBoardPlayerIdLabel =
+                (TextView)scoreView.findViewById(R.id.scoreBoardPlayerIdLabel);
+        scoreBoardPlayerIdLabel.setTextColor(textColor);
+        TextView scoreBoardPlayerNameLabel =
+                (TextView)scoreView.findViewById(R.id.scoreBoardPlayerNameLabel);
+        scoreBoardPlayerNameLabel.setTextColor(textColor);
+        TextView scoreBoardPlayerTypeLabel =
+                (TextView)scoreView.findViewById(R.id.scoreBoardPlayerTypeLabel);
+        scoreBoardPlayerTypeLabel.setTextColor(textColor);
+        TextView scoreBoardPlayerScoreLabel =
+                (TextView)scoreView.findViewById(R.id.scoreBoardPlayerScoreLabel);
+        scoreBoardPlayerScoreLabel.setTextColor(textColor);
+
+        // To determine if they are the winner.
         ArrayList currentWinners = gameState.getWinners();
         for (int i=0; i<allPlayerNames.length; i++) {
             /*
@@ -487,31 +480,32 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                     (LinearLayout.LayoutParams.WRAP_CONTENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT));
 
+            // See if they are the current winner.
             boolean winner = currentWinners.contains(i);
 
             TextView textViewPlayerId = new TextView(dialogContext);
-            textViewPlayerId.setTextColor(Color.BLACK);
+            textViewPlayerId.setTextColor(textColor);
             textViewPlayerId.setText(Integer.toString(i));
             textViewPlayerId.setTextSize(24f);
             if (winner) textViewPlayerId.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerId);
 
             TextView textViewPlayerName = new TextView(dialogContext);
-            textViewPlayerName.setTextColor(Color.BLACK);
+            textViewPlayerName.setTextColor(textColor);
             textViewPlayerName.setText(allPlayerNames[i]);
             textViewPlayerName.setTextSize(24f);
             if (winner) textViewPlayerName.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerName);
 
             TextView textViewPlayerType = new TextView(dialogContext);
-            textViewPlayerType.setTextColor(Color.BLACK);
+            textViewPlayerType.setTextColor(textColor);
             textViewPlayerType.setText(gameState.getPlayerTypeAtIdx(i));
             textViewPlayerType.setTextSize(24f);
             if (winner) textViewPlayerType.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerType);
 
             TextView textViewPlayerScore = new TextView(dialogContext);
-            textViewPlayerScore.setTextColor(Color.BLACK);
+            textViewPlayerScore.setTextColor(textColor);
             textViewPlayerScore.setText(Integer.toString(gameState.getPlayerScore(i)));
             textViewPlayerScore.setTextSize(24f);
             if (winner) textViewPlayerScore.setTypeface(null, Typeface.BOLD);
