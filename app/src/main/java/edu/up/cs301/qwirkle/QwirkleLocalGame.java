@@ -114,7 +114,8 @@ public class QwirkleLocalGame extends LocalGame {
 
         QwirkleTile[][] playerHands = gameState.getPlayerHands();
         for (int playerId=0; playerId<players.length; playerId++) {
-            if (rules.validMovesExist(playerHands[playerId], gameState.getBoard())) {
+            if (rules.validMovesExist(playerHands[playerId],
+                    gameState.getBoard())) {
                 return null;
             }
         }

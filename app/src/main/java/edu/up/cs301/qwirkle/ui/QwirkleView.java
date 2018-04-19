@@ -27,7 +27,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 18, 2018
+ * @version April 19, 2018
  */
 public class QwirkleView extends View {
     // Hashtables for all Bitmaps (static)
@@ -160,8 +160,8 @@ public class QwirkleView extends View {
                         false);
 
                 // Get the selected Bitmaps.
-                int pressedId = activity.getResources().getIdentifier(pressedName,
-                        "drawable", activity.getPackageName());
+                int pressedId = activity.getResources().getIdentifier
+                        (pressedName, "drawable", activity.getPackageName());
                 Bitmap selectedBitmap = BitmapFactory.decodeResource(
                         activity.getResources(), pressedId);
                 Bitmap selectedBitmapSideBoard = Bitmap.createScaledBitmap(
