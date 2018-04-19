@@ -48,7 +48,7 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  */
 public class QwirkleHumanPlayer extends GameHumanPlayer
         implements View.OnTouchListener, View.OnClickListener,
-        CompoundButton.OnCheckedChangeListener{
+        CompoundButton.OnCheckedChangeListener {
 
     // instance variables
     private GameMainActivity activity; // The activity.
@@ -191,10 +191,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     /**
-     * The top view of the current state
+     * Method: getTopView
+     * The top view of the current state (for flash).
      *
-     * @return
-     *         the top view of the project
+     * @return the top view of the project
      */
     @Override
     public View getTopView() {
@@ -243,6 +243,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         }
     }
 
+    /**
+     * Method: setConstants
+     * Helper method to set the constants for the bitmaps/board & initialize them.
+     */
     private void setConstants() {
         // Constants for main board.
         CONST.RECTDIM_MAIN = mainBoard.getHeight() / CONST.BOARD_HEIGHT;
@@ -260,10 +264,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     /**
+     * Method: receiveInfo
      * Callback method, called when player gets a message
      *
-     * @param info
-     *           the message;
+     * @param info the message;
      */
     @Override
     public void receiveInfo(GameInfo info) {
@@ -295,7 +299,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     /**
-     * callback method when the screen is touched. We're looking for a screen
+     * Method: onTouch
+     * Callback method when the screen is touched. We're looking for a screen
      * touch (which we'll detect on the "down" movement onto a Qwirkle board
      * spot)
      *
@@ -387,14 +392,13 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     /**
+     * Method: getSelectedBoardIdx
      * return a position in main board while taking into account of the offset
      *
-     * @param x
-     *          x-position of spot on board
-     * @param y
-     *          y-position of spot on board
-     * @return
-     *          position of main board
+     * @param x x-position of spot on board
+     * @param y y-position of spot on board
+     *
+     * @return position of main board as a Point object.
      */
     private Point getSelectedBoardIdx(int x, int y) {
         // if the position selected is outside the main board, do nothing
@@ -411,15 +415,13 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     /**
+     * Method: getSelectedHandIdx
      * return a position in player's hand while taking into account of the
      * offset
      *
-     * @param x
-     *          x-position of spot in hand
-     * @param y
-     *          y-position of spot in hand
-     * @return
-     *          position in player's hand
+     * @param x x-position of spot in hand
+     * @param y y-position of spot in hand
+     * @return position in player's hand
      */
     private int getSelectedHandIdx(int x, int y) {
         // if the position selected is outside the side board, do nothing
@@ -433,7 +435,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
     /**
      * Method: showScoreBoard
-     * Displays the scoreboard with each player's currrent amount in the form
+     * Displays the scoreboard with each player's current amount in the form
      * of a table
      */
     private void showScoreBoard() {
@@ -536,10 +538,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     /**
+     * Method: onClick
      * callback method when something is clicked on the screen
      *
-     * @param v
-     *          the surface view
+     * @param v view (a Button)
      */
     @Override
     public void onClick(View v) {

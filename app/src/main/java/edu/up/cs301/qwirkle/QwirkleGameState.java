@@ -229,6 +229,7 @@ public class QwirkleGameState extends GameState implements Serializable {
     public int getTurn() {
         return turn;
     }
+
     /**
      * Method: getPlayerHands
      * Return the array of player hands.
@@ -238,6 +239,7 @@ public class QwirkleGameState extends GameState implements Serializable {
     public QwirkleTile[][] getPlayerHands() {
         return playerHands;
     }
+
     /**
      * Method: getBoard
      * Gets the board.
@@ -247,6 +249,7 @@ public class QwirkleGameState extends GameState implements Serializable {
     public QwirkleTile[][] getBoard() {
         return board;
     }
+
     /**
      * Method: getMyPlayerHand
      * Return the current player's hand
@@ -256,6 +259,7 @@ public class QwirkleGameState extends GameState implements Serializable {
     public QwirkleTile[] getMyPlayerHand() {
         return myPlayerHand;
     }
+
     /**
      * Method: getMyPlayerScore
      * Get the scores at index
@@ -266,16 +270,28 @@ public class QwirkleGameState extends GameState implements Serializable {
         return playerScores[playerIdx];
     }
 
+    /**
+     * Method: getTilesLeft
+     * @return Returns the amount of tiles left in the draw pile.
+     */
     public int getTilesLeft() {
         return tilesLeft;
     }
 
+    /**
+     * Method: getPlayerTypeAtIdx
+     * @param idx The player ID
+     * @return The type of the player as a String.
+     */
     public String getPlayerTypeAtIdx(int idx) {
         return playerTypes[idx];
     }
 
     /**
-     * Returns the winners with their player IDs.
+     * Method: getWinners
+     * Returns the winners as an ArrayList of their player IDs.
+     *
+     * @return The list of winners represented by their player IDs.
      */
     public ArrayList<Integer> getWinners() {
         ArrayList<Integer> winners = new ArrayList<>();
@@ -294,14 +310,12 @@ public class QwirkleGameState extends GameState implements Serializable {
     }
 
     /**
-     * Set the current board state
+     * Method: setBoardAtIdx
+     * Set a tile on the board.
      *
-     * @param x
-     *          x-position of a spot on the board
-     * @param y
-     *          y-position of a spot on the board
-     * @param tile
-     *          tile currently in a spot on the board
+     * @param x x-position of a spot on the board
+     * @param y y-position of a spot on the board
+     * @param tile tile currently in a spot on the board
      */
     public void setBoardAtIdx(int x, int y, QwirkleTile tile) {
         board[x][y] = tile;
@@ -312,14 +326,12 @@ public class QwirkleGameState extends GameState implements Serializable {
     }
 
     /**
-     * Set the player's hand
+     * Method: setPlayerHandsAtIdx
+     * Set a tile in the player's hand.
      *
-     * @param playerIdx
-     *          a specific player
-     * @param handIdx
-     *          a position in the player's hand
-     * @param tile
-     *          tile currently in the player's hand
+     * @param playerIdx a specific player
+     * @param handIdx a position in the player's hand
+     * @param tile tile to set to the handIdx.
      */
     public void setPlayerHandsAtIdx(int playerIdx, int handIdx,
                                     QwirkleTile tile) {
@@ -339,10 +351,18 @@ public class QwirkleGameState extends GameState implements Serializable {
         this.playerScores[playerIdx] = score;
     }
 
+    /**
+     * Method: getMessageBoardString
+     * @return The message board message as a String.
+     */
     public String getMessageBoardString() {
         return messageBoardString;
     }
 
+    /**
+     * Method: setMessageBoardString
+     * @param messageBoardString String to set the message board string to.
+     */
     public void setMessageBoardString(String messageBoardString) {
         this.messageBoardString = messageBoardString;
     }

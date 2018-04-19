@@ -26,7 +26,6 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  */
 public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     // instance variables
-
     private QwirkleTile[] myPlayerHand; // The player's hand
     private QwirkleTile[][] board; // The board
     private QwirkleGameState gameState; // The game state
@@ -59,11 +58,13 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
             return;
         }
 
+        // Initialize game state and check for valid turn.
         this.gameState = (QwirkleGameState)info;
         if (this.gameState.getTurn() != this.playerNum) {
             return;
         }
 
+        // Initialize board and myPlayerHand.
         this.board = gameState.getBoard();
         this.myPlayerHand = gameState.getMyPlayerHand();
 
@@ -74,6 +75,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     /**
      * Method: playRandomMove
      * Have the dumb AI place a random tile on the board whenever valid.
+     * Otherwise, it will swap or pass.
      */
     private void playRandomMove() {
         // Sleep for the computer player.

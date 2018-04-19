@@ -16,8 +16,7 @@ public class QwirkleTile implements Serializable {
     // For serialization.
     private static final long serialVersionUID = 3781304818481394857L;
 
-    // Insyance variables
-
+    // Instance variables
     private int xPos; // x position of tile
     private int yPos; // y position of tile
     private QwirkleAnimal qwirkleAnimal; // Animal of tile
@@ -69,13 +68,22 @@ public class QwirkleTile implements Serializable {
         return qwirkleAnimal.toString()+"_"+qwirkleColor.toString();
     }
 
-    // Getters
+    /**
+     * Method: getXPos
+     * @return The x position of the tile.
+     */
     public int getXPos() {
         return xPos;
     }
+
+    /**
+     * Method: getYPos
+     * @return The y position of the tile.
+     */
     public int getYPos() {
         return yPos;
     }
+
     /**
      * Method: getQwirkleAnimal
      * @return the QwirkleAnimal of bitmap
@@ -83,6 +91,7 @@ public class QwirkleTile implements Serializable {
     public QwirkleAnimal getQwirkleAnimal() {
         return qwirkleAnimal;
     }
+
     /**
      * Method: getQwirkleColor
      * @return the QwirkleColor of bitmap
@@ -92,17 +101,21 @@ public class QwirkleTile implements Serializable {
     }
 
     /**
-     * Method:
-     * @return
+     * Method: isSelected
+     * @return if the tile is selected (true), otherwise false.
      */
     public boolean isSelected() {
         return isSelected;
     }
+
+    /**
+     * Method: isMainBoard
+     * @return if the tile is on the main board (true), otherwise false.
+     */
     public boolean isMainBoard() {
         return mainBoard;
     }
 
-    // Setters
     /**
      * Method: setXPos
      * Set x position of bitmap
@@ -111,6 +124,7 @@ public class QwirkleTile implements Serializable {
     public void setXPos(int xPos) {
         this.xPos = xPos;
     }
+
     /**
      * Method: setYPos
      * Set y position of bitmap
@@ -119,6 +133,7 @@ public class QwirkleTile implements Serializable {
     public void setYPos(int yPos) {
         this.yPos = yPos;
     }
+
     /**
      * Method: setMainBoard
      * @param mainBoard True if tile on the main board, otherwise false.
@@ -126,6 +141,7 @@ public class QwirkleTile implements Serializable {
     public void setMainBoard(boolean mainBoard) {
         this.mainBoard = mainBoard;
     }
+
     /**
      * Method: setSelected
      * Set the selected bitmaps

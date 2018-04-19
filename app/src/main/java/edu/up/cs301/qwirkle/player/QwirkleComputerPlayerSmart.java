@@ -31,7 +31,6 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  */
 public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
     // instance variables
-
     private QwirkleTile[] myPlayerHand; // The player's hand
     private QwirkleTile[][] board; // The board
     private QwirkleGameState gameState; // The game state
@@ -64,11 +63,13 @@ public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
             return;
         }
 
+        // Initialize game state and check for valid turn.
         gameState = (QwirkleGameState)info;
         if (gameState.getTurn() != playerNum) {
             return;
         }
 
+        // Initialize board and myPlayerHand.
         this.board = gameState.getBoard();
         this.myPlayerHand = gameState.getMyPlayerHand();
 

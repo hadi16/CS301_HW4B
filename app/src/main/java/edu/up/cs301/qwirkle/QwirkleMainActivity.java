@@ -71,6 +71,11 @@ public class QwirkleMainActivity extends GameMainActivity {
         return defaultConfig;
     }
 
+    /**
+     * Method: createLocalGame
+     * Create a new instance of the local game.
+     * @return The QwirkleLocalGame instance.
+     */
     @Override
     public LocalGame createLocalGame() {
         return new QwirkleLocalGame();

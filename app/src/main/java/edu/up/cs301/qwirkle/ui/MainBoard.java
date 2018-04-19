@@ -51,6 +51,7 @@ public class MainBoard extends QwirkleView {
      * Constructor: MainBoard
      * @param context Object holds the current context of the view.
      * @param attrs Object holds the attributes for the view.
+     * @param defStyleAttr The style attribute.
      */
     public MainBoard(Context context, @Nullable AttributeSet attrs,
                      int defStyleAttr){
@@ -62,6 +63,8 @@ public class MainBoard extends QwirkleView {
      * Constructor: MainBoard
      * @param context Object holds the current context of the view.
      * @param attrs Object holds the attributes for the view.
+     * @param defStyleAttr The style attribute.
+     * @param defStyleRes The style resource.
      */
     public MainBoard(Context context, @Nullable AttributeSet attrs,
                      int defStyleAttr, int defStyleRes){
@@ -121,6 +124,12 @@ public class MainBoard extends QwirkleView {
         greenPaint.setStyle(Paint.Style.FILL);
     }
 
+    /**
+     * Method: setLegalMoves
+     * Set the points that are legal on the board.
+     *
+     * @param legalMoves The ArrayList of Point objects.
+     */
     public void setLegalMoves(ArrayList<Point> legalMoves) {
         this.legalMoves = legalMoves;
     }

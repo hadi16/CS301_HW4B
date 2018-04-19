@@ -28,6 +28,11 @@ public class QwirkleLocalGame extends LocalGame {
     private QwirkleGameState gameState; // the game state.
     private QwirkleRules rules = new QwirkleRules(); // for legal moves.
 
+    /**
+     * Method: start
+     * The start method is overridden to support an arbitrary amount of players.
+     * @param players The array of GamePlayer objects.
+     */
     @Override
     public void start(GamePlayer[] players) {
         /*
@@ -60,10 +65,12 @@ public class QwirkleLocalGame extends LocalGame {
             }
         }
 
+        // Initialize the game state.
         this.gameState = new QwirkleGameState(players.length, playerTypes);
     }
 
     /**
+     * Method: sendUpdatedStateTo
      * Notify the given player that its state has changed. This should involve
      * sending a GameInfo object to the player. If the game is not a perfect-
      * information game, this method should remove any information from the game
@@ -87,13 +94,12 @@ public class QwirkleLocalGame extends LocalGame {
     }
 
     /**
+     * Method: canMove
      * Tell whether the given player is allowed to make a move at the
      * present point in the game.
      *
-     * @param playerIdx
-     * 		the player's player-number (ID)
-     * @return
-     *      True if the player is allowed to move;
+     * @param playerIdx the player's player-number (ID)
+     * @return True if the player is allowed to move (otherwise false)
      */
     @Override
     protected boolean canMove(int playerIdx) {
@@ -101,10 +107,10 @@ public class QwirkleLocalGame extends LocalGame {
     }
 
     /**
+     * Method: checkIfGameOver
      * Tell whether the game has ended or if there is a winner
      *
-     * @return
-     *      Whether the game has ended or not
+     * @return Whether the game has ended (null string) or not
      */
     @Override
     protected String checkIfGameOver() {
@@ -112,6 +118,7 @@ public class QwirkleLocalGame extends LocalGame {
         // no valid moves left to complete
         if (gameState.hasTilesInPile()) return null;
 
+        // Check for any remaining valid moves.
         QwirkleTile[][] playerHands = gameState.getPlayerHands();
         for (int playerId=0; playerId<players.length; playerId++) {
             if (rules.validMovesExist(playerHands[playerId],
@@ -120,6 +127,7 @@ public class QwirkleLocalGame extends LocalGame {
             }
         }
 
+        // Check for the winner(s) and return the appropriate message.
         ArrayList<Integer> winners = gameState.getWinners();
         if (winners.size() == 0) return null;
         else if (winners.size() == 1) {
@@ -137,6 +145,7 @@ public class QwirkleLocalGame extends LocalGame {
                 if (i == 0) {
                     message = playerNames[playerId];
                 }
+                // Last iteration in the loop.
                 else if (i == winners.size()-1) {
                     message += ", and " + playerNames[playerId] + " won.";
                 }
@@ -149,12 +158,11 @@ public class QwirkleLocalGame extends LocalGame {
     }
 
     /**
+     * Method: makeMove
      * Make a move on behalf of a player.
      *
-     * @param action
-     * 			The move that the player has sent to the game
-     * @return
-     *          Tells whether the move was a legal one.
+     * @param action The move that the player has sent to the game
+     * @return Tells whether the move was a legal one.
      */
     @Override
     protected boolean makeMove(GameAction action) {

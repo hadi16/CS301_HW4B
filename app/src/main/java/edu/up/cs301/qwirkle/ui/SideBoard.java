@@ -41,6 +41,7 @@ public class SideBoard extends QwirkleView {
      * Constructor: SideBoard
      * @param context Object holds the current context of the view.
      * @param attrs Object holds the attributes for the view.
+     * @param defStyleAttr The style attribute.
      */
     public SideBoard(Context context, @Nullable AttributeSet attrs,
                      int defStyleAttr){
@@ -51,6 +52,8 @@ public class SideBoard extends QwirkleView {
      * Constructor: SideBoard
      * @param context Object holds the current context of the view.
      * @param attrs Object holds the attributes for the view.
+     * @param defStyleAttr The style attribute.
+     * @param defStyleRes The style resource.
      */
     public SideBoard(Context context, @Nullable AttributeSet attrs,
                      int defStyleAttr, int defStyleRes){

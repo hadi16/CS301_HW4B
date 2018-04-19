@@ -39,28 +39,54 @@ public class QwirkleView extends View {
     protected Paint gridPaint; // for drawing board
     protected boolean nightMode; // for night mode
 
+    /**
+     * Constructor: QwirkleView
+     * @param context The context of the view.
+     */
     public QwirkleView(Context context) {
         super(context);
         init();
     }
 
+    /**
+     * Constructor: QwirkleView
+     * @param context The context of the view.
+     * @param attrs The attributes of the view.
+     */
     public QwirkleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
+    /**
+     * Constructor: QwirkleView
+     * @param context The context of the view.
+     * @param attrs The attributes of the view.
+     * @param defStyleAttr The style attribute.
+     */
     public QwirkleView(Context context, @Nullable AttributeSet attrs,
                        int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
+    /**
+     * Constructor: QwirkleView
+     * @param context The context of the view.
+     * @param attrs The attributes of the view.
+     * @param defStyleAttr The style attribute.
+     * @param defStyleRes The style resource.
+     */
     public QwirkleView(Context context, @Nullable AttributeSet attrs,
                        int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
+    /**
+     * Method: init
+     * The gridPaint is initialized and the night mode is initially false.
+     */
     private void init() {
         gridPaint = new Paint();
         gridPaint.setColor(Color.BLACK);
@@ -74,6 +100,7 @@ public class QwirkleView extends View {
      * Method: drawTile
      * Used to draw a bitmap onto a view given a Canvas object.
      * @param canvas Canvas object to allow the bitmap to be drawn.
+     * @param tile The tile to draw.
      */
     protected void drawTile(Canvas canvas, QwirkleTile tile) {
         Bitmap bitmap;
@@ -177,6 +204,11 @@ public class QwirkleView extends View {
         }
     }
 
+    /**
+     * Method: setNightModeAndUpdateColor
+     * The night mode boolean is set and the color is updated accordingly.
+     * @param nightMode True if in night mode, otherwise false.
+     */
     public void setNightModeAndUpdateColor(boolean nightMode) {
         this.nightMode = nightMode;
         gridPaint.setColor(nightMode ? Color.WHITE : Color.BLACK);
