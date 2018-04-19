@@ -564,11 +564,14 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             return;
         }
 
+        //if scores button is pressed, call showScoreBoard
         if (v.getId() == R.id.buttonScores) {
             showScoreBoard();
             return;
         }
 
+        //if swap button is pass button and it is pressed,
+        // create new PassAction and send it to the game
         if (v.getId() == R.id.buttonSwap && pass) {
             PassAction pa = new PassAction(this);
             game.sendAction(pa);
