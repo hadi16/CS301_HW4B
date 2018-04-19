@@ -121,6 +121,12 @@ public class MainBoard extends QwirkleView {
         greenPaint.setStyle(Paint.Style.FILL);
     }
 
+    /**
+     * Method: setLegalMoves
+     * Set the legal moves a player can make with the tiles in their hand
+     * @param legalMoves positions on the board where a tile can legally be
+     *                   placed
+     */
     public void setLegalMoves(ArrayList<Point> legalMoves) {
         this.legalMoves = legalMoves;
     }

@@ -35,38 +35,68 @@ public class QwirkleView extends View {
     private static Hashtable<String, Bitmap> sideBoardBitmaps = null;
     private static Hashtable<String, Bitmap> selectedSideBoardBitmaps = null;
 
+    // Instance variables
+
     protected QwirkleGameState gameState; // Instance of the game state.
     protected Paint gridPaint; // for drawing board
     protected boolean nightMode; // for night mode
 
+    /**
+     * Constructor: QwirkleView
+     * @param context Object holds the current context of the view
+     */
     public QwirkleView(Context context) {
         super(context);
         init();
     }
 
+    /**
+     * Constructor: QwirkleView
+     * @param context Object holds the current context of the view
+     * @param attrs Object holds the attributes for the view
+     */
     public QwirkleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
+    /**
+     * Constructor: QwirkleView
+     * @param context Object holds the current context of the view
+     * @param attrs Object holds the attributes for the view
+     * @param defStyleAttr the style attribute of the view
+     */
     public QwirkleView(Context context, @Nullable AttributeSet attrs,
                        int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
+    /**
+     * Constructor: QwirkleView
+     * @param context Object holds the current context of the view
+     * @param attrs Object holds the attributes for the view
+     * @param defStyleAttr the style attribute of the view
+     * @param defStyleRes the style resolution of the view
+     */
     public QwirkleView(Context context, @Nullable AttributeSet attrs,
                        int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
+    /**
+     * Method: init
+     * Initializes the grid and background
+     */
     private void init() {
+        // draw the grid lines
         gridPaint = new Paint();
         gridPaint.setColor(Color.BLACK);
         gridPaint.setStrokeWidth(3.0f);
         gridPaint.setStyle(Paint.Style.STROKE);
 
+        // turn night mode off as default
         nightMode = false;
     }
 
@@ -76,6 +106,7 @@ public class QwirkleView extends View {
      * @param canvas Canvas object to allow the bitmap to be drawn.
      */
     protected void drawTile(Canvas canvas, QwirkleTile tile) {
+        // position the tiles when placed on the board
         Bitmap bitmap;
         int rectDim, offset;
         if (tile.isMainBoard()) {
@@ -177,6 +208,11 @@ public class QwirkleView extends View {
         }
     }
 
+    /**
+     * Method: setNightModeAndUpdateColor
+     * Access the night mode of the game and change the background color
+     * @param nightMode
+     */
     public void setNightModeAndUpdateColor(boolean nightMode) {
         this.nightMode = nightMode;
         gridPaint.setColor(nightMode ? Color.WHITE : Color.BLACK);

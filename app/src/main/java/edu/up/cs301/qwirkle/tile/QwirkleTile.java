@@ -70,9 +70,19 @@ public class QwirkleTile implements Serializable {
     }
 
     // Getters
+
+    /**
+     * Method: getXPos
+     * @return the X position of bitmap on board
+     */
     public int getXPos() {
         return xPos;
     }
+
+    /**
+     * Method: getYPos
+     * @return the Y position of bitmap on board
+     */
     public int getYPos() {
         return yPos;
     }
@@ -90,14 +100,18 @@ public class QwirkleTile implements Serializable {
     public QwirkleColor getQwirkleColor() {
         return qwirkleColor;
     }
-
     /**
-     * Method:
-     * @return
+     * Method: isSelected
+     * @return whether a tile has been selected
      */
     public boolean isSelected() {
         return isSelected;
     }
+
+    /**
+     * Method: isMainBoard
+     * @return the mainboard
+     */
     public boolean isMainBoard() {
         return mainBoard;
     }
