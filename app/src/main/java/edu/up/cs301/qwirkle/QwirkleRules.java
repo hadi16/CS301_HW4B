@@ -16,7 +16,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 14, 2018
+ * @version April 19, 2018
  */
 public class QwirkleRules {
     private ArrayList<QwirkleTile> lineNS;
@@ -254,5 +254,12 @@ public class QwirkleRules {
 
         // return false if there are no more valid moves.
         return false;
+    }
+
+    public int getNumQwirkles() {
+        if (this.lineNS.size() == 6 && this.lineEW.size() == 6) return 2;
+        if (this.lineNS.size() == 6) return 1;
+        if (this.lineEW.size() == 6) return 1;
+        return 0;
     }
 }

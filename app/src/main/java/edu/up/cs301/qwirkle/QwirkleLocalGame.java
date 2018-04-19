@@ -22,7 +22,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 18, 2018
+ * @version April 19, 2018
  */
 public class QwirkleLocalGame extends LocalGame {
     private QwirkleGameState gameState; // the game state.
@@ -189,8 +189,18 @@ public class QwirkleLocalGame extends LocalGame {
             gameState.setPlayerHandsAtIdx(playerIdx, handIdx,
                     gameState.getRandomTile());
 
-            // Set the message board string & change the turn.
-            gameState.setMessageBoardString(playerName + " placed a tile");
+            // Set the message board string/
+            String messageBoardString = "";
+            messageBoardString += playerName + " placed a tile";
+            int numQwirkles = rules.getNumQwirkles();
+            if (numQwirkles == 1) {
+                messageBoardString += " and got a qwirkle!";
+            } else if (numQwirkles == 2) {
+                messageBoardString += " and got two qwirkles!";
+            }
+            gameState.setMessageBoardString(messageBoardString);
+
+            // Change the turn
             gameState.changeTurn();
             return true;
         }
