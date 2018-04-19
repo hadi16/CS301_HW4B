@@ -44,14 +44,13 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 18, 2018
+ * @version April 19, 2018
  */
 public class QwirkleHumanPlayer extends GameHumanPlayer
         implements View.OnTouchListener, View.OnClickListener,
         CompoundButton.OnCheckedChangeListener{
 
     // instance variables
-
     private GameMainActivity activity; // The activity.
     private QwirkleGameState gameState; // The game state.
     private QwirkleRules rules = new QwirkleRules(); // For valid moves.
@@ -97,7 +96,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      * @param activity The current activity object.
      */
     @Override
-    public void setAsGui(final GameMainActivity activity) {
+    public void setAsGui(GameMainActivity activity) {
         // Initialize passed activity object
         this.activity = activity;
 
@@ -212,15 +211,17 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             * Date: April 11 2018
             * Problem: Couldn't update the GUI correctly
             * Source:
-            * https://github.com/srvegdahl/CounterGame/blob/master/app/src/main/java/
-            * edu/up/cs301/counter/CounterHumanPlayer.java
+            * https://github.com/srvegdahl/CounterGame/blob/master/app/src/
+            * main/java/edu/up/cs301/counter/CounterHumanPlayer.java
             * Solution:
             * Used Vegdahl's code as reference
         */
         // Update turn
-        textViewTurnLabel.setText("Turn: " + allPlayerNames[gameState.getTurn()]);
+        textViewTurnLabel.setText
+                ("Turn: " + allPlayerNames[gameState.getTurn()]);
         // Update my score
-        textViewMyScore.setText("My Score: " + gameState.getPlayerScore(playerNum));
+        textViewMyScore.setText
+                ("My Score: " + gameState.getPlayerScore(playerNum));
         // Update number of tiles left.
         textViewTilesLeft.setText("Tiles Left: " + gameState.getTilesLeft());
         // Update message board.
@@ -245,7 +246,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private void setConstants() {
         // Constants for main board.
         CONST.RECTDIM_MAIN = mainBoard.getHeight() / CONST.BOARD_HEIGHT;
-        CONST.OFFSET_MAIN = (mainBoard.getWidth() - (CONST.BOARD_WIDTH*CONST.RECTDIM_MAIN)) / 2;
+        CONST.OFFSET_MAIN =
+                (mainBoard.getWidth()-(CONST.BOARD_WIDTH*CONST.RECTDIM_MAIN))/2;
 
         // Constants for side board.
         CONST.RECTDIM_SIDE = sideBoard.getHeight() / CONST.NUM_IN_HAND;
@@ -450,7 +452,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         LayoutInflater inflater = LayoutInflater.from(dialogContext);
         View scoreView = inflater.inflate(R.layout.qwirkle_scoreboard, null);
         builder.setView(scoreView);
-        TableLayout tableLayout = (TableLayout)scoreView.findViewById(R.id.tableLayout);
+        TableLayout tableLayout =
+                (TableLayout)scoreView.findViewById(R.id.tableLayout);
 
         // Set the background color of the score board.
         tableLayout.setBackgroundColor(
@@ -460,18 +463,18 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         int textColor = switchDarkMode.isChecked() ? Color.WHITE : Color.BLACK;
 
         // Set the textColor value to the label TextViews.
-        TextView scoreBoardPlayerIdLabel =
-                (TextView)scoreView.findViewById(R.id.scoreBoardPlayerIdLabel);
-        scoreBoardPlayerIdLabel.setTextColor(textColor);
-        TextView scoreBoardPlayerNameLabel =
-                (TextView)scoreView.findViewById(R.id.scoreBoardPlayerNameLabel);
-        scoreBoardPlayerNameLabel.setTextColor(textColor);
-        TextView scoreBoardPlayerTypeLabel =
-                (TextView)scoreView.findViewById(R.id.scoreBoardPlayerTypeLabel);
-        scoreBoardPlayerTypeLabel.setTextColor(textColor);
-        TextView scoreBoardPlayerScoreLabel =
-                (TextView)scoreView.findViewById(R.id.scoreBoardPlayerScoreLabel);
-        scoreBoardPlayerScoreLabel.setTextColor(textColor);
+        TextView scoreBoardIdLabel =
+                (TextView)scoreView.findViewById(R.id.scoreBoardIdLabel);
+        scoreBoardIdLabel.setTextColor(textColor);
+        TextView scoreBoardNameLabel =
+                (TextView)scoreView.findViewById(R.id.scoreBoardNameLabel);
+        scoreBoardNameLabel.setTextColor(textColor);
+        TextView scoreBoardTypeLabel =
+                (TextView)scoreView.findViewById(R.id.scoreBoardTypeLabel);
+        scoreBoardTypeLabel.setTextColor(textColor);
+        TextView scoreBoardScoreLabel =
+                (TextView)scoreView.findViewById(R.id.scoreBoardScoreLabel);
+        scoreBoardScoreLabel.setTextColor(textColor);
 
         // To determine if they are the winner.
         ArrayList currentWinners = gameState.getWinners();
@@ -517,7 +520,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
             TextView textViewPlayerScore = new TextView(dialogContext);
             textViewPlayerScore.setTextColor(textColor);
-            textViewPlayerScore.setText(Integer.toString(gameState.getPlayerScore(i)));
+            textViewPlayerScore.setText
+                    (Integer.toString(gameState.getPlayerScore(i)));
             textViewPlayerScore.setTextSize(24f);
             if (winner) textViewPlayerScore.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerScore);

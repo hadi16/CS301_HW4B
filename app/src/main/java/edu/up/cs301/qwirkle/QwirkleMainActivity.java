@@ -19,7 +19,7 @@ import edu.up.cs301.qwirkle.player.QwirkleHumanPlayer;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 18, 2018
+ * @version April 19, 2018
  */
 public class QwirkleMainActivity extends GameMainActivity {
     // Have a high port number to avoid conflicts.
@@ -75,6 +75,4 @@ public class QwirkleMainActivity extends GameMainActivity {
     public LocalGame createLocalGame() {
         return new QwirkleLocalGame();
     }
-
-
 }
