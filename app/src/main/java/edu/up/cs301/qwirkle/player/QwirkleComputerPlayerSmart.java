@@ -7,6 +7,7 @@ import edu.up.cs301.game.GameComputerPlayer;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
+import edu.up.cs301.qwirkle.CONST;
 import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.QwirkleRules;
 import edu.up.cs301.qwirkle.action.PassAction;
@@ -26,16 +27,13 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 18, 2018
+ * @version April 19, 2018
  */
 public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
     private QwirkleTile[] myPlayerHand; // The player's hand
     private QwirkleTile[][] board; // The board
     private QwirkleGameState gameState;
     private QwirkleRules rules = new QwirkleRules(); // For valid moves
-
-    // Constant for 1000-millisecond delay
-    private static final int TIME_TO_SLEEP = 1000;
 
     /**
      * Constructor: QwirkleComputerPlayerSmart
@@ -78,7 +76,7 @@ public class QwirkleComputerPlayerSmart extends GameComputerPlayer {
 
     private void playSmartMove() {
         // Sleep for the computer player.
-        sleep(TIME_TO_SLEEP);
+        sleep(CONST.COMPUTER_PLAYER_TIME_TO_SLEEP);
 
         //ArrayList that stores all scores and its corresponding PlaceTileAction.
         Hashtable<Integer, PlaceTileAction> allScores = new Hashtable<>();

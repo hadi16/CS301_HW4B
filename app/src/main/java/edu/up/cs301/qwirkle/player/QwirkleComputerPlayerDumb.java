@@ -22,7 +22,7 @@ import edu.up.cs301.qwirkle.tile.QwirkleTile;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 18, 2018
+ * @version April 19, 2018
  */
 public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
     private QwirkleTile[] myPlayerHand; // The player's hand
@@ -75,7 +75,7 @@ public class QwirkleComputerPlayerDumb extends GameComputerPlayer {
      */
     private void playRandomMove() {
         // Sleep for the computer player.
-        sleep(CONST.COMP_PLAYER_TIME_TO_SLEEP);
+        sleep(CONST.COMPUTER_PLAYER_TIME_TO_SLEEP);
 
         //Iterate through each tile in the player's hand
         for (int tileIdx=0; tileIdx<myPlayerHand.length; tileIdx++) {
