@@ -44,14 +44,13 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 18, 2018
+ * @version April 19, 2018
  */
 public class QwirkleHumanPlayer extends GameHumanPlayer
         implements View.OnTouchListener, View.OnClickListener,
         CompoundButton.OnCheckedChangeListener{
 
     // instance variables
-
     private GameMainActivity activity; // The activity.
     private QwirkleGameState gameState; // The game state.
     private QwirkleRules rules = new QwirkleRules(); // For valid moves.
@@ -97,7 +96,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      * @param activity The current activity object.
      */
     @Override
-    public void setAsGui(final GameMainActivity activity) {
+    public void setAsGui(GameMainActivity activity) {
         // Initialize passed activity object
         this.activity = activity;
 

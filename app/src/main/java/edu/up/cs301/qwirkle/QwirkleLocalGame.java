@@ -189,16 +189,17 @@ public class QwirkleLocalGame extends LocalGame {
             gameState.setPlayerHandsAtIdx(playerIdx, handIdx,
                     gameState.getRandomTile());
 
-            // Set the message board string/
-            String messageBoardString = "";
-            messageBoardString += playerName + " placed a tile";
+            // Set the message board string
+            String message;
+            message = String.format("%s placed a tile and received %d points.",
+                    playerName, points);
             int numQwirkles = rules.getNumQwirkles();
             if (numQwirkles == 1) {
-                messageBoardString += " and got a qwirkle!";
+                message += " They got a Qwirkle!";
             } else if (numQwirkles == 2) {
-                messageBoardString += " and got two qwirkles!";
+                message += " They got two Qwirkles!";
             }
-            gameState.setMessageBoardString(messageBoardString);
+            gameState.setMessageBoardString(message);
 
             // Change the turn
             gameState.changeTurn();
@@ -209,7 +210,7 @@ public class QwirkleLocalGame extends LocalGame {
         else if (action instanceof SwapTileAction) {
             SwapTileAction sta = (SwapTileAction) action;
 
-            // Swap all of the tiles.
+            // Swap all of the tiles in the ArrayList.
             ArrayList<Integer> tilesToSwap = sta.getSwapIdx();
             int playerId = getPlayerIdx(sta.getPlayer());
             for (int i : tilesToSwap) {
@@ -219,14 +220,17 @@ public class QwirkleLocalGame extends LocalGame {
                 gameState.setPlayerHandsAtIdx(playerId, i,
                         gameState.getRandomTile());
             }
+
             // Set the message board string & change the turn.
-            gameState.setMessageBoardString(playerName + " swapped");
+            String message = String.format("%s swapped %d tiles.", playerName,
+                    tilesToSwap.size());
+            gameState.setMessageBoardString(message);
             gameState.changeTurn();
             return true;
         }
         else if (action instanceof PassAction) {
             // Set the message board string & change the turn.
-            gameState.setMessageBoardString(playerName + " passed");
+            gameState.setMessageBoardString(playerName + " passed.");
             gameState.changeTurn();
             return true;
         }
