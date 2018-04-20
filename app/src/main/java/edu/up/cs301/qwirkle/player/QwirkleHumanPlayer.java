@@ -219,7 +219,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         */
         // Update turn
         if(allPlayerNames[gameState.getTurn()].length() <= 12) {
-
+            textViewTurnLabel.setText
+                    ("Turn: " + allPlayerNames[gameState.getTurn()]);
         }
         else if(allPlayerNames[gameState.getTurn()].length() > 12 &&
                 allPlayerNames[gameState.getTurn()].length() <= 16)  {
