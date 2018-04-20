@@ -108,13 +108,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         // Set the player TextView to the user's name.
         textViewPlayerLabel =
                 (TextView)activity.findViewById(R.id.textViewPlayerLabel);
-        textViewPlayerLabel.setText("My Name: " + name);
 
-        if(name.length() <= 10) {
+        if(name.length() <= 9) {
             textViewPlayerLabel.setText
                     ("My Name: " + name);
         }
-        else if(name.length() > 10 && name.length() <= 13)  {
+        else if(name.length() > 9 && name.length() <= 13)  {
             textViewPlayerLabel.setTextSize(15.0f);
             textViewPlayerLabel.setText("My Name: " + name);
         }
