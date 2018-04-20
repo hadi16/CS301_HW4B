@@ -29,7 +29,8 @@ import edu.up.cs301.qwirkle.player.QwirkleHumanPlayer;
  * We have more debugging to do.
  *
  * Features added: night mode and message board at bottom of screen which
- * lets you know what actions players take
+ * lets you know what actions players take. The user can also see the legal
+ * moves for a given selected tile in green.
  *
  * @author Alex Hadi
  * @author Michael Quach
