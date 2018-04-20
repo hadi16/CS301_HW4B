@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
@@ -108,6 +109,31 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         textViewPlayerLabel =
                 (TextView)activity.findViewById(R.id.textViewPlayerLabel);
         textViewPlayerLabel.setText("My Name: " + name);
+
+        if(name.length() <= 10) {
+            textViewPlayerLabel.setText
+                    ("My Name: " + name);
+        }
+        else if(name.length() > 10 && name.length() <= 13)  {
+            textViewPlayerLabel.setTextSize(15.0f);
+            textViewPlayerLabel.setText("My Name: " + name);
+        }
+        else if (name.length() > 13 && name.length() <= 15)  {
+            textViewPlayerLabel.setTextSize(13.0f);
+            textViewPlayerLabel.setText("My Name: " + name);
+        }
+        else if (name.length() > 15 && name.length() <= 18)  {
+            textViewPlayerLabel.setTextSize(11.0f);
+            textViewPlayerLabel.setText("My Name: " + name);
+        }
+        else if (name.length() > 18 && name.length() <= 20)  {
+            textViewPlayerLabel.setTextSize(9.0f);
+            textViewPlayerLabel.setText("My Name: " + name);
+        }
+        else {
+            textViewPlayerLabel.setTextSize(7.0f);
+            textViewPlayerLabel.setText("My Name: " + name);
+        }
 
         // Initialize the TextViews by using findViewById.
         textViewTurnLabel =
@@ -218,25 +244,27 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             * Used Vegdahl's code as reference
         */
         // Update turn
-        if(allPlayerNames[gameState.getTurn()].length() <= 12) {
+        String turnLabel = allPlayerNames[gameState.getTurn()];
+        int turnLabelLength = allPlayerNames[gameState.getTurn()].length();
+        if(turnLabelLength <= 12) {
             textViewTurnLabel.setText
-                    ("Turn: " + allPlayerNames[gameState.getTurn()]);
+                    ("Turn: " + turnLabel);
         }
-        else if(allPlayerNames[gameState.getTurn()].length() > 12 &&
-                allPlayerNames[gameState.getTurn()].length() <= 16)  {
+        else if(turnLabelLength > 12 &&
+                turnLabelLength <= 16)  {
             textViewTurnLabel.setTextSize(15.0f);
             textViewTurnLabel.setText
-                    ("Turn: " + allPlayerNames[gameState.getTurn()]);
+                    ("Turn: " + turnLabel);
         }
-        else if (allPlayerNames[gameState.getTurn()].length() > 16 &&
-                allPlayerNames[gameState.getTurn()].length() <= 19)  {
+        else if (turnLabelLength > 16 &&
+                turnLabelLength <= 19)  {
             textViewTurnLabel.setTextSize(13.0f);
             textViewTurnLabel.setText
-                    ("Turn: " + allPlayerNames[gameState.getTurn()]);
+                    ("Turn: " + turnLabel);
         }
         else {
             textViewTurnLabel.setTextSize(11.0f);
-            textViewTurnLabel.setText("Turn: " + allPlayerNames[gameState.getTurn()]);
+            textViewTurnLabel.setText("Turn: " + turnLabel);
         }
 
         // Update my score
