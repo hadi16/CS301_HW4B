@@ -26,6 +26,9 @@ import edu.up.cs301.qwirkle.player.QwirkleHumanPlayer;
  * blank spot, it selects a different tile in the player's hand. And vice
  * versa for the other tile. However, game play still works and you are able
  * to play the tiles in the hand. We are not sure why this is happening.
+ *
+ * Features added: night mode and message board at bottom of screen which
+ * lets you know what actions players take
  * We have more debugging to do.
  *
  * @author Alex Hadi
