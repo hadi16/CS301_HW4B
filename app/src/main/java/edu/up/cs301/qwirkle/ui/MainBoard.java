@@ -28,6 +28,7 @@ public class MainBoard extends QwirkleView {
     private Paint greenPaint;
     private ArrayList<Point> legalMoves;
 
+
     /**
      * Constructor: MainBoard
      * @param context Object holds the current context of the view.
@@ -112,6 +113,7 @@ public class MainBoard extends QwirkleView {
                     (x+1)*CONST.RECTDIM_MAIN+CONST.OFFSET_MAIN,
                     (y+1)*CONST.RECTDIM_MAIN, greenPaint);
         }
+
     }
 
     /**
@@ -133,4 +135,5 @@ public class MainBoard extends QwirkleView {
     public void setLegalMoves(ArrayList<Point> legalMoves) {
         this.legalMoves = legalMoves;
     }
+
 }

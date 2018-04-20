@@ -14,6 +14,18 @@ import edu.up.cs301.qwirkle.player.QwirkleHumanPlayer;
 /**
  * Class: QwirkleMainActivity
  * This class contains the code to interact with the QwirkleMainActivity XML.
+ * Status: We have one minor bug which is when you enter in a long name for one
+ * of the players, each time it was their turn, the whole board was pushed down
+ * to accommodate the whole name. We will work on setting up an if statement
+ * which checks player name length and adjusts text size based on that length.
+ *
+ * The only other kind of critical bug we found was during network play,
+ * when the network player tries to swap out all six of their tiles, when
+ * they get new tiles, one tile is always blank. And when you click on that
+ * blank spot, it selects a different tile in the player's hand. And vice
+ * versa for the other tile. However, game play still works and you are able
+ * to play the tiles in the hand. We are not sure why this is happening.
+ * We have more debugging to do.
  *
  * @author Alex Hadi
  * @author Michael Quach

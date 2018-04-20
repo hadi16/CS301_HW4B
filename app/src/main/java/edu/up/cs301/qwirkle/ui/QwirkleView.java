@@ -219,6 +219,7 @@ public class QwirkleView extends View {
         gridPaint.setColor(nightMode ? Color.WHITE : Color.BLACK);
     }
 
+
     /**
      * Method: setGameState
      * set the game state to the current game state

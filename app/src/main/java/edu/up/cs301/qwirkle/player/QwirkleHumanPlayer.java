@@ -15,6 +15,7 @@ import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -346,8 +347,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             game.sendAction(pta);
             mainBoard.invalidate();
             sideBoard.invalidate();
-
-            // return true if touch has been registered
             return true;
         }
         // access the side board in order to allow touch detection
@@ -571,7 +570,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         }
 
         //if swap button is pass button and it is pressed,
-        // create new PassAction and send it to the game
+        //create new PassAction and send it to the game
         if (v.getId() == R.id.buttonSwap && pass) {
             PassAction pa = new PassAction(this);
             game.sendAction(pa);
