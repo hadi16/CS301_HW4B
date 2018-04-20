@@ -113,15 +113,15 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             textViewPlayerLabel.setText
                     ("My Name: " + name);
         }
-        else if(name.length() > 9 && name.length() <= 13)  {
+        else if(name.length() > 9 && name.length() <= 12)  {
             textViewPlayerLabel.setTextSize(15.0f);
             textViewPlayerLabel.setText("My Name: " + name);
         }
-        else if (name.length() > 13 && name.length() <= 15)  {
+        else if (name.length() > 12 && name.length() <= 14)  {
             textViewPlayerLabel.setTextSize(13.0f);
             textViewPlayerLabel.setText("My Name: " + name);
         }
-        else if (name.length() > 15 && name.length() <= 18)  {
+        else if (name.length() > 14 && name.length() <= 18)  {
             textViewPlayerLabel.setTextSize(11.0f);
             textViewPlayerLabel.setText("My Name: " + name);
         }
