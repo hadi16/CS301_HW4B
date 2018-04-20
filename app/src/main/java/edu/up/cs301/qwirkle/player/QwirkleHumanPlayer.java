@@ -218,8 +218,26 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             * Used Vegdahl's code as reference
         */
         // Update turn
-        textViewTurnLabel.setText
-                ("Turn: " + allPlayerNames[gameState.getTurn()]);
+        if(allPlayerNames[gameState.getTurn()].length() <= 12) {
+
+        }
+        else if(allPlayerNames[gameState.getTurn()].length() > 12 &&
+                allPlayerNames[gameState.getTurn()].length() <= 16)  {
+            textViewTurnLabel.setTextSize(15.0f);
+            textViewTurnLabel.setText
+                    ("Turn: " + allPlayerNames[gameState.getTurn()]);
+        }
+        else if (allPlayerNames[gameState.getTurn()].length() > 16 &&
+                allPlayerNames[gameState.getTurn()].length() <= 19)  {
+            textViewTurnLabel.setTextSize(13.0f);
+            textViewTurnLabel.setText
+                    ("Turn: " + allPlayerNames[gameState.getTurn()]);
+        }
+        else {
+            textViewTurnLabel.setTextSize(11.0f);
+            textViewTurnLabel.setText("Turn: " + allPlayerNames[gameState.getTurn()]);
+        }
+
         // Update my score
         textViewMyScore.setText
                 ("My Score: " + gameState.getPlayerScore(playerNum));

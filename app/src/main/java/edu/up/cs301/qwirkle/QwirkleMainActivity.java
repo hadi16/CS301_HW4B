@@ -14,6 +14,7 @@ import edu.up.cs301.qwirkle.player.QwirkleHumanPlayer;
 /**
  * Class: QwirkleMainActivity
  * This class contains the code to interact with the QwirkleMainActivity XML.
+ *
  * Status: We have one minor bug which is when you enter in a long name for one
  * of the players, each time it was their turn, the whole board was pushed down
  * to accommodate the whole name. We will work on setting up an if statement
