@@ -15,10 +15,8 @@ import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
@@ -46,7 +44,7 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 19, 2018
+ * @version April 22, 2018
  */
 public class QwirkleHumanPlayer extends GameHumanPlayer
         implements View.OnTouchListener, View.OnClickListener,
@@ -410,6 +408,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
 
             // To prevent multiple tiles from being selected when not in swap.
             if (!swap) {
+                if (handSelectedIdx != -1) {
+                    myPlayerHand[handSelectedIdx].setSelected(false);
+                }
+
                 if (tileSelected.isSelected()) {
                     handSelectedIdx = yPos;
                     mainBoard.setLegalMoves(rules.getLegalMoves(tileSelected,
@@ -419,13 +421,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                     handSelectedIdx = -1;
                     mainBoard.setLegalMoves(null);
                 }
-                for (int i = 0; i < myPlayerHand.length; i++) {
-                    if (yPos == i) continue;
-                    if (myPlayerHand[i] != null) {
-                        myPlayerHand[i].setSelected(false);
-                    }
-                }
             }
+
             //Redraw the boards
             mainBoard.invalidate();
             sideBoard.invalidate();
@@ -550,7 +547,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             textViewPlayerId.setTextColor(textColor);
             textViewPlayerId.setText(Integer.toString(i));
             textViewPlayerId.setTextSize(24f);
-            if (winner) textViewPlayerId.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerId);
 
             //sets up player name, checks if player is winning
@@ -559,7 +555,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             textViewPlayerName.setTextColor(textColor);
             textViewPlayerName.setText(allPlayerNames[i]);
             textViewPlayerName.setTextSize(24f);
-            if (winner) textViewPlayerName.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerName);
 
             //sets up player type, checks if player is winning
@@ -568,7 +563,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             textViewPlayerType.setTextColor(textColor);
             textViewPlayerType.setText(gameState.getPlayerTypeAtIdx(i));
             textViewPlayerType.setTextSize(24f);
-            if (winner) textViewPlayerType.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerType);
 
             //sets up player score, checks if player is winning
@@ -578,8 +572,14 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             textViewPlayerScore.setText
                     (Integer.toString(gameState.getPlayerScore(i)));
             textViewPlayerScore.setTextSize(24f);
-            if (winner) textViewPlayerScore.setTypeface(null, Typeface.BOLD);
             tableRow.addView(textViewPlayerScore);
+
+            if (winner) {
+                textViewPlayerId.setTypeface(null, Typeface.BOLD);
+                textViewPlayerName.setTypeface(null, Typeface.BOLD);
+                textViewPlayerType.setTypeface(null, Typeface.BOLD);
+                textViewPlayerScore.setTypeface(null, Typeface.BOLD);
+            }
 
             //add row in table for each player
             tableLayout.addView(tableRow);
@@ -599,38 +599,40 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
      */
     @Override
     public void onClick(View v) {
-        // Only allow the scoreboard to be accessed when not your turn.
-        if (v.getId() != R.id.buttonScores && gameState.getTurn() != playerNum) {
-            return;
-        }
-
-        // if the swap or scores button is not pressed, do nothing
-        if (v.getId() != R.id.buttonSwap && v.getId() != R.id.buttonScores) {
-            return;
-        }
-
-        //if scores button is pressed, call showScoreBoard
+        // if scores button is pressed, always call showScoreBoard
         if (v.getId() == R.id.buttonScores) {
             showScoreBoard();
             return;
         }
 
-        //if swap button is pass button and it is pressed,
-        //create new PassAction and send it to the game
-        if (v.getId() == R.id.buttonSwap && pass) {
+        // Otherwise, it must be your turn.
+        if (gameState.getTurn() != playerNum) return;
+
+        // If swap was not pressed, ignore (scores already checked for).
+        if (v.getId() != R.id.buttonSwap) return;
+
+        // If in pass mode, just pass.
+        if (pass) {
             PassAction pa = new PassAction(this);
             game.sendAction(pa);
             return;
         }
 
-        // If swap button is pressed and there is nothing to swap, do nothing.
+        // Revert the swap boolean.
+        swap = !swap;
+
         if (swap) {
+            buttonSwap.setText("End");
+            mainBoard.setLegalMoves(null);
+        }
+        else {
+            buttonSwap.setText("Swap");
+
+            // If swap button was pressed & there's nothing to swap, do nothing.
             boolean somethingToSwap = false;
             for (QwirkleTile tile : myPlayerHand) {
                 if (tile == null) continue;
-                if (tile.isSelected()) {
-                    somethingToSwap = true;
-                }
+                if (tile.isSelected()) somethingToSwap = true;
             }
 
             if (somethingToSwap) {
@@ -646,18 +648,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                     }
                 }
             }
-        }
-
-        // Revert the swap boolean.
-        swap = !swap;
-
-        // If button clicked, make text "End" (otherwise keep it as "Swap")
-        if (swap) {
-            buttonSwap.setText("End");
-            mainBoard.setLegalMoves(null);
-        }
-        else {
-            buttonSwap.setText("Swap");
         }
 
         // Redraw after performing the action
