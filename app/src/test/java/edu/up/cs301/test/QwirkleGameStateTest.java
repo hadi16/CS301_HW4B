@@ -2,6 +2,9 @@ package edu.up.cs301.test;
 
 import org.junit.Test;
 
+import edu.up.cs301.game.Game;
+import edu.up.cs301.game.infoMsg.GameState;
+import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.tile.QwirkleAnimal;
 import edu.up.cs301.qwirkle.tile.QwirkleColor;
 import edu.up.cs301.qwirkle.tile.QwirkleTile;
@@ -22,14 +25,24 @@ import static org.junit.Assert.*;
 public class QwirkleGameStateTest {
     @Test
     public void addToDrawPile() throws Exception {
+        String[] playerTypes = new String[2];
+        playerTypes[0] = "local human player";
+        playerTypes[1] = "easy AI player";
+        QwirkleGameState testGameState = new QwirkleGameState(2, playerTypes );
         QwirkleTile tile1 = new QwirkleTile(QwirkleAnimal.dog, QwirkleColor.blue);
-        QwirkleTile tile2 = new QwirkleTile(QwirkleAnimal.owl, QwirkleColor.green);
-        QwirkleTile tile3 = new QwirkleTile(QwirkleAnimal.fox, QwirkleColor.orange);
+        int tilesLeft1 = testGameState.getTilesLeft();
+        testGameState.addToDrawPile(tile1);
+        int tilesLeft2 = testGameState.getTilesLeft();
+        assertEquals(tilesLeft1+1, tilesLeft2);
     }
 
     @Test
     public void getRandomTile() throws Exception {
-
+        String[] playerTypes = new String[2];
+        playerTypes[0] = "local human player";
+        playerTypes[1] = "easy AI player";
+        QwirkleGameState testGameState = new QwirkleGameState(2, playerTypes);
+        assertNotNull(testGameState.getRandomTile());
     }
 
     @Test

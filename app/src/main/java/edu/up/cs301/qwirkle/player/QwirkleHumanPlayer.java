@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -391,6 +392,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             game.sendAction(pta);
             mainBoard.invalidate();
             sideBoard.invalidate();
+
             return true;
         }
         // access the side board in order to allow touch detection
