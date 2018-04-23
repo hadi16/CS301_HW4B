@@ -107,11 +107,11 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         textViewPlayerLabel =
                 (TextView)activity.findViewById(R.id.textViewPlayerLabel);
 
-        if(name.length() <= 9) {
+        if(name.length() <= 8) {
             textViewPlayerLabel.setText
                     ("My Name: " + name);
         }
-        else if(name.length() > 9 && name.length() <= 12)  {
+        else if(name.length() > 8 && name.length() <= 12)  {
             textViewPlayerLabel.setTextSize(15.0f);
             textViewPlayerLabel.setText("My Name: " + name);
         }
@@ -124,7 +124,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             textViewPlayerLabel.setText("My Name: " + name);
         }
         else if (name.length() > 18 && name.length() <= 20)  {
-            textViewPlayerLabel.setTextSize(9.0f);
+            textViewPlayerLabel.setTextSize(10.0f);
             textViewPlayerLabel.setText("My Name: " + name);
         }
         else {
