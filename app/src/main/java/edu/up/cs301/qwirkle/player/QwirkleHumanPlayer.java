@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -108,30 +107,11 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         textViewPlayerLabel =
                 (TextView)activity.findViewById(R.id.textViewPlayerLabel);
 
-        if(name.length() <= 8) {
-            textViewPlayerLabel.setText
-                    ("My Name: " + name);
-        }
-        else if(name.length() > 8 && name.length() <= 12)  {
-            textViewPlayerLabel.setTextSize(15.0f);
-            textViewPlayerLabel.setText("My Name: " + name);
-        }
-        else if (name.length() > 12 && name.length() <= 14)  {
-            textViewPlayerLabel.setTextSize(13.0f);
-            textViewPlayerLabel.setText("My Name: " + name);
-        }
-        else if (name.length() > 14 && name.length() <= 18)  {
-            textViewPlayerLabel.setTextSize(11.0f);
-            textViewPlayerLabel.setText("My Name: " + name);
-        }
-        else if (name.length() > 18 && name.length() <= 20)  {
-            textViewPlayerLabel.setTextSize(10.0f);
-            textViewPlayerLabel.setText("My Name: " + name);
-        }
-        else {
-            textViewPlayerLabel.setTextSize(7.0f);
-            textViewPlayerLabel.setText("My Name: " + name);
-        }
+        // Name is shortened to 10 characters at the most.
+        String truncatedName;
+        if (name.length() > 10) truncatedName = name.substring(0, 10);
+        else truncatedName = name;
+        textViewPlayerLabel.setText("My Name: " + truncatedName);
 
         // Initialize the TextViews by using findViewById.
         textViewTurnLabel =
@@ -242,28 +222,10 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             * Used Vegdahl's code as reference
         */
         // Update turn
-        String turnLabel = allPlayerNames[gameState.getTurn()];
-        int turnLabelLength = allPlayerNames[gameState.getTurn()].length();
-        if(turnLabelLength <= 12) {
-            textViewTurnLabel.setText
-                    ("Turn: " + turnLabel);
-        }
-        else if(turnLabelLength > 12 &&
-                turnLabelLength <= 16)  {
-            textViewTurnLabel.setTextSize(15.0f);
-            textViewTurnLabel.setText
-                    ("Turn: " + turnLabel);
-        }
-        else if (turnLabelLength > 16 &&
-                turnLabelLength <= 19)  {
-            textViewTurnLabel.setTextSize(13.0f);
-            textViewTurnLabel.setText
-                    ("Turn: " + turnLabel);
-        }
-        else {
-            textViewTurnLabel.setTextSize(11.0f);
-            textViewTurnLabel.setText("Turn: " + turnLabel);
-        }
+        String turnName = allPlayerNames[gameState.getTurn()];
+        // Player name is shortened to 10 characters at most.
+        if (turnName.length() > 10) turnName = turnName.substring(0, 10);
+        textViewTurnLabel.setText("Turn: " + turnName);
 
         // Update my score
         textViewMyScore.setText

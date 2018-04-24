@@ -168,6 +168,8 @@ public class QwirkleLocalGame extends LocalGame {
     protected boolean makeMove(GameAction action) {
         // Get the current player (for message board string).
         String playerName = playerNames[getPlayerIdx(action.getPlayer())];
+        // Player name is shortened to 10 characters at most.
+        if (playerName.length() > 10) playerName = playerName.substring(0, 10);
 
         // get the x- and y- position of a tile in the player's hand
         if (action instanceof PlaceTileAction) {
