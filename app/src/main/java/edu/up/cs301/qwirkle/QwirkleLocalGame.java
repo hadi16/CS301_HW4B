@@ -212,7 +212,6 @@ public class QwirkleLocalGame extends LocalGame {
             }
             gameState.setMessageBoardString(message);
 
-
             // Change the turn
             gameState.changeTurn();
             return true;

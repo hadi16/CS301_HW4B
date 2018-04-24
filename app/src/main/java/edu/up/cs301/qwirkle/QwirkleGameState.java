@@ -362,11 +362,29 @@ public class QwirkleGameState extends GameState implements Serializable {
         return messageBoardString;
     }
 
+
+
     /**
      * Method: setMessageBoardString
      * @param messageBoardString String to set the message board string to.
      */
     public void setMessageBoardString(String messageBoardString) {
         this.messageBoardString = messageBoardString;
+    }
+
+    /**
+     * Method: setTurn
+     * @param turn int to set the turn to
+     */
+    public void setTurn (int turn) {
+        this.turn = turn;
+    }
+
+    /**
+     * Method: getDrawPile
+     * @return the drawPile ArrayList
+     */
+    public ArrayList<QwirkleTile> getDrawPile() {
+        return drawPile;
     }
 }
