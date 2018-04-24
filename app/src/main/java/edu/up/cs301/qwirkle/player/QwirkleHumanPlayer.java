@@ -108,9 +108,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 (TextView)activity.findViewById(R.id.textViewPlayerLabel);
 
         // Name is shortened to 10 characters at the most.
-        String truncatedName;
+        String truncatedName = name;
         if (name.length() > 10) truncatedName = name.substring(0, 10);
-        else truncatedName = name;
         textViewPlayerLabel.setText("My Name: " + truncatedName);
 
         // Initialize the TextViews by using findViewById.
@@ -517,7 +516,9 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             //bolds id if they are winning
             TextView textViewPlayerName = new TextView(dialogContext);
             textViewPlayerName.setTextColor(textColor);
-            textViewPlayerName.setText(allPlayerNames[i]);
+            String name = allPlayerNames[i];
+            if (name.length() > 10) name = name.substring(0, 10);
+            textViewPlayerName.setText(name);
             textViewPlayerName.setTextSize(24f);
             tableRow.addView(textViewPlayerName);
 
