@@ -24,25 +24,26 @@ import static org.junit.Assert.*;
  */
 public class QwirkleGameStateTest {
     @Test
-    public void addToDrawPile() throws Exception {
+    public void testAddToDrawPile() throws Exception {
         String[] playerTypes = new String[2];
-        playerTypes[0] = "local human player";
-        playerTypes[1] = "easy AI player";
-        QwirkleGameState testGameState = new QwirkleGameState(2, playerTypes );
-        QwirkleTile tile1 = new QwirkleTile(QwirkleAnimal.dog, QwirkleColor.blue);
-        int tilesLeft1 = testGameState.getTilesLeft();
-        testGameState.addToDrawPile(tile1);
-        int tilesLeft2 = testGameState.getTilesLeft();
-        assertEquals(tilesLeft1+1, tilesLeft2);
+        playerTypes[0] = "Human";
+        playerTypes[1] = "Smart AI";
+        QwirkleGameState gameState = new QwirkleGameState(playerTypes.length, playerTypes);
+
+        int initialTilesLeft = gameState.getTilesLeft();
+        QwirkleTile tile = new QwirkleTile(QwirkleAnimal.dog, QwirkleColor.blue);
+        gameState.addToDrawPile(tile);
+        int finalTilesLeft = gameState.getTilesLeft();
+        assertEquals(initialTilesLeft+1, finalTilesLeft);
     }
 
     @Test
-    public void getRandomTile() throws Exception {
+    public void testGetRandomTile() throws Exception {
         String[] playerTypes = new String[2];
-        playerTypes[0] = "local human player";
-        playerTypes[1] = "easy AI player";
-        QwirkleGameState testGameState = new QwirkleGameState(2, playerTypes);
-        assertNotNull(testGameState.getRandomTile());
+        playerTypes[0] = "Human";
+        playerTypes[1] = "Dumb AI";
+        QwirkleGameState gameState = new QwirkleGameState(playerTypes.length, playerTypes);
+        assertNotNull(gameState.getRandomTile());
     }
 
     @Test
@@ -119,5 +120,4 @@ public class QwirkleGameStateTest {
     public void setMessageBoardString() throws Exception {
 
     }
-
 }
