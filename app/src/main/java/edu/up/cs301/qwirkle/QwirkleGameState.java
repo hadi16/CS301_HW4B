@@ -110,7 +110,9 @@ public class QwirkleGameState extends GameState implements Serializable {
         // Copy just the current player's hand.
         this.myPlayerHand = new QwirkleTile[CONST.NUM_IN_HAND];
         for (int i=0; i<this.myPlayerHand.length; i++) {
-            this.myPlayerHand[i] = new QwirkleTile(orig.playerHands[playerId][i]);
+            if (orig.playerHands[playerId][i] != null) {
+                this.myPlayerHand[i] = new QwirkleTile(orig.playerHands[playerId][i]);
+            }
         }
 
         // Copy the player scores.
