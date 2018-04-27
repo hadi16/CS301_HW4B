@@ -2,21 +2,29 @@ package edu.up.cs301.qwirkle.player;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
@@ -68,6 +76,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private TextView textViewMyScore;
     private TextView textViewTilesLeft;
     private TextView textViewMessageBoard;
+    private TextView textViewRules;
 
     // Switch for night mode
     private Switch switchDarkMode;
@@ -125,12 +134,20 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 (TextView)activity.findViewById(R.id.textViewTilesLeft);
         textViewMessageBoard =
                 (TextView)activity.findViewById(R.id.textViewMessageBoard);
+        textViewRules =
+                (TextView)activity.findViewById(R.id.textViewRules);
 
-        // Initialize swap button, main board, and side board & set listeners.
+        // Initialize buttons, main board, and side board & set listeners.
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
         buttonSwap.setOnClickListener(this);
+
         Button buttonScores = (Button)activity.findViewById(R.id.buttonScores);
         buttonScores.setOnClickListener(this);
+
+        Button buttonRules = (Button)
+                activity.findViewById(R.id.buttonRules);
+        buttonRules.setOnClickListener(this);
+
         mainBoard = (MainBoard)activity.findViewById(R.id.mainBoard);
         mainBoard.setOnTouchListener(this);
         sideBoard = (SideBoard)activity.findViewById(R.id.sideBoard);
@@ -360,6 +377,57 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             else {
                 sound.playErrorSound();
             }
+
+            /*
+            * External Citation
+            * Date: April 15 2018
+            * Problem: Wanted to create a popup for points scored
+            * Source: https://www.concretepage.com/android/
+            * android-toast-example-with-custom-view
+            * Solution:
+            * Used sample code to create a custom Toast
+            */
+
+            LayoutInflater inflater = activity.getLayoutInflater();
+            View layout = inflater.inflate(R.layout.qwirkle_points_popup, null);
+            ImageView image = (ImageView) layout.findViewById(R.id.imageView);
+
+            // set a message
+            TextView pointsPopup = (TextView) layout.findViewById(R.id.textViewPoints);
+
+
+            //Toast points popup
+            if(rules.isValidMove(coordinates.x,coordinates.y,
+                    myPlayerHand[handSelectedIdx],gameState.getBoard())) {
+
+                if(rules.getNumQwirkles() == 0) {
+                    pointsPopup.setText("+"+rules.getPoints());
+                    pointsPopup.setTextColor(Color.RED);
+                    image.setVisibility(View.INVISIBLE);
+
+                    // Toast...
+                    Toast toast = new Toast(activity);
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER,coordinates.x,coordinates.y);
+                    toast.setView(layout);
+                    toast.show();
+                }
+                else {
+                    image.setImageResource(R.drawable.qwirkle_logo);
+                    image.setVisibility(View.VISIBLE);
+                    pointsPopup.setVisibility(View.INVISIBLE);
+
+                    // Toast...
+                    Toast toast = new Toast(activity);
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.setView(layout);
+                    toast.show();
+                }
+
+
+            }
+
             // Reset selected tile.
             myPlayerHand[handSelectedIdx].setSelected(false);
             handSelectedIdx = -1;
@@ -572,6 +640,48 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     }
 
     /**
+     * Method: showRules
+     * Displays the rules of the game
+     */
+    private void showRules() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        Context dialogContext = builder.getContext();
+
+        builder.setTitle("Qwirkle Rules");
+        builder.setMessage("The objective of the game is for players to " +
+                "create and build upon lines based on the same color or animal."
+                + " On your turn, you may either place a tile from your hand"
+                + "onto the board or swap out one or more tiles from your " +
+                "hand, given that there are enough tiles left in the draw " +
+                "pile (Note that swapping counts as using your turn.)" +"\n"
+                +"Players take turns adding to the grid, created by the first " +
+                "turn. All tiles must connect to the grid. Two or more " +
+                "tiles that touch create a line. A line is either all one" +
+                " animal or all one color. Tiles that are added to a line " +
+                "must share the same attribute as the tiles that are already" +
+                " in the line. A line of animals can only have one tile" +
+                " of each of the six colors. A line of color can only " +
+                "have one tile of each of the six animals. There are places " +
+                "on the grid where tiles will not be able to be played." +
+                "\n\n" + "Scoring:\n" +"Each line can only contain one of " +
+                "each color and one of each shape, and every line must have" +
+                " either its color or shape in common. By completing a Qwirkle, " +
+                "or a line of 6 matching tiles, you get six extra points. " +
+                "Complete the game by using all of your tiles. " +
+                "The highest scoring player is the winner.");
+        LayoutInflater inflater = LayoutInflater.from(dialogContext);
+        View rulesView = inflater.inflate(R.layout.qwirkle_rules, null);
+        builder.setView(rulesView);
+
+        // Show the scoreboard as a popup that can be closed
+        builder.setCancelable(true);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+
+    }
+
+    /**
      * Method: onClick
      * callback method when something is clicked on the screen
      *
@@ -582,6 +692,12 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         // if scores button is pressed, always call showScoreBoard
         if (v.getId() == R.id.buttonScores) {
             showScoreBoard();
+            return;
+        }
+
+        // if rules button is pressed, always call showRules
+        if (v.getId() == R.id.buttonRules) {
+            showRules();
             return;
         }
 

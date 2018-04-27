@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/top_gui_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,6 +17,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonRules"
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorAccent"
+                android:text="rules"
+                android:textColor="@android:color/white"
+                android:textSize="8sp"/>
 
             <TextView
                 android:id="@+id/textViewPlayerLabel"
@@ -62,6 +74,8 @@
                 android:layout_marginLeft="20sp"
                 android:text="Night Mode: OFF"
                 android:textSize="@dimen/labels_default_font_size" />
+
+
         </LinearLayout>
 
         <edu.up.cs301.qwirkle.ui.MainBoard

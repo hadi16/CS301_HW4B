@@ -23,6 +23,8 @@ import edu.up.cs301.qwirkle.player.QwirkleHumanPlayer;
  * in green.
  * -Score board added, can be accessed by pressing "Scores" button.
  * -Sound effects
+ * -rules button
+ * -points popup
  *
  * @author Alex Hadi
  * @author Michael Quach
