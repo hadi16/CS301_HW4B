@@ -22,6 +22,7 @@ import edu.up.cs301.qwirkle.player.QwirkleHumanPlayer;
  * -When a player selects a tile, valid moves on the board are highlighted
  * in green.
  * -Score board added, can be accessed by pressing "Scores" button.
+ * -Sound effects
  *
  * @author Alex Hadi
  * @author Michael Quach

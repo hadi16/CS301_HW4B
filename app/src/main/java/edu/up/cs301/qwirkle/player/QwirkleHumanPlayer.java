@@ -25,6 +25,7 @@ import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
 import edu.up.cs301.qwirkle.CONST;
+import edu.up.cs301.qwirkle.QwirkleGameSound;
 import edu.up.cs301.qwirkle.QwirkleGameState;
 import edu.up.cs301.qwirkle.QwirkleRules;
 import edu.up.cs301.qwirkle.action.PassAction;
@@ -44,7 +45,7 @@ import edu.up.cs301.qwirkle.ui.SideBoard;
  * @author Michael Quach
  * @author Huy Nguyen
  * @author Stephanie Camacho
- * @version April 22, 2018
+ * @version April 26, 2018
  */
 public class QwirkleHumanPlayer extends GameHumanPlayer
         implements View.OnTouchListener, View.OnClickListener,
@@ -55,6 +56,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private QwirkleGameState gameState; // The game state.
     private QwirkleRules rules = new QwirkleRules(); // For valid moves.
     private QwirkleTile[] myPlayerHand; // Current player's hand.
+    private QwirkleGameSound sound; //Sounds of game
 
     // Boards (View objects)
     private MainBoard mainBoard;
@@ -99,6 +101,8 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     public void setAsGui(GameMainActivity activity) {
         // Initialize passed activity object
         this.activity = activity;
+        //Create sound reference
+        sound = new QwirkleGameSound(activity);
 
         // Set the GUI XML file.
         activity.setContentView(R.layout.qwirkle_human_player);
@@ -343,12 +347,23 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
             // Create the PlaceTileAction object.
             PlaceTileAction pta = new PlaceTileAction(this, coordinates.x,
                     coordinates.y, handSelectedIdx);
-
+            //Check to see which sound to play
+            if(rules.isValidMove(coordinates.x, coordinates.y,
+                    myPlayerHand[handSelectedIdx],gameState.getBoard())) {
+                if(rules.getNumQwirkles() == 1 || rules.getNumQwirkles() == 2){
+                    sound.playQwirkleSound();
+                }
+                else {
+                    sound.playPlaceTileSound();
+                }
+            }
+            else {
+                sound.playErrorSound();
+            }
             // Reset selected tile.
             myPlayerHand[handSelectedIdx].setSelected(false);
             handSelectedIdx = -1;
             mainBoard.setLegalMoves(null);
-
             // Send the action to the game & invalidate boards.
             game.sendAction(pta);
             mainBoard.invalidate();
@@ -604,6 +619,7 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 // If there is something to swap, call the SwapTileAction and
                 // send to game to replace the selected tile with random one
                 SwapTileAction sta = new SwapTileAction(this, myPlayerHand);
+                sound.playSwapSound();
                 game.sendAction(sta);
 
                 // Reset isSelected in myPlayerHand.
