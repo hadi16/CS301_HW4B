@@ -76,7 +76,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private TextView textViewMyScore;
     private TextView textViewTilesLeft;
     private TextView textViewMessageBoard;
-    private TextView textViewRules;
 
     // Switch for night mode
     private Switch switchDarkMode;
@@ -134,8 +133,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 (TextView)activity.findViewById(R.id.textViewTilesLeft);
         textViewMessageBoard =
                 (TextView)activity.findViewById(R.id.textViewMessageBoard);
-        textViewRules =
-                (TextView)activity.findViewById(R.id.textViewRules);
 
         // Initialize buttons, main board, and side board & set listeners.
         buttonSwap = (Button)activity.findViewById(R.id.buttonSwap);
@@ -646,10 +643,27 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
     private void showRules() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         Context dialogContext = builder.getContext();
+        LayoutInflater inflater = LayoutInflater.from(dialogContext);
+        View rulesView = inflater.inflate(R.layout.qwirkle_rules, null);
+        builder.setView(rulesView);
 
-        TextView rulesTv = (TextView)activity.findViewById(R.id.textViewRules);
+        // Get the top LinearLayout view.
+        LinearLayout rulesLayout =
+                (LinearLayout)rulesView.findViewById(R.id.rules_layout);
 
-        rulesTv.setText("The objective of the game is for players to " +
+        // To change the color of the text with dark mode.
+        int textColor = switchDarkMode.isChecked() ? Color.WHITE : Color.BLACK;
+
+        // Get the TextView & set color.
+        TextView textViewRules =
+                (TextView)rulesView.findViewById(R.id.textViewRules);
+        textViewRules.setTextColor(textColor);
+
+        // Set the background color of the rules view.
+        rulesLayout.setBackgroundColor(
+                switchDarkMode.isChecked() ? Color.DKGRAY : Color.WHITE);
+
+        textViewRules.setText("The objective of the game is for players to " +
                 "create and build upon lines based on the same color or animal."
                 + " On your turn, you may either place a tile from your hand"
                 + "onto the board or swap out one or more tiles from your " +
@@ -670,9 +684,6 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
                 "or a line of 6 matching tiles, you get six extra points. " +
                 "Complete the game by using all of your tiles. " +
                 "The highest scoring player is the winner.");
-        LayoutInflater inflater = LayoutInflater.from(dialogContext);
-        View rulesView = inflater.inflate(R.layout.qwirkle_rules, null);
-        builder.setView(rulesView);
 
         // Show the scoreboard as a popup that can be closed
         builder.setCancelable(true);
