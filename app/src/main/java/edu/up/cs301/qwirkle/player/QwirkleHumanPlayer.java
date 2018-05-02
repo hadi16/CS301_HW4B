@@ -647,8 +647,9 @@ public class QwirkleHumanPlayer extends GameHumanPlayer
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         Context dialogContext = builder.getContext();
 
-        builder.setTitle("Qwirkle Rules");
-        builder.setMessage("The objective of the game is for players to " +
+        TextView rulesTv = (TextView)activity.findViewById(R.id.textViewRules);
+
+        rulesTv.setText("The objective of the game is for players to " +
                 "create and build upon lines based on the same color or animal."
                 + " On your turn, you may either place a tile from your hand"
                 + "onto the board or swap out one or more tiles from your " +
